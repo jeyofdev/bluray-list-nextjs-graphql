@@ -2,6 +2,7 @@ import {
 	MovieDetails,
 	MovieResponse,
 	MutationAddMovieArgs,
+	MutationDeleteMovieArgs,
 	QueryMovieArgs,
 } from '../__generated__/resolvers-types';
 import { IContext } from '../context';
@@ -63,6 +64,20 @@ class MovieServices extends DataServices {
 					dvd: args.support?.dvd,
 				},
 			},
+		});
+	}
+
+	/**
+	 * Delete movie by ID
+	 */
+	async deleteById(
+		ctx: IContext,
+		args: MutationDeleteMovieArgs,
+	): Promise<MovieResponse> {
+		const { movieId } = args;
+
+		return ctx.prisma.movies.delete({
+			where: { id: movieId },
 		});
 	}
 }

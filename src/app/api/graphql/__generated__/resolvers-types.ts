@@ -60,11 +60,16 @@ export type MovieResponse = {
 export type Mutation = {
 	__typename?: 'Mutation';
 	addMovie?: Maybe<MovieResponse>;
+	deleteMovie?: Maybe<MovieResponse>;
 };
 
 export type MutationAddMovieArgs = {
 	support?: InputMaybe<SupportInput>;
 	tmdbMovieId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MutationDeleteMovieArgs = {
+	movieId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type ProductionCountry = {
@@ -325,6 +330,12 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		Partial<MutationAddMovieArgs>
+	>;
+	deleteMovie?: Resolver<
+		Maybe<ResolversTypes['MovieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationDeleteMovieArgs>
 	>;
 }>;
 
