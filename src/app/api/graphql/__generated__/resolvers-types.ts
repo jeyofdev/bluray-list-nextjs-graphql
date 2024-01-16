@@ -75,7 +75,12 @@ export type ProductionCountry = {
 
 export type Query = {
 	__typename?: 'Query';
+	movie?: Maybe<MovieResponse>;
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
+};
+
+export type QueryMovieArgs = {
+	movieId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type Support = {
@@ -342,6 +347,12 @@ export type QueryResolvers<
 	ParentType extends
 		ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = ResolversObject<{
+	movie?: Resolver<
+		Maybe<ResolversTypes['MovieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<QueryMovieArgs>
+	>;
 	movies?: Resolver<
 		Maybe<Array<Maybe<ResolversTypes['MovieResponse']>>>,
 		ParentType,

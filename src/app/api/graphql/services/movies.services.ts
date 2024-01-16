@@ -2,6 +2,7 @@ import {
 	MovieDetails,
 	MovieResponse,
 	MutationAddMovieArgs,
+	QueryMovieArgs,
 } from '../__generated__/resolvers-types';
 import { IContext } from '../context';
 import DataServices from './data.services';
@@ -12,6 +13,17 @@ class MovieServices extends DataServices {
 	 */
 	async findAll(ctx: IContext): Promise<MovieResponse[]> {
 		return ctx.prisma.movies.findMany();
+	}
+
+	/**
+	 * Get movie by ID
+	 */
+	async findById(ctx: IContext, args: QueryMovieArgs): Promise<MovieResponse> {
+		const { movieId } = args;
+
+		return ctx.prisma.movies.findUnique({
+			where: { id: movieId },
+		});
 	}
 
 	/**
