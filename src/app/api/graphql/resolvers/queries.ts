@@ -1,8 +1,8 @@
-const queries = {
-	// queries here
+import { IContext } from '../context';
 
-	hello: () => {
-		return 'hello world';
+const queries = {
+	movies: (_: never, __: never, ctx: IContext) => {
+		return ctx.dataSource.movies.findAll(ctx);
 	},
 };
 
