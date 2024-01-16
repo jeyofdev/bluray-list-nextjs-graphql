@@ -2,6 +2,9 @@ import {
 	MovieDetails,
 	MovieResponse,
 	MutationAddMovieArgs,
+	MutationDeleteMovieArgs,
+	MutationUpdateMovieArgs,
+	QueryMovieArgs,
 } from '../__generated__/resolvers-types';
 import { IContext } from '../context';
 import DataServices from './data.services';
@@ -12,6 +15,17 @@ class MovieServices extends DataServices {
 	 */
 	async findAll(ctx: IContext): Promise<MovieResponse[]> {
 		return ctx.prisma.movies.findMany();
+	}
+
+	/**
+	 * Get movie by ID
+	 */
+	async findById(ctx: IContext, args: QueryMovieArgs): Promise<MovieResponse> {
+		const { movieId } = args;
+
+		return ctx.prisma.movies.findUnique({
+			where: { id: movieId },
+		});
 	}
 
 	/**
@@ -51,6 +65,42 @@ class MovieServices extends DataServices {
 					dvd: args.support?.dvd,
 				},
 			},
+		});
+	}
+
+	/**
+	 * update movie data by ID
+	 */
+	async updateById(
+		ctx: IContext,
+		args: MutationUpdateMovieArgs,
+	): Promise<MovieResponse> {
+		const { movieId } = args;
+
+		const movieToUpdate = await ctx.prisma.movies.findUnique({
+			where: { id: movieId },
+		});
+
+		return ctx.prisma.movies.update({
+			where: { id: movieId },
+			data: {
+				details: movieToUpdate.details,
+				support: args.support ?? movieToUpdate.support,
+			},
+		});
+	}
+
+	/**
+	 * Delete movie by ID
+	 */
+	async deleteById(
+		ctx: IContext,
+		args: MutationDeleteMovieArgs,
+	): Promise<MovieResponse> {
+		const { movieId } = args;
+
+		return ctx.prisma.movies.delete({
+			where: { id: movieId },
 		});
 	}
 }

@@ -60,11 +60,22 @@ export type MovieResponse = {
 export type Mutation = {
 	__typename?: 'Mutation';
 	addMovie?: Maybe<MovieResponse>;
+	deleteMovie?: Maybe<MovieResponse>;
+	updateMovie?: Maybe<MovieResponse>;
 };
 
 export type MutationAddMovieArgs = {
 	support?: InputMaybe<SupportInput>;
 	tmdbMovieId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MutationDeleteMovieArgs = {
+	movieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type MutationUpdateMovieArgs = {
+	movieId?: InputMaybe<Scalars['ID']['input']>;
+	support?: InputMaybe<SupportInput>;
 };
 
 export type ProductionCountry = {
@@ -75,7 +86,12 @@ export type ProductionCountry = {
 
 export type Query = {
 	__typename?: 'Query';
+	movie?: Maybe<MovieResponse>;
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
+};
+
+export type QueryMovieArgs = {
+	movieId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type Support = {
@@ -321,6 +337,18 @@ export type MutationResolvers<
 		ContextType,
 		Partial<MutationAddMovieArgs>
 	>;
+	deleteMovie?: Resolver<
+		Maybe<ResolversTypes['MovieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationDeleteMovieArgs>
+	>;
+	updateMovie?: Resolver<
+		Maybe<ResolversTypes['MovieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationUpdateMovieArgs>
+	>;
 }>;
 
 export type ProductionCountryResolvers<
@@ -342,6 +370,12 @@ export type QueryResolvers<
 	ParentType extends
 		ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = ResolversObject<{
+	movie?: Resolver<
+		Maybe<ResolversTypes['MovieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<QueryMovieArgs>
+	>;
 	movies?: Resolver<
 		Maybe<Array<Maybe<ResolversTypes['MovieResponse']>>>,
 		ParentType,
