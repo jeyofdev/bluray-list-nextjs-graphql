@@ -7,7 +7,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type DetailsGenres {
+  id              Int
+  name            String
+}
+
+type DetailsProductionCountries {
+  iso_3166_1 String
+  name       String
+}
+
+type MoviesDetails {
+  backdrop_path        String
+  genres               DetailsGenres[]
+  homepage             String
+  id                   Int
+  original_language    String
+  original_title       String
+  overview             String
+  poster_path          String
+  production_countries DetailsProductionCountries[]
+  release_date         String
+  title                String
+  vote_average         Float
+}
+
+
+type Support {
+  bluray     Boolean
+  bluray_hd  Boolean
+  dvd        Boolean
+}
+
 model movies {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  details   MoviesDetails
+  support   Support
 }

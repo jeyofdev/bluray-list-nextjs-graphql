@@ -1,8 +1,9 @@
-import { QueryResolvers } from '../__generated__/resolvers-types';
 import queries from './queries';
+import mutations from './mutations';
 
-const resolvers: QueryResolvers = {
+const resolvers = {
 	Query: { ...queries },
+	Mutation: { ...mutations },
 };
 
 export default resolvers;
