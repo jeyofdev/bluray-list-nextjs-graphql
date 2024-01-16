@@ -28,15 +28,67 @@ export type Scalars = {
 	Float: { input: number; output: number };
 };
 
+export type Genre = {
+	__typename?: 'Genre';
+	id?: Maybe<Scalars['Int']['output']>;
+	name?: Maybe<Scalars['String']['output']>;
+};
+
+export type MovieDetails = {
+	__typename?: 'MovieDetails';
+	backdrop_path?: Maybe<Scalars['String']['output']>;
+	genres?: Maybe<Array<Maybe<Genre>>>;
+	homepage?: Maybe<Scalars['String']['output']>;
+	id?: Maybe<Scalars['Int']['output']>;
+	original_language?: Maybe<Scalars['String']['output']>;
+	original_title?: Maybe<Scalars['String']['output']>;
+	overview?: Maybe<Scalars['String']['output']>;
+	poster_path?: Maybe<Scalars['String']['output']>;
+	production_countries?: Maybe<Array<Maybe<ProductionCountry>>>;
+	release_date?: Maybe<Scalars['String']['output']>;
+	title?: Maybe<Scalars['String']['output']>;
+	vote_average?: Maybe<Scalars['Float']['output']>;
+};
+
 export type MovieResponse = {
 	__typename?: 'MovieResponse';
+	details?: Maybe<MovieDetails>;
 	id?: Maybe<Scalars['ID']['output']>;
-	title?: Maybe<Scalars['String']['output']>;
+	support?: Maybe<Support>;
+};
+
+export type Mutation = {
+	__typename?: 'Mutation';
+	addMovie?: Maybe<MovieResponse>;
+};
+
+export type MutationAddMovieArgs = {
+	support?: InputMaybe<SupportInput>;
+	tmdbMovieId?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ProductionCountry = {
+	__typename?: 'ProductionCountry';
+	iso_3166_1?: Maybe<Scalars['String']['output']>;
+	name?: Maybe<Scalars['String']['output']>;
 };
 
 export type Query = {
 	__typename?: 'Query';
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
+};
+
+export type Support = {
+	__typename?: 'Support';
+	bluray?: Maybe<Scalars['Boolean']['output']>;
+	bluray_hd?: Maybe<Scalars['Boolean']['output']>;
+	dvd?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type SupportInput = {
+	bluray?: InputMaybe<Scalars['Boolean']['input']>;
+	bluray_hd?: InputMaybe<Scalars['Boolean']['input']>;
+	dvd?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -150,19 +202,97 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
 	Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+	Float: ResolverTypeWrapper<Scalars['Float']['output']>;
+	Genre: ResolverTypeWrapper<Genre>;
 	ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+	Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+	MovieDetails: ResolverTypeWrapper<MovieDetails>;
 	MovieResponse: ResolverTypeWrapper<MovieResponse>;
+	Mutation: ResolverTypeWrapper<{}>;
+	ProductionCountry: ResolverTypeWrapper<ProductionCountry>;
 	Query: ResolverTypeWrapper<{}>;
 	String: ResolverTypeWrapper<Scalars['String']['output']>;
+	Support: ResolverTypeWrapper<Support>;
+	SupportInput: SupportInput;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
 	Boolean: Scalars['Boolean']['output'];
+	Float: Scalars['Float']['output'];
+	Genre: Genre;
 	ID: Scalars['ID']['output'];
+	Int: Scalars['Int']['output'];
+	MovieDetails: MovieDetails;
 	MovieResponse: MovieResponse;
+	Mutation: {};
+	ProductionCountry: ProductionCountry;
 	Query: {};
 	String: Scalars['String']['output'];
+	Support: Support;
+	SupportInput: SupportInput;
+}>;
+
+export type GenreResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['Genre'] = ResolversParentTypes['Genre'],
+> = ResolversObject<{
+	id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MovieDetailsResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['MovieDetails'] = ResolversParentTypes['MovieDetails'],
+> = ResolversObject<{
+	backdrop_path?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	genres?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes['Genre']>>>,
+		ParentType,
+		ContextType
+	>;
+	homepage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	original_language?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	original_title?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	overview?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	poster_path?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	production_countries?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes['ProductionCountry']>>>,
+		ParentType,
+		ContextType
+	>;
+	release_date?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	vote_average?: Resolver<
+		Maybe<ResolversTypes['Float']>,
+		ParentType,
+		ContextType
+	>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type MovieResponseResolvers<
@@ -170,8 +300,40 @@ export type MovieResponseResolvers<
 	ParentType extends
 		ResolversParentTypes['MovieResponse'] = ResolversParentTypes['MovieResponse'],
 > = ResolversObject<{
+	details?: Resolver<
+		Maybe<ResolversTypes['MovieDetails']>,
+		ParentType,
+		ContextType
+	>;
 	id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-	title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	support?: Resolver<Maybe<ResolversTypes['Support']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MutationResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
+> = ResolversObject<{
+	addMovie?: Resolver<
+		Maybe<ResolversTypes['MovieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationAddMovieArgs>
+	>;
+}>;
+
+export type ProductionCountryResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['ProductionCountry'] = ResolversParentTypes['ProductionCountry'],
+> = ResolversObject<{
+	iso_3166_1?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -187,7 +349,27 @@ export type QueryResolvers<
 	>;
 }>;
 
+export type SupportResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['Support'] = ResolversParentTypes['Support'],
+> = ResolversObject<{
+	bluray?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+	bluray_hd?: Resolver<
+		Maybe<ResolversTypes['Boolean']>,
+		ParentType,
+		ContextType
+	>;
+	dvd?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = any> = ResolversObject<{
+	Genre?: GenreResolvers<ContextType>;
+	MovieDetails?: MovieDetailsResolvers<ContextType>;
 	MovieResponse?: MovieResponseResolvers<ContextType>;
+	Mutation?: MutationResolvers<ContextType>;
+	ProductionCountry?: ProductionCountryResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
+	Support?: SupportResolvers<ContextType>;
 }>;
