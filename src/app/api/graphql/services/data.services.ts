@@ -1,5 +1,5 @@
 import { RESTDataSource } from '@apollo/datasource-rest';
-import { MovieDetails } from '../__generated__/resolvers-types';
+import { MovieDetails, SerieDetails } from '../__generated__/resolvers-types';
 import { formatUrlQuery } from '../utils';
 
 class DataServices extends RESTDataSource {
@@ -8,7 +8,7 @@ class DataServices extends RESTDataSource {
 
 	constructor() {
 		super();
-		this.baseURL = 'https://api.themoviedb.org/3/movie';
+		this.baseURL = 'https://api.themoviedb.org/3';
 
 		if (!process.env.TMDB_API_KEY) {
 			throw new Error(
@@ -21,9 +21,14 @@ class DataServices extends RESTDataSource {
 	/**
 	 * get data movie details
 	 */
-	async findDataDetails(args: any): Promise<MovieDetails> {
+	async findDataDetails(
+		type: 'movie' | 'tv',
+		args: any,
+	): Promise<MovieDetails | SerieDetails> {
+		const id = String(args.tmdbMovieId ?? args.tmdbSerieId);
+
 		return this.get(
-			formatUrlQuery(this.baseURL, this.apiKey, String(args.tmdbMovieId), {
+			formatUrlQuery(`${this.baseURL}/${type}`, this.apiKey, id, {
 				language: args?.options?.language,
 			}),
 		);

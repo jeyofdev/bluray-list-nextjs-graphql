@@ -35,7 +35,7 @@ class MovieServices extends DataServices {
 		const { tmdbMovieId } = args;
 
 		const TMDB_movie = await (
-			this.findDataDetails({
+			this.findDataDetails('movie', {
 				tmdbMovieId,
 				options: {
 					language: 'fr',
