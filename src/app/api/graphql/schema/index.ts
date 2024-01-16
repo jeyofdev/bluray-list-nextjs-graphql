@@ -51,6 +51,7 @@ const schema = gql`
 
 	type Mutation {
 		addMovie(tmdbMovieId: Int, support: SupportInput): MovieResponse
+		updateMovie(movieId: ID, support: SupportInput): MovieResponse
 		deleteMovie(movieId: ID): MovieResponse
 	}
 `;

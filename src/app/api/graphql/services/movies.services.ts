@@ -3,6 +3,7 @@ import {
 	MovieResponse,
 	MutationAddMovieArgs,
 	MutationDeleteMovieArgs,
+	MutationUpdateMovieArgs,
 	QueryMovieArgs,
 } from '../__generated__/resolvers-types';
 import { IContext } from '../context';
@@ -63,6 +64,28 @@ class MovieServices extends DataServices {
 					bluray_hd: args.support?.bluray_hd,
 					dvd: args.support?.dvd,
 				},
+			},
+		});
+	}
+
+	/**
+	 * update movie data by ID
+	 */
+	async updateById(
+		ctx: IContext,
+		args: MutationUpdateMovieArgs,
+	): Promise<MovieResponse> {
+		const { movieId } = args;
+
+		const movieToUpdate = await ctx.prisma.movies.findUnique({
+			where: { id: movieId },
+		});
+
+		return ctx.prisma.movies.update({
+			where: { id: movieId },
+			data: {
+				details: movieToUpdate.details,
+				support: args.support ?? movieToUpdate.support,
 			},
 		});
 	}

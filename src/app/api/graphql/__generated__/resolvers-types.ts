@@ -61,6 +61,7 @@ export type Mutation = {
 	__typename?: 'Mutation';
 	addMovie?: Maybe<MovieResponse>;
 	deleteMovie?: Maybe<MovieResponse>;
+	updateMovie?: Maybe<MovieResponse>;
 };
 
 export type MutationAddMovieArgs = {
@@ -70,6 +71,11 @@ export type MutationAddMovieArgs = {
 
 export type MutationDeleteMovieArgs = {
 	movieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type MutationUpdateMovieArgs = {
+	movieId?: InputMaybe<Scalars['ID']['input']>;
+	support?: InputMaybe<SupportInput>;
 };
 
 export type ProductionCountry = {
@@ -336,6 +342,12 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		Partial<MutationDeleteMovieArgs>
+	>;
+	updateMovie?: Resolver<
+		Maybe<ResolversTypes['MovieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationUpdateMovieArgs>
 	>;
 }>;
 
