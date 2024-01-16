@@ -7,14 +7,22 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint src js,ts,tsx --no-ignore --max-warnings 0",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"codegen:api": "graphql-codegen --config src/app/api/graphql/codegen.ts"
 	},
 	"dependencies": {
+		"@apollo/server": "^4.10.0",
+		"@as-integrations/next": "^3.0.0",
+		"graphql": "^16.8.1",
+		"graphql-tag": "^2.12.6",
 		"next": "14.0.4",
 		"react": "^18",
 		"react-dom": "^18"
 	},
 	"devDependencies": {
+		"@graphql-codegen/cli": "5.0.0",
+		"@graphql-codegen/typescript": "4.0.1",
+		"@graphql-codegen/typescript-resolvers": "4.0.1",
 		"@types/node": "^20",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
@@ -27,7 +35,8 @@
 		"postcss": "^8",
 		"prettier": "^3.2.2",
 		"tailwindcss": "^3.3.0",
-		"typescript": "^5"
+		"typescript": "^5",
+		"@graphql-codegen/introspection": "4.0.0"
 	},
 	"lint-staged": {
 		"*.{js,ts,tsx,jsx}": [
