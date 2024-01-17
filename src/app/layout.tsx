@@ -1,7 +1,9 @@
+import { CssBaseline } from '@mui/material';
 import '@styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
+import RootComponent from '../components/RootComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +19,10 @@ type RootLayoutPropsType = {
 const RootLayout = ({ children }: RootLayoutPropsType) => {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>{children}</body>
+			<RootComponent>
+				<CssBaseline />
+				<body className={`${inter.className} bg-gray-50`}>{children}</body>
+			</RootComponent>
 		</html>
 	);
 };
