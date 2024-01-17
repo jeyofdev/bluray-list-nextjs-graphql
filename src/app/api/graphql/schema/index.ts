@@ -81,6 +81,13 @@ const schema = gql`
 		total_results: Int!
 	}
 
+	type SearchSerieResponse {
+		page: Int!
+		results: [SerieDetails]!
+		total_pages: Int!
+		total_results: Int!
+	}
+
 	input SupportInput {
 		bluray: Boolean
 		bluray_hd: Boolean
@@ -100,6 +107,7 @@ const schema = gql`
 		series: [SerieResponse]
 		serie(serieId: ID): SerieResponse
 		searchMovies(searchOptions: SearchOptionsInput): SearchMovieResponse
+		searchSeries(searchOptions: SearchOptionsInput): SearchSerieResponse
 	}
 
 	type Mutation {

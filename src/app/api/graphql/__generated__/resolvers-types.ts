@@ -107,7 +107,7 @@ export type Query = {
 	__typename?: 'Query';
 	movie?: Maybe<MovieResponse>;
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
-	searchMovies?: Maybe<SearchMovieResponse>;
+	searchMovies?: Maybe<SearchSerieResponse>;
 	serie?: Maybe<SerieResponse>;
 	series?: Maybe<Array<Maybe<SerieResponse>>>;
 };
@@ -135,6 +135,14 @@ export type SearchMovieResponse = {
 export type SearchOptionsInput = {
 	page?: InputMaybe<Scalars['Int']['input']>;
 	query?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SearchSerieResponse = {
+	__typename?: 'SearchSerieResponse';
+	page: Scalars['Int']['output'];
+	results: Array<Maybe<SerieDetails>>;
+	total_pages: Scalars['Int']['output'];
+	total_results: Scalars['Int']['output'];
 };
 
 export type Season = {
@@ -311,6 +319,7 @@ export type ResolversTypes = ResolversObject<{
 	Query: ResolverTypeWrapper<{}>;
 	SearchMovieResponse: ResolverTypeWrapper<SearchMovieResponse>;
 	SearchOptionsInput: SearchOptionsInput;
+	SearchSerieResponse: ResolverTypeWrapper<SearchSerieResponse>;
 	Season: ResolverTypeWrapper<Season>;
 	SerieDetails: ResolverTypeWrapper<SerieDetails>;
 	SerieResponse: ResolverTypeWrapper<SerieResponse>;
@@ -333,6 +342,7 @@ export type ResolversParentTypes = ResolversObject<{
 	Query: {};
 	SearchMovieResponse: SearchMovieResponse;
 	SearchOptionsInput: SearchOptionsInput;
+	SearchSerieResponse: SearchSerieResponse;
 	Season: Season;
 	SerieDetails: SerieDetails;
 	SerieResponse: SerieResponse;
@@ -492,7 +502,7 @@ export type QueryResolvers<
 		ContextType
 	>;
 	searchMovies?: Resolver<
-		Maybe<ResolversTypes['SearchMovieResponse']>,
+		Maybe<ResolversTypes['SearchSerieResponse']>,
 		ParentType,
 		ContextType,
 		Partial<QuerySearchMoviesArgs>
@@ -518,6 +528,22 @@ export type SearchMovieResponseResolvers<
 	page?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 	results?: Resolver<
 		Array<Maybe<ResolversTypes['MovieDetails']>>,
+		ParentType,
+		ContextType
+	>;
+	total_pages?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+	total_results?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SearchSerieResponseResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['SearchSerieResponse'] = ResolversParentTypes['SearchSerieResponse'],
+> = ResolversObject<{
+	page?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+	results?: Resolver<
+		Array<Maybe<ResolversTypes['SerieDetails']>>,
 		ParentType,
 		ContextType
 	>;
@@ -664,6 +690,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
 	ProductionCountry?: ProductionCountryResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
 	SearchMovieResponse?: SearchMovieResponseResolvers<ContextType>;
+	SearchSerieResponse?: SearchSerieResponseResolvers<ContextType>;
 	Season?: SeasonResolvers<ContextType>;
 	SerieDetails?: SerieDetailsResolvers<ContextType>;
 	SerieResponse?: SerieResponseResolvers<ContextType>;
