@@ -60,8 +60,11 @@ export type MovieResponse = {
 export type Mutation = {
 	__typename?: 'Mutation';
 	addMovie?: Maybe<MovieResponse>;
+	addSerie?: Maybe<SerieResponse>;
 	deleteMovie?: Maybe<MovieResponse>;
+	deleteSerie?: Maybe<SerieResponse>;
 	updateMovie?: Maybe<MovieResponse>;
+	updateSerie?: Maybe<SerieResponse>;
 };
 
 export type MutationAddMovieArgs = {
@@ -69,12 +72,28 @@ export type MutationAddMovieArgs = {
 	tmdbMovieId?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type MutationAddSerieArgs = {
+	season?: InputMaybe<Scalars['Int']['input']>;
+	support?: InputMaybe<SupportInput>;
+	tmdbSerieId?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type MutationDeleteMovieArgs = {
 	movieId?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type MutationDeleteSerieArgs = {
+	serieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type MutationUpdateMovieArgs = {
 	movieId?: InputMaybe<Scalars['ID']['input']>;
+	support?: InputMaybe<SupportInput>;
+};
+
+export type MutationUpdateSerieArgs = {
+	season?: InputMaybe<Scalars['Int']['input']>;
+	serieId?: InputMaybe<Scalars['ID']['input']>;
 	support?: InputMaybe<SupportInput>;
 };
 
@@ -88,10 +107,55 @@ export type Query = {
 	__typename?: 'Query';
 	movie?: Maybe<MovieResponse>;
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
+	serie?: Maybe<SerieResponse>;
+	series?: Maybe<Array<Maybe<SerieResponse>>>;
 };
 
 export type QueryMovieArgs = {
 	movieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QuerySerieArgs = {
+	serieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type Season = {
+	__typename?: 'Season';
+	air_date?: Maybe<Scalars['String']['output']>;
+	episode_count?: Maybe<Scalars['Int']['output']>;
+	id?: Maybe<Scalars['Int']['output']>;
+	name?: Maybe<Scalars['String']['output']>;
+	overview?: Maybe<Scalars['String']['output']>;
+	poster_path?: Maybe<Scalars['String']['output']>;
+	season_number?: Maybe<Scalars['Int']['output']>;
+	vote_average?: Maybe<Scalars['Float']['output']>;
+};
+
+export type SerieDetails = {
+	__typename?: 'SerieDetails';
+	backdrop_path?: Maybe<Scalars['String']['output']>;
+	first_air_date?: Maybe<Scalars['String']['output']>;
+	genres?: Maybe<Array<Maybe<Genre>>>;
+	homepage?: Maybe<Scalars['String']['output']>;
+	id?: Maybe<Scalars['Int']['output']>;
+	name?: Maybe<Scalars['String']['output']>;
+	number_of_episodes?: Maybe<Scalars['Int']['output']>;
+	number_of_seasons?: Maybe<Scalars['Int']['output']>;
+	original_language?: Maybe<Scalars['String']['output']>;
+	original_name?: Maybe<Scalars['String']['output']>;
+	overview?: Maybe<Scalars['String']['output']>;
+	poster_path?: Maybe<Scalars['String']['output']>;
+	production_countries?: Maybe<Array<Maybe<ProductionCountry>>>;
+	seasons?: Maybe<Array<Maybe<Season>>>;
+	vote_average?: Maybe<Scalars['Float']['output']>;
+};
+
+export type SerieResponse = {
+	__typename?: 'SerieResponse';
+	details?: Maybe<SerieDetails>;
+	id?: Maybe<Scalars['ID']['output']>;
+	season?: Maybe<Scalars['Int']['output']>;
+	support?: Maybe<Support>;
 };
 
 export type Support = {
@@ -227,6 +291,9 @@ export type ResolversTypes = ResolversObject<{
 	Mutation: ResolverTypeWrapper<{}>;
 	ProductionCountry: ResolverTypeWrapper<ProductionCountry>;
 	Query: ResolverTypeWrapper<{}>;
+	Season: ResolverTypeWrapper<Season>;
+	SerieDetails: ResolverTypeWrapper<SerieDetails>;
+	SerieResponse: ResolverTypeWrapper<SerieResponse>;
 	String: ResolverTypeWrapper<Scalars['String']['output']>;
 	Support: ResolverTypeWrapper<Support>;
 	SupportInput: SupportInput;
@@ -244,6 +311,9 @@ export type ResolversParentTypes = ResolversObject<{
 	Mutation: {};
 	ProductionCountry: ProductionCountry;
 	Query: {};
+	Season: Season;
+	SerieDetails: SerieDetails;
+	SerieResponse: SerieResponse;
 	String: Scalars['String']['output'];
 	Support: Support;
 	SupportInput: SupportInput;
@@ -337,17 +407,35 @@ export type MutationResolvers<
 		ContextType,
 		Partial<MutationAddMovieArgs>
 	>;
+	addSerie?: Resolver<
+		Maybe<ResolversTypes['SerieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationAddSerieArgs>
+	>;
 	deleteMovie?: Resolver<
 		Maybe<ResolversTypes['MovieResponse']>,
 		ParentType,
 		ContextType,
 		Partial<MutationDeleteMovieArgs>
 	>;
+	deleteSerie?: Resolver<
+		Maybe<ResolversTypes['SerieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationDeleteSerieArgs>
+	>;
 	updateMovie?: Resolver<
 		Maybe<ResolversTypes['MovieResponse']>,
 		ParentType,
 		ContextType,
 		Partial<MutationUpdateMovieArgs>
+	>;
+	updateSerie?: Resolver<
+		Maybe<ResolversTypes['SerieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationUpdateSerieArgs>
 	>;
 }>;
 
@@ -381,6 +469,132 @@ export type QueryResolvers<
 		ParentType,
 		ContextType
 	>;
+	serie?: Resolver<
+		Maybe<ResolversTypes['SerieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<QuerySerieArgs>
+	>;
+	series?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes['SerieResponse']>>>,
+		ParentType,
+		ContextType
+	>;
+}>;
+
+export type SeasonResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['Season'] = ResolversParentTypes['Season'],
+> = ResolversObject<{
+	air_date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	episode_count?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
+	id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	overview?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	poster_path?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	season_number?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
+	vote_average?: Resolver<
+		Maybe<ResolversTypes['Float']>,
+		ParentType,
+		ContextType
+	>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SerieDetailsResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['SerieDetails'] = ResolversParentTypes['SerieDetails'],
+> = ResolversObject<{
+	backdrop_path?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	first_air_date?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	genres?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes['Genre']>>>,
+		ParentType,
+		ContextType
+	>;
+	homepage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	number_of_episodes?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
+	number_of_seasons?: Resolver<
+		Maybe<ResolversTypes['Int']>,
+		ParentType,
+		ContextType
+	>;
+	original_language?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	original_name?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	overview?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	poster_path?: Resolver<
+		Maybe<ResolversTypes['String']>,
+		ParentType,
+		ContextType
+	>;
+	production_countries?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes['ProductionCountry']>>>,
+		ParentType,
+		ContextType
+	>;
+	seasons?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes['Season']>>>,
+		ParentType,
+		ContextType
+	>;
+	vote_average?: Resolver<
+		Maybe<ResolversTypes['Float']>,
+		ParentType,
+		ContextType
+	>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SerieResponseResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['SerieResponse'] = ResolversParentTypes['SerieResponse'],
+> = ResolversObject<{
+	details?: Resolver<
+		Maybe<ResolversTypes['SerieDetails']>,
+		ParentType,
+		ContextType
+	>;
+	id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+	season?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	support?: Resolver<Maybe<ResolversTypes['Support']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type SupportResolvers<
@@ -405,5 +619,8 @@ export type Resolvers<ContextType = any> = ResolversObject<{
 	Mutation?: MutationResolvers<ContextType>;
 	ProductionCountry?: ProductionCountryResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
+	Season?: SeasonResolvers<ContextType>;
+	SerieDetails?: SerieDetailsResolvers<ContextType>;
+	SerieResponse?: SerieResponseResolvers<ContextType>;
 	Support?: SupportResolvers<ContextType>;
 }>;

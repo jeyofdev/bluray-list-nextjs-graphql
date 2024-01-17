@@ -17,6 +17,17 @@ type DetailsProductionCountries {
   name       String
 }
 
+type DetailsSeasons {
+  air_date           String
+  episode_count      Int
+  id                 Int
+  name               String
+  overview           String
+  poster_path        String
+  season_number      Int
+  vote_average       Float
+}
+
 type MoviesDetails {
   backdrop_path        String
   genres               DetailsGenres[]
@@ -32,6 +43,23 @@ type MoviesDetails {
   vote_average         Float
 }
 
+type SeriesDetail {
+  id                   Int
+  backdrop_path        String
+  first_air_date       String
+  genres               DetailsGenres[]
+  homepage             String
+  name                 String
+  number_of_episodes   Int
+  number_of_seasons    Int
+  original_language    String
+  original_name        String
+  overview             String
+  poster_path          String
+  production_countries DetailsProductionCountries[]
+  seasons              DetailsSeasons[]
+  vote_average         Float
+}
 
 type Support {
   bluray     Boolean
@@ -43,4 +71,11 @@ model movies {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
   details   MoviesDetails
   support   Support
+}
+
+model series {
+  id     String       @id @default(auto()) @map("_id") @db.ObjectId
+  details SeriesDetail
+  season Int
+  support Support
 }

@@ -11,6 +11,17 @@ const schema = gql`
 		name: String
 	}
 
+	type Season {
+		air_date: String
+		episode_count: Int
+		id: Int
+		name: String
+		overview: String
+		poster_path: String
+		season_number: Int
+		vote_average: Float
+	}
+
 	type MovieDetails {
 		id: Int
 		title: String
@@ -26,6 +37,24 @@ const schema = gql`
 		production_countries: [ProductionCountry]
 	}
 
+	type SerieDetails {
+		id: Int
+		backdrop_path: String
+		first_air_date: String
+		genres: [Genre]
+		homepage: String
+		name: String
+		number_of_episodes: Int
+		number_of_seasons: Int
+		original_language: String
+		original_name: String
+		overview: String
+		poster_path: String
+		production_countries: [ProductionCountry]
+		seasons: [Season]
+		vote_average: Float
+	}
+
 	type Support {
 		bluray: Boolean
 		bluray_hd: Boolean
@@ -38,6 +67,13 @@ const schema = gql`
 		support: Support
 	}
 
+	type SerieResponse {
+		id: ID
+		details: SerieDetails
+		season: Int
+		support: Support
+	}
+
 	input SupportInput {
 		bluray: Boolean
 		bluray_hd: Boolean
@@ -47,12 +83,22 @@ const schema = gql`
 	type Query {
 		movies: [MovieResponse]
 		movie(movieId: ID): MovieResponse
+		series: [SerieResponse]
+		serie(serieId: ID): SerieResponse
 	}
 
 	type Mutation {
 		addMovie(tmdbMovieId: Int, support: SupportInput): MovieResponse
 		updateMovie(movieId: ID, support: SupportInput): MovieResponse
 		deleteMovie(movieId: ID): MovieResponse
+
+		addSerie(
+			tmdbSerieId: Int
+			season: Int
+			support: SupportInput
+		): SerieResponse
+		updateSerie(serieId: ID, season: Int, support: SupportInput): SerieResponse
+		deleteSerie(serieId: ID): SerieResponse
 	}
 `;
 
