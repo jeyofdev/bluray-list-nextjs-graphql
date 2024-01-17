@@ -1,12 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 import MovieServices from '../services/movies.services';
 import SerieServices from '../services/series.services';
+import SearchServices from '../services/search.services';
 
 export interface IContext {
 	prisma: any;
 	dataSource: {
 		movies: MovieServices;
 		series: SerieServices;
+		search: SearchServices;
 	};
 }
 
@@ -18,6 +20,7 @@ const context: IContext = {
 	dataSource: {
 		movies: new MovieServices(),
 		series: new SerieServices(),
+		search: new SearchServices(),
 	},
 };
 

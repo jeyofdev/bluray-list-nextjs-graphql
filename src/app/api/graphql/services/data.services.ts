@@ -33,6 +33,20 @@ class DataServices extends RESTDataSource {
 			}),
 		);
 	}
+
+	/**
+	 * Search movie or serie
+	 */
+	async searchItems(type: 'movie' | 'tv', args: any): Promise<any> {
+		return this.get(
+			formatUrlQuery(`${this.baseURL}/search/${type}`, this.apiKey, '', {
+				query: args?.searchOptions?.query?.split(' ').join('+'),
+				page: args?.searchOptions?.page ?? 1,
+				language: 'fr-FR',
+				region: 'fr',
+			}),
+		);
+	}
 }
 
 export default DataServices;
