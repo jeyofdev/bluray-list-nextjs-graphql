@@ -95,6 +95,7 @@ const schema = gql`
 			season: Int
 			support: SupportInput
 		): SerieResponse
+		updateSerie(serieId: ID, season: Int, support: SupportInput): SerieResponse
 	}
 `;
 

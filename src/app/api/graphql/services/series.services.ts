@@ -1,5 +1,6 @@
 import {
 	MutationAddSerieArgs,
+	MutationUpdateSerieArgs,
 	SerieDetails,
 	SerieResponse,
 } from '../__generated__/resolvers-types';
@@ -47,6 +48,29 @@ class SerieServices extends DataServices {
 					bluray_hd: args.support?.bluray_hd,
 					dvd: args.support?.dvd,
 				},
+			},
+		});
+	}
+
+	/**
+	 * update serie data by Id
+	 */
+	async updateById(
+		ctx: IContext,
+		args: MutationUpdateSerieArgs,
+	): Promise<SerieResponse> {
+		const { serieId } = args;
+
+		const serieToUpdate = await ctx.prisma.series.findUnique({
+			where: { id: serieId },
+		});
+
+		return ctx.prisma.series.update({
+			where: { id: serieId },
+			data: {
+				details: serieToUpdate.details,
+				season: args.season ?? serieToUpdate.season,
+				support: args.support ?? serieToUpdate.support,
 			},
 		});
 	}

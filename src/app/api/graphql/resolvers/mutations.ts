@@ -4,6 +4,7 @@ import {
 	MutationDeleteMovieArgs,
 	MutationResolvers,
 	MutationUpdateMovieArgs,
+	MutationUpdateSerieArgs,
 } from '../__generated__/resolvers-types';
 import { IContext } from '../context';
 
@@ -30,6 +31,14 @@ const mutations: MutationResolvers = {
 
 	addSerie: async (_: never, args: MutationAddSerieArgs, ctx: IContext) => {
 		return ctx.dataSource.series.add(ctx, args);
+	},
+
+	updateSerie: async (
+		_: never,
+		args: MutationUpdateSerieArgs,
+		ctx: IContext,
+	) => {
+		return ctx.dataSource.series.updateById(ctx, args);
 	},
 };
 
