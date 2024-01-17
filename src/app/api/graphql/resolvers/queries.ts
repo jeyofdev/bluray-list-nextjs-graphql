@@ -1,4 +1,7 @@
-import { QueryMovieArgs } from '../__generated__/resolvers-types';
+import {
+	QueryMovieArgs,
+	QuerySerieArgs,
+} from '../__generated__/resolvers-types';
 import { IContext } from '../context';
 
 const queries = {
@@ -7,6 +10,12 @@ const queries = {
 	},
 	movie: (_: never, args: QueryMovieArgs, ctx: IContext) => {
 		return ctx.dataSource.movies.findById(ctx, args);
+	},
+	series: (_: never, __: never, ctx: IContext) => {
+		return ctx.dataSource.series.findAll(ctx);
+	},
+	serie: (_: never, args: QuerySerieArgs, ctx: IContext) => {
+		return ctx.dataSource.series.findById(ctx, args);
 	},
 };
 

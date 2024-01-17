@@ -83,6 +83,8 @@ const schema = gql`
 	type Query {
 		movies: [MovieResponse]
 		movie(movieId: ID): MovieResponse
+		series: [SerieResponse]
+		serie(serieId: ID): SerieResponse
 	}
 
 	type Mutation {

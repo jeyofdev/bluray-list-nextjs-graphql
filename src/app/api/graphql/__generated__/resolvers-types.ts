@@ -107,10 +107,16 @@ export type Query = {
 	__typename?: 'Query';
 	movie?: Maybe<MovieResponse>;
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
+	serie?: Maybe<SerieResponse>;
+	series?: Maybe<Array<Maybe<SerieResponse>>>;
 };
 
 export type QueryMovieArgs = {
 	movieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QuerySerieArgs = {
+	serieId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type Season = {
@@ -460,6 +466,17 @@ export type QueryResolvers<
 	>;
 	movies?: Resolver<
 		Maybe<Array<Maybe<ResolversTypes['MovieResponse']>>>,
+		ParentType,
+		ContextType
+	>;
+	serie?: Resolver<
+		Maybe<ResolversTypes['SerieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<QuerySerieArgs>
+	>;
+	series?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes['SerieResponse']>>>,
 		ParentType,
 		ContextType
 	>;

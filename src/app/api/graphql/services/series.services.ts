@@ -2,6 +2,7 @@ import {
 	MutationAddSerieArgs,
 	MutationDeleteSerieArgs,
 	MutationUpdateSerieArgs,
+	QuerySerieArgs,
 	SerieDetails,
 	SerieResponse,
 } from '../__generated__/resolvers-types';
@@ -9,6 +10,24 @@ import { IContext } from '../context';
 import DataServices from './data.services';
 
 class SerieServices extends DataServices {
+	/**
+	 * Get all series
+	 */
+	async findAll(ctx: IContext): Promise<SerieResponse[]> {
+		return ctx.prisma.series.findMany();
+	}
+
+	/**
+	 * Get serie by ID
+	 */
+	async findById(ctx: IContext, args: QuerySerieArgs): Promise<SerieResponse> {
+		const { serieId } = args;
+
+		return ctx.prisma.series.findUnique({
+			where: { id: serieId },
+		});
+	}
+
 	/**
 	 * Add new serie
 	 */
