@@ -62,6 +62,7 @@ export type Mutation = {
 	addMovie?: Maybe<MovieResponse>;
 	addSerie?: Maybe<SerieResponse>;
 	deleteMovie?: Maybe<MovieResponse>;
+	deleteSerie?: Maybe<SerieResponse>;
 	updateMovie?: Maybe<MovieResponse>;
 	updateSerie?: Maybe<SerieResponse>;
 };
@@ -79,6 +80,10 @@ export type MutationAddSerieArgs = {
 
 export type MutationDeleteMovieArgs = {
 	movieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type MutationDeleteSerieArgs = {
+	serieId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type MutationUpdateMovieArgs = {
@@ -407,6 +412,12 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		Partial<MutationDeleteMovieArgs>
+	>;
+	deleteSerie?: Resolver<
+		Maybe<ResolversTypes['SerieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<MutationDeleteSerieArgs>
 	>;
 	updateMovie?: Resolver<
 		Maybe<ResolversTypes['MovieResponse']>,

@@ -96,6 +96,7 @@ const schema = gql`
 			support: SupportInput
 		): SerieResponse
 		updateSerie(serieId: ID, season: Int, support: SupportInput): SerieResponse
+		deleteSerie(serieId: ID): SerieResponse
 	}
 `;
 

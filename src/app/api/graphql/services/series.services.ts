@@ -1,5 +1,6 @@
 import {
 	MutationAddSerieArgs,
+	MutationDeleteSerieArgs,
 	MutationUpdateSerieArgs,
 	SerieDetails,
 	SerieResponse,
@@ -72,6 +73,20 @@ class SerieServices extends DataServices {
 				season: args.season ?? serieToUpdate.season,
 				support: args.support ?? serieToUpdate.support,
 			},
+		});
+	}
+
+	/**
+	 * Delete serie by ID
+	 */
+	async deleteById(
+		ctx: IContext,
+		args: MutationDeleteSerieArgs,
+	): Promise<SerieResponse> {
+		const { serieId } = args;
+
+		return ctx.prisma.series.delete({
+			where: { id: serieId },
 		});
 	}
 }

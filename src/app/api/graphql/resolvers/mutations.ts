@@ -2,6 +2,7 @@ import {
 	MutationAddMovieArgs,
 	MutationAddSerieArgs,
 	MutationDeleteMovieArgs,
+	MutationDeleteSerieArgs,
 	MutationResolvers,
 	MutationUpdateMovieArgs,
 	MutationUpdateSerieArgs,
@@ -39,6 +40,10 @@ const mutations: MutationResolvers = {
 		ctx: IContext,
 	) => {
 		return ctx.dataSource.series.updateById(ctx, args);
+	},
+
+	deleteSerie: (_: never, args: MutationDeleteSerieArgs, ctx: IContext) => {
+		return ctx.dataSource.series.deleteById(ctx, args);
 	},
 };
 
