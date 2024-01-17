@@ -1,5 +1,10 @@
 import { RESTDataSource } from '@apollo/datasource-rest';
-import { MovieDetails, SerieDetails } from '../__generated__/resolvers-types';
+import {
+	MovieDetails,
+	SearchMovieResponse,
+	SearchSerieResponse,
+	SerieDetails,
+} from '../__generated__/resolvers-types';
 import { formatUrlQuery } from '../utils';
 
 class DataServices extends RESTDataSource {

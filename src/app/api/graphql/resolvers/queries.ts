@@ -17,6 +17,12 @@ const queries = {
 	serie: (_: never, args: QuerySerieArgs, ctx: IContext) => {
 		return ctx.dataSource.series.findById(ctx, args);
 	},
+	searchMovies: (_: never, args: any, ctx: IContext) => {
+		return ctx.dataSource.search.searchByName('movie', args);
+	},
+	searchSeries: (_: never, args: any, ctx: IContext) => {
+		return ctx.dataSource.search.searchByName('tv', args);
+	},
 };
 
 export default queries;
