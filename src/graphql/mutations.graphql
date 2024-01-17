@@ -1,0 +1,30 @@
+query Movies {
+	movies {
+		id
+		details {
+			id
+			title
+			original_title
+			homepage
+			genres {
+				id
+				name
+			}
+			original_language
+			backdrop_path
+			overview
+			poster_path
+			production_countries {
+				iso_3166_1
+				name
+			}
+			release_date
+			vote_average
+		}
+		support {
+			bluray
+			bluray_hd
+			dvd
+		}
+	}
+}
