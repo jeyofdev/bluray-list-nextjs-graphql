@@ -4,6 +4,7 @@ import { CssBaseline } from '@mui/material';
 import '@styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import MainContainer from '../components/containers/MainContainer';
 import { ChildrenType } from '../types';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -23,7 +24,10 @@ const RootLayout = ({ children }: RootLayoutPropsType) => {
 			<RootComponent>
 				<CssBaseline />
 				<body className={`${inter.className} bg-gray-50`}>
-					<ApolloWrapper>{children}</ApolloWrapper>
+					<ApolloWrapper>
+						<header className='py-8'>header</header>
+						<MainContainer>{children}</MainContainer>
+					</ApolloWrapper>
 				</body>
 			</RootComponent>
 		</html>
