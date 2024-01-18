@@ -1,5 +1,6 @@
 import RootComponent from '@components/RootComponent';
 import ApolloWrapper from '@components/apollo/ApolloWrapper';
+import Header from '@components/navigation/Header';
 import { CssBaseline } from '@mui/material';
 import '@styles/globals.css';
 import type { Metadata } from 'next';
@@ -25,7 +26,7 @@ const RootLayout = ({ children }: RootLayoutPropsType) => {
 				<CssBaseline />
 				<body className={`${inter.className} bg-gray-50`}>
 					<ApolloWrapper>
-						<header className='py-8'>header</header>
+						<Header />
 						<MainContainer>{children}</MainContainer>
 					</ApolloWrapper>
 				</body>
