@@ -1,9 +1,9 @@
 import { ApolloNextAppProvider } from '@apollo/experimental-nextjs-app-support/ssr';
 import { makeClient } from '@config/apollo-client';
-import { ReactNode } from 'react';
+import { ChildrenType } from '../../types';
 
 type ApolloWrapperPropsType = {
-	children: ReactNode;
+	children: ChildrenType;
 };
 const ApolloWrapper = ({ children }: ApolloWrapperPropsType) => {
 	return (

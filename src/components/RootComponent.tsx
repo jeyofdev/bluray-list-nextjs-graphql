@@ -3,10 +3,10 @@
 import { ThemeProvider } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { darkTheme } from '@theme/globalTheme';
-import { ReactNode } from 'react';
+import { ChildrenType } from '../types';
 
 type RootComponentPropsType = {
-	children: ReactNode;
+	children: ChildrenType;
 };
 
 const RootComponent = ({ children }: RootComponentPropsType) => {

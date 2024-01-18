@@ -4,7 +4,7 @@ import { CssBaseline } from '@mui/material';
 import '@styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ReactNode } from 'react';
+import { ChildrenType } from '../types';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 type RootLayoutPropsType = {
-	children: ReactNode;
+	children: ChildrenType;
 };
 
 const RootLayout = ({ children }: RootLayoutPropsType) => {
