@@ -1,5 +1,6 @@
 'use client';
 
+import Logo from '@components/ui/Logo';
 import { pages } from '@datas/index';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -96,12 +97,12 @@ const Header = () => {
 							</Box>
 						</SwipeableDrawer>
 
-						<p>logo</p>
+						<Logo variant='h6' />
 						<Box />
 					</Box>
 
 					<Box className='hidden md:flex md:gap-14'>
-						<p>logo</p>
+						<Logo variant='h6' />
 
 						<Box className='flex'>
 							{pages.map((page: PageType) => (
