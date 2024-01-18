@@ -2,8 +2,8 @@
 
 import { ThemeProvider } from '@mui/material';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { darkTheme } from '@theme/globalTheme';
 import { ReactNode } from 'react';
-import { darkTheme } from '../theme/globalTheme';
 
 type RootComponentPropsType = {
 	children: ReactNode;

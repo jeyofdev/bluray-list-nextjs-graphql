@@ -1,9 +1,10 @@
+import RootComponent from '@components/RootComponent';
+import ApolloWrapper from '@components/apollo/ApolloWrapper';
 import { CssBaseline } from '@mui/material';
 import '@styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
-import RootComponent from '../components/RootComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +22,9 @@ const RootLayout = ({ children }: RootLayoutPropsType) => {
 		<html lang='en'>
 			<RootComponent>
 				<CssBaseline />
-				<body className={`${inter.className} bg-gray-50`}>{children}</body>
+				<body className={`${inter.className} bg-gray-50`}>
+					<ApolloWrapper>{children}</ApolloWrapper>
+				</body>
 			</RootComponent>
 		</html>
 	);
