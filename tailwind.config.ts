@@ -4,7 +4,7 @@ const config: Config = {
 	corePlugins: {
 		preflight: false,
 	},
-	content: ['./src/**/*.{js,ts,tsx}'],
+	content: ['./src/**/*.{ts,tsx}'],
 	theme: {
 		extend: {},
 	},
