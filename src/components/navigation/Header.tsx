@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {
 	AppBar,
 	Box,
+	Button,
 	Container,
 	Divider,
 	IconButton,
@@ -97,6 +98,30 @@ const Header = () => {
 
 						<p>logo</p>
 						<Box />
+					</Box>
+
+					<Box className='hidden md:flex md:gap-14'>
+						<p>logo</p>
+
+						<Box className='flex'>
+							{pages.map((page: PageType) => (
+								<Box
+									key={page.id}
+									className='border-0 border-r border-solid border-gray-500 px-6 py-2.5 first:border-l'
+								>
+									<Link href={page.path} passHref legacyBehavior>
+										<Button
+											key={page.id}
+											classes={{
+												root: 'p-0 rounded-none text-gray-50 text-base',
+											}}
+										>
+											{page.label}
+										</Button>
+									</Link>
+								</Box>
+							))}
+						</Box>
 					</Box>
 				</Toolbar>
 			</Container>
