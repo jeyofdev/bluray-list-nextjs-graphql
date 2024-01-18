@@ -1,0 +1,30 @@
+mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
+	addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
+		id
+		details {
+			backdrop_path
+			genres {
+				id
+				name
+			}
+			homepage
+			id
+			original_language
+			original_title
+			overview
+			poster_path
+			production_countries {
+				iso_3166_1
+				name
+			}
+			release_date
+			title
+			vote_average
+		}
+		support {
+			bluray
+			bluray_hd
+			dvd
+		}
+	}
+}

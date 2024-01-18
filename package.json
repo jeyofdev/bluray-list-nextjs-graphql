@@ -8,13 +8,21 @@
 		"start": "next start",
 		"lint": "next lint src js,ts,tsx --no-ignore --max-warnings 0",
 		"prepare": "husky install",
-		"codegen:api": "graphql-codegen --config src/app/api/graphql/codegen.ts"
+		"codegen:api": "graphql-codegen --config src/app/api/graphql/codegen.ts",
+		"codegen:client": "graphql-codegen --config codegen.ts"
 	},
 	"dependencies": {
+		"@apollo/client": "^3.8.9",
 		"@apollo/datasource-rest": "^6.2.2",
+		"@apollo/experimental-nextjs-app-support": "^0.6.0",
 		"@apollo/server": "^4.10.0",
 		"@as-integrations/next": "^3.0.0",
+		"@emotion/react": "^11.11.3",
+		"@emotion/styled": "^11.11.0",
+		"@mui/icons-material": "^5.14.5",
+		"@mui/material": "^5.15.3",
 		"@prisma/client": "^5.8.1",
+		"@prisma/nextjs-monorepo-workaround-plugin": "^5.8.1",
 		"graphql": "^16.8.1",
 		"graphql-tag": "^2.12.6",
 		"next": "14.0.4",
@@ -23,8 +31,11 @@
 	},
 	"devDependencies": {
 		"@graphql-codegen/cli": "5.0.0",
+		"@graphql-codegen/client-preset": "4.1.0",
 		"@graphql-codegen/introspection": "4.0.0",
-		"@graphql-codegen/typescript": "4.0.1",
+		"@graphql-codegen/typescript": "^4.0.1",
+		"@graphql-codegen/typescript-operations": "^4.0.1",
+		"@graphql-codegen/typescript-react-apollo": "^4.1.0",
 		"@graphql-codegen/typescript-resolvers": "4.0.1",
 		"@types/node": "^20",
 		"@types/react": "^18",
@@ -33,12 +44,13 @@
 		"eslint": "^8",
 		"eslint-config-next": "14.0.4",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-tailwindcss": "^3.14.0",
 		"husky": "^8.0.3",
 		"lint-staged": "^15.2.0",
 		"postcss": "^8",
 		"prettier": "^3.2.2",
 		"tailwindcss": "^3.3.0",
-		"typescript": "^5"
+		"typescript": "^5.3.3"
 	},
 	"lint-staged": {
 		"*.{js,ts,tsx,jsx}": [

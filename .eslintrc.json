@@ -1,5 +1,15 @@
 {
-	"extends": ["next", "prettier"],
+	"extends": [
+		"next/core-web-vitals",
+		"plugin:tailwindcss/recommended",
+		"prettier"
+	],
+	"settings": {
+		"tailwindcss": {
+			"config": "tailwind.config.js",
+			"removeDuplicates": true
+		}
+	},
 	"rules": {
 		"no-console": "warn"
 	}

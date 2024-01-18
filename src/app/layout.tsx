@@ -1,7 +1,10 @@
+import RootComponent from '@components/RootComponent';
+import ApolloWrapper from '@components/apollo/ApolloWrapper';
+import { CssBaseline } from '@mui/material';
 import '@styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ReactNode } from 'react';
+import { ChildrenType } from '../types';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -11,13 +14,18 @@ export const metadata: Metadata = {
 };
 
 type RootLayoutPropsType = {
-	children: ReactNode;
+	children: ChildrenType;
 };
 
 const RootLayout = ({ children }: RootLayoutPropsType) => {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>{children}</body>
+			<RootComponent>
+				<CssBaseline />
+				<body className={`${inter.className} bg-gray-50`}>
+					<ApolloWrapper>{children}</ApolloWrapper>
+				</body>
+			</RootComponent>
 		</html>
 	);
 };
