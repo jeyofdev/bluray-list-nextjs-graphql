@@ -4,6 +4,8 @@ import tailwindConfigModule from '../../tailwind.config';
 
 const tailwindConfig = resolveConfig(tailwindConfigModule) as any;
 
+console.log(tailwindConfig.theme);
+
 const theme = createTheme({
 	breakpoints: {
 		values: {
@@ -108,6 +110,137 @@ export const darkTheme = createTheme({
 			focus: 'rgba(0, 0, 0, 0.12)',
 			focusOpacity: 0.12,
 			activatedOpacity: 0.12,
+		},
+	},
+	shape: {
+		borderRadius: 5,
+	},
+	mixins: {
+		toolbar: {
+			minHeight: 'auto',
+			'@media (min-width:0px)': {
+				'@media (orientation: landscape)': {
+					minHeight: 'auto',
+				},
+
+				'@media (min-width:600px)': {
+					minHeight: 'auto',
+				},
+			},
+		},
+	},
+	typography: {
+		htmlFontSize: tailwindConfig.theme.fontSize.base[0],
+		fontFamily: tailwindConfig.theme.fontFamily.sans,
+		fontSize: tailwindConfig.theme.fontSize.sm[0],
+		fontWeightLight: tailwindConfig.theme.fontWeight.light,
+		fontWeightRegular: tailwindConfig.theme.fontWeight.normal,
+		fontWeightMedium: tailwindConfig.theme.fontWeight.medium,
+		fontWeightBold: tailwindConfig.theme.fontWeight.bold,
+
+		h1: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.light,
+			fontSize: tailwindConfig.theme.fontSize['h1'],
+			lineHeight: tailwindConfig.theme.lineHeight['h1'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['h1'],
+		},
+
+		h2: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.light,
+			fontSize: tailwindConfig.theme.fontSize['h2'],
+			lineHeight: tailwindConfig.theme.lineHeight['h2'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['h2'],
+		},
+
+		h3: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontSize: tailwindConfig.theme.fontSize['h3'],
+			lineHeight: tailwindConfig.theme.lineHeight['h3'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['h3'],
+		},
+
+		h4: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontSize: tailwindConfig.theme.fontSize['h4'],
+			lineHeight: tailwindConfig.theme.lineHeight['h4'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['h4'],
+		},
+
+		h5: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontSize: tailwindConfig.theme.fontSize['h5'],
+			lineHeight: tailwindConfig.theme.lineHeight['h5'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['h5'],
+		},
+
+		h6: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.medium,
+			fontSize: tailwindConfig.theme.fontSize['h6'],
+			lineHeight: tailwindConfig.theme.lineHeight['h6'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['h6'],
+		},
+
+		subtitle1: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontSize: tailwindConfig.theme.fontSize.base[0],
+			lineHeight: tailwindConfig.theme.lineHeight['subtitle1'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['subtitle1'],
+		},
+
+		subtitle2: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.medium,
+			fontSize: tailwindConfig.theme.fontSize.sm[0],
+			lineHeight: tailwindConfig.theme.lineHeight['subtitle2'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['subtitle2'],
+		},
+
+		body1: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontSize: tailwindConfig.theme.fontSize.base[0],
+			lineHeight: tailwindConfig.theme.lineHeight['body1'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['body1'],
+		},
+
+		body2: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontSize: tailwindConfig.theme.fontSize.sm[0],
+			lineHeight: tailwindConfig.theme.lineHeight['body2'],
+			letterSpacing: tailwindConfig.theme.letterSpacing['body2'],
+		},
+
+		button: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.medium,
+			fontSize: tailwindConfig.theme.fontSize.sm[0],
+			lineHeight: tailwindConfig.theme.lineHeight.button,
+			letterSpacing: tailwindConfig.theme.letterSpacing.button,
+			textTransform: 'uppercase',
+		},
+
+		caption: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontSize: tailwindConfig.theme.fontSize.xs[0],
+			lineHeight: tailwindConfig.theme.lineHeight.caption,
+			letterSpacing: tailwindConfig.theme.letterSpacing.caption,
+		},
+		overline: {
+			fontFamily: tailwindConfig.theme.fontFamily.sans,
+			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontSize: tailwindConfig.theme.fontSize.xs[0],
+			lineHeight: tailwindConfig.theme.lineHeight.overline,
+			letterSpacing: tailwindConfig.theme.letterSpacing.overline,
+			textTransform: 'uppercase',
 		},
 	},
 });

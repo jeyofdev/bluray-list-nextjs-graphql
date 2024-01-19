@@ -13,7 +13,47 @@ const config: Config = {
 			xl: '1920px',
 		},
 
+		letterSpacing: {
+			h1: '-0.01562em',
+			h2: '-0.00833em',
+			h3: '0em',
+			h4: '0.00735em',
+			h5: '0em',
+			h6: '0.0075em',
+			subtitle1: '0.00938em',
+			subtitle2: '0.00714em',
+			body1: '0.00938em',
+			body2: '0.01071em',
+			button: '0.02857em',
+			caption: '0.03333em',
+			overline: '0.08333em',
+		},
 		extend: {
+			fontFamily: {
+				sans: 'Roboto, Helvetica, Arial, sans-serif',
+			},
+			fontSize: {
+				h1: '6rem',
+				h2: '3.75rem',
+				h3: '3rem',
+				h4: '2.125rem',
+				h5: '1.5rem',
+				h6: '1.25rem',
+			},
+			lineHeight: {
+				h1: '1.167',
+				h2: '1.2',
+				h3: '1.167',
+				h4: '1.235',
+				h5: '1.334',
+				subtitle1: '1.75',
+				subtitle2: '1.57',
+				body1: '1.5',
+				body2: '1.43',
+				button: '1.75',
+				caption: '1.66',
+				overline: '2.66',
+			},
 			colors: {
 				primary: {
 					50: '#f8fafc',

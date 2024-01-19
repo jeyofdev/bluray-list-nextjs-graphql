@@ -25,6 +25,8 @@ const SeriesPage = () => {
 			>
 				ok
 			</Button>
+
+			<Typography variant='subtitle2'>ok</Typography>
 		</ContentContainer>
 	);
 };
