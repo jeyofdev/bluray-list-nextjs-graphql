@@ -1,16 +1,17 @@
-mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
-	addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
+query Movies {
+	movies {
 		id
 		details {
-			backdrop_path
+			id
+			title
+			original_title
+			homepage
 			genres {
 				id
 				name
 			}
-			homepage
-			id
 			original_language
-			original_title
+			backdrop_path
 			overview
 			poster_path
 			production_countries {
@@ -18,7 +19,6 @@ mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
 				name
 			}
 			release_date
-			title
 			vote_average
 		}
 		support {

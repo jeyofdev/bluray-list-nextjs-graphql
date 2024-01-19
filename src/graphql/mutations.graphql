@@ -1,30 +1,27 @@
-query Movies {
-	movies {
-		id
-		details {
+query SearchMovies($searchOptions: SearchOptionsInput) {
+	searchMovies(searchOptions: $searchOptions) {
+		page
+		results {
 			id
 			title
 			original_title
 			homepage
+			overview
+			backdrop_path
+			poster_path
 			genres {
 				id
 				name
 			}
 			original_language
-			backdrop_path
-			overview
-			poster_path
+			release_date
+			vote_average
 			production_countries {
 				iso_3166_1
 				name
 			}
-			release_date
-			vote_average
 		}
-		support {
-			bluray
-			bluray_hd
-			dvd
-		}
+		total_pages
+		total_results
 	}
 }

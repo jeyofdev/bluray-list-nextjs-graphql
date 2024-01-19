@@ -1,14 +1,45 @@
 'use client';
 
 import ContentContainer from '@components/containers/ContentContainer';
-import { Typography } from '@mui/material';
+import { ButtonAction } from '@components/ui/buttons/ButtonAction';
+import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
+import { useMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
+import AddIcon from '@mui/icons-material/Add';
+import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
 
 const MoviesPage = () => {
+	const [showSearchModal, setshowSearchModal] = useState<boolean>(false);
+
+	const { data } = useMoviesSuspenseQuery({
+		fetchPolicy: 'cache-and-network',
+	});
+
+	const handleOpenSearchModal = () => {
+		setshowSearchModal(true);
+	};
+
+	const handleCloseSearchModal = () => {
+		setshowSearchModal(false);
+	};
+
 	return (
 		<ContentContainer>
 			<Typography variant='h4' component='h1' className='text-center'>
 				Movies
 			</Typography>
+
+			<Box className='mt-4 flex justify-center'>
+				<ButtonAction
+					icon={<AddIcon className='size-6' />}
+					onClick={handleOpenSearchModal}
+				/>
+			</Box>
+
+			<SearchMovieModal
+				open={showSearchModal}
+				onClose={handleCloseSearchModal}
+			/>
 		</ContentContainer>
 	);
 };
