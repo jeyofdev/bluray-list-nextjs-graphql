@@ -2,7 +2,7 @@
 
 import ContentContainer from '@components/containers/ContentContainer';
 import { ButtonAction } from '@components/ui/buttons/ButtonAction';
-import { Modal } from '@components/ui/modal/Modal';
+import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -31,7 +31,10 @@ const MoviesPage = () => {
 				/>
 			</Box>
 
-			<Modal open={showSearchModal} onClose={handleCloseSearchModal} />
+			<SearchMovieModal
+				open={showSearchModal}
+				onClose={handleCloseSearchModal}
+			/>
 		</ContentContainer>
 	);
 };

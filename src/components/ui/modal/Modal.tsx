@@ -1,19 +1,15 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import {
-	Box,
-	Container,
-	IconButton,
-	Modal as ModalMui,
-	Typography,
-} from '@mui/material';
+import { Box, Container, IconButton, Modal, Typography } from '@mui/material';
 
-type ModalPropsType = {
+export type SearchModalPropsType = {
 	open: boolean;
 	onClose: () => void;
+	title: string;
 };
-export const Modal = ({ open, onClose }: ModalPropsType) => {
+
+const SearchModal = ({ open, onClose, title }: SearchModalPropsType) => {
 	return (
-		<ModalMui open={open}>
+		<Modal open={open}>
 			<Box className='absolute left-1/2 top-1/2 h-screen w-full -translate-x-1/2 -translate-y-1/2 bg-primary-50'>
 				<Container
 					maxWidth='lg'
@@ -37,11 +33,13 @@ export const Modal = ({ open, onClose }: ModalPropsType) => {
 							variant='h6'
 							className='text-primary-300'
 						>
-							Search movie
+							{title}
 						</Typography>
 					</Box>
 				</Container>
 			</Box>
-		</ModalMui>
+		</Modal>
 	);
 };
+
+export default SearchModal;
