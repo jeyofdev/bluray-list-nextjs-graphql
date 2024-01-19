@@ -24,7 +24,7 @@ const RootLayout = ({ children }: RootLayoutPropsType) => {
 		<html lang='en'>
 			<RootComponent>
 				<CssBaseline />
-				<body className={`${inter.className} bg-gray-50`}>
+				<body className={`${inter.className} bg-slate-50`}>
 					<ApolloWrapper>
 						<Header />
 						<MainContainer>{children}</MainContainer>

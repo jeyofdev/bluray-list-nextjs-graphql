@@ -16,7 +16,7 @@ const Logo = ({ variant }: LogoType) => {
 					variant={variant}
 					noWrap
 					classes={{
-						root: 'no-underline text-gray-50 text-md tracking-normal font-bold font-mono cursor-pointer',
+						root: 'no-underline text-primary-50 text-md tracking-normal font-bold font-mono cursor-pointer',
 					}}
 				>
 					Bluray List

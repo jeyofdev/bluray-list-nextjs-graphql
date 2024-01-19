@@ -1,15 +1,14 @@
 'use client';
 
 import ContentContainer from '@components/containers/ContentContainer';
-import { Typography } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 
 const SeriesPage = () => {
+	const theme = useTheme();
+
 	return (
 		<ContentContainer>
-			<Typography
-				variant='h4'
-				className='text-center text-5xl font-bold md:text-6xl'
-			>
+			<Typography variant='h4' component='h1' className='text-center'>
 				Series
 			</Typography>
 		</ContentContainer>
