@@ -6,10 +6,7 @@ import { Typography } from '@mui/material';
 const MoviesPage = () => {
 	return (
 		<ContentContainer>
-			<Typography
-				variant='h4'
-				className='text-center text-5xl font-bold md:text-6xl'
-			>
+			<Typography variant='h4' component='h1' className='text-center'>
 				Movies
 			</Typography>
 		</ContentContainer>

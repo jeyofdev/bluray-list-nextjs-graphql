@@ -4,8 +4,6 @@ import tailwindConfigModule from '../../tailwind.config';
 
 const tailwindConfig = resolveConfig(tailwindConfigModule) as any;
 
-console.log(tailwindConfig.theme);
-
 const theme = createTheme({
 	breakpoints: {
 		values: {
@@ -89,7 +87,7 @@ export const darkTheme = createTheme({
 			900: tailwindConfig.theme.colors.gray['900'],
 		},
 		background: {
-			paper: tailwindConfig.theme.colors.slate['50'],
+			paper: tailwindConfig.theme.colors.slate['100'],
 			default: tailwindConfig.theme.colors.slate['50'],
 		},
 		text: {
@@ -130,9 +128,9 @@ export const darkTheme = createTheme({
 		},
 	},
 	typography: {
-		htmlFontSize: tailwindConfig.theme.fontSize.base[0],
+		htmlFontSize: Number(tailwindConfig.theme.fontSize.base[0].slice(0, -2)),
 		fontFamily: tailwindConfig.theme.fontFamily.sans,
-		fontSize: tailwindConfig.theme.fontSize.sm[0],
+		fontSize: Number(tailwindConfig.theme.fontSize.sm[0].slice(0, -2)),
 		fontWeightLight: tailwindConfig.theme.fontWeight.light,
 		fontWeightRegular: tailwindConfig.theme.fontWeight.normal,
 		fontWeightMedium: tailwindConfig.theme.fontWeight.medium,
@@ -164,10 +162,14 @@ export const darkTheme = createTheme({
 
 		h4: {
 			fontFamily: tailwindConfig.theme.fontFamily.sans,
-			fontWeight: tailwindConfig.theme.fontWeight.normal,
+			fontWeight: tailwindConfig.theme.fontWeight.bold,
 			fontSize: tailwindConfig.theme.fontSize['h4'],
 			lineHeight: tailwindConfig.theme.lineHeight['h4'],
 			letterSpacing: tailwindConfig.theme.letterSpacing['h4'],
+
+			[theme.breakpoints.up('md')]: {
+				fontSize: tailwindConfig.theme.fontSize['5xl'],
+			},
 		},
 
 		h5: {
