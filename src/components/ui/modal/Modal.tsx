@@ -1,7 +1,8 @@
+import SearchTextField from '@components/ui/form/SearchTextField';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Box, Container, IconButton, Modal, Typography } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
-import SearchTextField from '../form/SearchTextField';
+import { ChildrenType } from '../../../types';
 
 export type SearchModalPropsType = {
 	open: boolean;
@@ -9,6 +10,8 @@ export type SearchModalPropsType = {
 	title: string;
 	search: string;
 	setSearch: Dispatch<SetStateAction<string>>;
+	setSearchQuery: Dispatch<SetStateAction<string>>;
+	children: ChildrenType;
 };
 
 const SearchModal = ({
@@ -17,6 +20,8 @@ const SearchModal = ({
 	title,
 	search,
 	setSearch,
+	setSearchQuery,
+	children,
 }: SearchModalPropsType) => {
 	return (
 		<Modal open={open}>
@@ -46,7 +51,13 @@ const SearchModal = ({
 							{title}
 						</Typography>
 
-						<SearchTextField search={search} setSearch={setSearch} />
+						<SearchTextField
+							search={search}
+							setSearch={setSearch}
+							setSearchQuery={setSearchQuery}
+						/>
+
+						{children}
 					</Box>
 				</Container>
 			</Box>

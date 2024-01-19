@@ -3,12 +3,17 @@
 import ContentContainer from '@components/containers/ContentContainer';
 import { ButtonAction } from '@components/ui/buttons/ButtonAction';
 import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
+import { useMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 
 const MoviesPage = () => {
 	const [showSearchModal, setshowSearchModal] = useState<boolean>(false);
+
+	const { data } = useMoviesSuspenseQuery({
+		fetchPolicy: 'cache-and-network',
+	});
 
 	const handleOpenSearchModal = () => {
 		setshowSearchModal(true);

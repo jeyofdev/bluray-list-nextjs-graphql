@@ -4,17 +4,25 @@ import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction } from 'react';
 export type SearchTextFieldPropsType = {
 	search: string;
 	setSearch: Dispatch<SetStateAction<string>>;
+	setSearchQuery: Dispatch<SetStateAction<string>>;
 };
 
-const SearchTextField = ({ search, setSearch }: SearchTextFieldPropsType) => {
+const SearchTextField = ({
+	search,
+	setSearch,
+	setSearchQuery,
+}: SearchTextFieldPropsType) => {
 	const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearch(e.target.value);
 	};
 
+	const handleSearchQuery = () => {
+		setSearchQuery(search);
+	};
+
 	const onKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.code === 'Enter' && search.length > 0) {
-			// eslint-disable-next-line no-console
-			console.log('ok', search);
+			handleSearchQuery();
 		}
 	};
 

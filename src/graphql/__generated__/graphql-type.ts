@@ -204,6 +204,43 @@ export type SupportInput = {
 	dvd?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type SearchMoviesQueryVariables = Exact<{
+	searchOptions?: InputMaybe<SearchOptionsInput>;
+}>;
+
+export type SearchMoviesQuery = {
+	__typename?: 'Query';
+	searchMovies?: {
+		__typename?: 'SearchMovieResponse';
+		page: number;
+		total_pages: number;
+		total_results: number;
+		results: Array<{
+			__typename?: 'MovieDetails';
+			id?: number | null;
+			title?: string | null;
+			original_title?: string | null;
+			homepage?: string | null;
+			overview?: string | null;
+			backdrop_path?: string | null;
+			poster_path?: string | null;
+			original_language?: string | null;
+			release_date?: string | null;
+			vote_average?: number | null;
+			genres?: Array<{
+				__typename?: 'Genre';
+				id?: number | null;
+				name?: string | null;
+			} | null> | null;
+			production_countries?: Array<{
+				__typename?: 'ProductionCountry';
+				iso_3166_1?: string | null;
+				name?: string | null;
+			} | null> | null;
+		} | null>;
+	} | null;
+};
+
 export type MoviesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MoviesQuery = {
@@ -243,48 +280,101 @@ export type MoviesQuery = {
 	} | null> | null;
 };
 
-export type AddMovieMutationVariables = Exact<{
-	tmdbMovieId?: InputMaybe<Scalars['Int']['input']>;
-	support?: InputMaybe<SupportInput>;
-}>;
+export const SearchMoviesDocument = gql`
+	query SearchMovies($searchOptions: SearchOptionsInput) {
+		searchMovies(searchOptions: $searchOptions) {
+			page
+			results {
+				id
+				title
+				original_title
+				homepage
+				overview
+				backdrop_path
+				poster_path
+				genres {
+					id
+					name
+				}
+				original_language
+				release_date
+				vote_average
+				production_countries {
+					iso_3166_1
+					name
+				}
+			}
+			total_pages
+			total_results
+		}
+	}
+`;
 
-export type AddMovieMutation = {
-	__typename?: 'Mutation';
-	addMovie?: {
-		__typename?: 'MovieResponse';
-		id?: string | null;
-		details?: {
-			__typename?: 'MovieDetails';
-			backdrop_path?: string | null;
-			homepage?: string | null;
-			id?: number | null;
-			original_language?: string | null;
-			original_title?: string | null;
-			overview?: string | null;
-			poster_path?: string | null;
-			release_date?: string | null;
-			title?: string | null;
-			vote_average?: number | null;
-			genres?: Array<{
-				__typename?: 'Genre';
-				id?: number | null;
-				name?: string | null;
-			} | null> | null;
-			production_countries?: Array<{
-				__typename?: 'ProductionCountry';
-				iso_3166_1?: string | null;
-				name?: string | null;
-			} | null> | null;
-		} | null;
-		support?: {
-			__typename?: 'Support';
-			bluray?: boolean | null;
-			bluray_hd?: boolean | null;
-			dvd?: boolean | null;
-		} | null;
-	} | null;
-};
-
+/**
+ * __useSearchMoviesQuery__
+ *
+ * To run a query within a React component, call `useSearchMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchMoviesQuery({
+ *   variables: {
+ *      searchOptions: // value for 'searchOptions'
+ *   },
+ * });
+ */
+export function useSearchMoviesQuery(
+	baseOptions?: Apollo.QueryHookOptions<
+		SearchMoviesQuery,
+		SearchMoviesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<SearchMoviesQuery, SearchMoviesQueryVariables>(
+		SearchMoviesDocument,
+		options,
+	);
+}
+export function useSearchMoviesLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<
+		SearchMoviesQuery,
+		SearchMoviesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<SearchMoviesQuery, SearchMoviesQueryVariables>(
+		SearchMoviesDocument,
+		options,
+	);
+}
+export function useSearchMoviesSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		SearchMoviesQuery,
+		SearchMoviesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<SearchMoviesQuery, SearchMoviesQueryVariables>(
+		SearchMoviesDocument,
+		options,
+	);
+}
+export type SearchMoviesQueryHookResult = ReturnType<
+	typeof useSearchMoviesQuery
+>;
+export type SearchMoviesLazyQueryHookResult = ReturnType<
+	typeof useSearchMoviesLazyQuery
+>;
+export type SearchMoviesSuspenseQueryHookResult = ReturnType<
+	typeof useSearchMoviesSuspenseQuery
+>;
+export type SearchMoviesQueryResult = Apollo.QueryResult<
+	SearchMoviesQuery,
+	SearchMoviesQueryVariables
+>;
 export const MoviesDocument = gql`
 	query Movies {
 		movies {
@@ -371,77 +461,4 @@ export type MoviesSuspenseQueryHookResult = ReturnType<
 export type MoviesQueryResult = Apollo.QueryResult<
 	MoviesQuery,
 	MoviesQueryVariables
->;
-export const AddMovieDocument = gql`
-	mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
-		addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
-			id
-			details {
-				backdrop_path
-				genres {
-					id
-					name
-				}
-				homepage
-				id
-				original_language
-				original_title
-				overview
-				poster_path
-				production_countries {
-					iso_3166_1
-					name
-				}
-				release_date
-				title
-				vote_average
-			}
-			support {
-				bluray
-				bluray_hd
-				dvd
-			}
-		}
-	}
-`;
-export type AddMovieMutationFn = Apollo.MutationFunction<
-	AddMovieMutation,
-	AddMovieMutationVariables
->;
-
-/**
- * __useAddMovieMutation__
- *
- * To run a mutation, you first call `useAddMovieMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddMovieMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addMovieMutation, { data, loading, error }] = useAddMovieMutation({
- *   variables: {
- *      tmdbMovieId: // value for 'tmdbMovieId'
- *      support: // value for 'support'
- *   },
- * });
- */
-export function useAddMovieMutation(
-	baseOptions?: Apollo.MutationHookOptions<
-		AddMovieMutation,
-		AddMovieMutationVariables
-	>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useMutation<AddMovieMutation, AddMovieMutationVariables>(
-		AddMovieDocument,
-		options,
-	);
-}
-export type AddMovieMutationHookResult = ReturnType<typeof useAddMovieMutation>;
-export type AddMovieMutationResult = Apollo.MutationResult<AddMovieMutation>;
-export type AddMovieMutationOptions = Apollo.BaseMutationOptions<
-	AddMovieMutation,
-	AddMovieMutationVariables
 >;
