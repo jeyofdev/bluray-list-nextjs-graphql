@@ -1,9 +1,11 @@
 'use client';
 
 import ContentContainer from '@components/containers/ContentContainer';
-import { Typography } from '@mui/material';
+import { Button, Typography, useTheme } from '@mui/material';
 
 const SeriesPage = () => {
+	const theme = useTheme();
+
 	return (
 		<ContentContainer>
 			<Typography
@@ -12,6 +14,17 @@ const SeriesPage = () => {
 			>
 				Series
 			</Typography>
+
+			<Button
+				variant='contained'
+				color='success'
+				// sx={{
+				// 	backgroundColor: theme.palette.info.light,
+				// 	color: theme.palette.info.contrastText
+				// }}
+			>
+				ok
+			</Button>
 		</ContentContainer>
 	);
 };

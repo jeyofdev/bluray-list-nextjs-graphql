@@ -23,11 +23,13 @@
 		"@mui/material": "^5.15.3",
 		"@prisma/client": "^5.8.1",
 		"@prisma/nextjs-monorepo-workaround-plugin": "^5.8.1",
+		"clsx": "^2.1.0",
 		"graphql": "^16.8.1",
 		"graphql-tag": "^2.12.6",
 		"next": "14.0.4",
 		"react": "^18",
-		"react-dom": "^18"
+		"react-dom": "^18",
+		"twin.macro": "^3.4.0"
 	},
 	"devDependencies": {
 		"@graphql-codegen/cli": "5.0.0",

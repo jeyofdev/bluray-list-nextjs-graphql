@@ -10,7 +10,7 @@ type MainContainerType = {
 const MainContainer = ({ children }: MainContainerType) => {
 	return (
 		<Box className='relative'>
-			<Box className='min-h-36 w-full bg-gray-300' />
+			<Box className='min-h-[150px] w-full bg-primary-300' />
 			<Container
 				maxWidth='lg'
 				classes={{

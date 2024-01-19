@@ -40,14 +40,14 @@ const Header = () => {
 		};
 
 	return (
-		<AppBar position='static' classes={{ root: 'bg-gray-900' }}>
+		<AppBar position='static' classes={{ root: 'bg-primary-900' }}>
 			<Container maxWidth='lg'>
 				<Toolbar disableGutters>
 					<Box className='flex w-full justify-between md:hidden'>
 						<IconButton size='large' onClick={toggleDrawer(true)}>
 							<MenuIcon
 								classes={{
-									root: 'text-gray-50',
+									root: 'text-primary-50',
 								}}
 							/>
 						</IconButton>
@@ -65,7 +65,7 @@ const Header = () => {
 							<IconButton
 								size='large'
 								classes={{
-									root: 'absolute right-4 top-4 hover:bg-red-50 text-red-500',
+									root: 'absolute right-4 top-4 hover:bg-danger-50 text-danger-500',
 								}}
 								onClick={toggleDrawer(false)}
 							>
@@ -81,11 +81,11 @@ const Header = () => {
 									{pages.map((page: PageType) => (
 										<ListItem key={page.id} disablePadding>
 											<Link href={page.path} passHref legacyBehavior>
-												<ListItemButton className='hover:bg-gray-50'>
+												<ListItemButton className='hover:bg-primary-50'>
 													<ListItemText
 														primary={page.label}
 														classes={{
-															primary: 'text-gray-900 text-3xl',
+															primary: 'text-primary-900 text-3xl',
 														}}
 													/>
 													<Divider />
@@ -108,13 +108,13 @@ const Header = () => {
 							{pages.map((page: PageType) => (
 								<Box
 									key={page.id}
-									className='border-0 border-r border-solid border-gray-500 px-6 py-2.5 first:border-l'
+									className='border-0 border-r border-solid border-primary-500 px-6 py-2.5 first:border-l'
 								>
 									<Link href={page.path} passHref legacyBehavior>
 										<Button
 											key={page.id}
 											classes={{
-												root: 'p-0 rounded-none text-gray-50 text-base',
+												root: 'p-0 rounded-none text-primary-50 text-base',
 											}}
 										>
 											{page.label}
