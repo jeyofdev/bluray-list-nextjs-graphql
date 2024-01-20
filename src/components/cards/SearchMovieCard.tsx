@@ -1,3 +1,5 @@
+import BlurayIcon from '@components/icons/BlurayIcon';
+import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
 import {
 	Box,
@@ -26,6 +28,11 @@ const SearchMovieCardProps = ({ movie }: SearchMovieCardProps) => {
 				<Typography variant='h6' className='mb-4 text-center text-primary-900'>
 					Select the platform(s)
 				</Typography>
+
+				<Box>
+					<BlurayIcon className='text-5xl text-primary-900' />
+					<BlurayUltraHDIcon className='text-7xl text-primary-900' />
+				</Box>
 
 				<Button variant='contained' color='secondary' onClick={handleClick}>
 					Add to list
