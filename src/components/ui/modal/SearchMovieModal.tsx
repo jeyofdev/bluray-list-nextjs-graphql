@@ -2,7 +2,10 @@ import SearchMovieCardProps from '@components/cards/SearchMovieCard';
 import SearchResultList from '@components/ui/list/SearchResultList';
 import Modal, { SearchModalPropsType } from '@components/ui/modal/Modal';
 import { useSearchMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
-import { Box } from '@mui/material';
+import usePagination from '@hooks/usePagination';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Pagination, PaginationItem } from '@mui/material';
 import { Suspense, useState } from 'react';
 import ShowResultsNumber from '../result/ShowResultNumber';
 
@@ -12,11 +15,13 @@ const SearchMovieModal = ({ open, onClose }: SearchMovieModal) => {
 	const [search, setSearch] = useState<string>('');
 	const [searchQuery, setSearchQuery] = useState<string>('');
 
+	const { currentPage, handleChangeCurrentPage } = usePagination();
+
 	const { data } = useSearchMoviesSuspenseQuery({
 		variables: {
 			searchOptions: {
 				query: searchQuery,
-				page: 1,
+				page: currentPage,
 			},
 		},
 	});
@@ -44,6 +49,36 @@ const SearchMovieModal = ({ open, onClose }: SearchMovieModal) => {
 							<SearchMovieCardProps key={data.id} movie={data} />
 						)}
 					/>
+
+					{searchQuery &&
+					data?.searchMovies?.total_results &&
+					data?.searchMovies?.total_results > 0 ? (
+						<Box className='my-8 flex justify-center'>
+							<Pagination
+								classes={{
+									ul: 'gap-2',
+								}}
+								size='small'
+								count={
+									(data?.searchMovies?.total_pages as number) > 100
+										? 100
+										: data?.searchMovies?.total_pages
+								}
+								page={currentPage}
+								onChange={handleChangeCurrentPage}
+								renderItem={item => (
+									<PaginationItem
+										classes={{
+											root: 'text-primary-900 text-xl w-9 h-9 rounded-full',
+											selected: 'bg-transparent text-lg',
+										}}
+										slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+										{...item}
+									/>
+								)}
+							/>
+						</Box>
+					) : null}
 				</Suspense>
 			</Box>
 		</Modal>
