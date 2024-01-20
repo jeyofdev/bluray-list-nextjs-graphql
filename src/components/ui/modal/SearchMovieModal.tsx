@@ -1,6 +1,7 @@
+import SearchMovieCardProps from '@components/cards/SearchMovieCard';
+import SearchResultList from '@components/ui/list/SearchResultList';
 import Modal, { SearchModalPropsType } from '@components/ui/modal/Modal';
 import { useSearchMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
-import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 
 type SearchMovieModal = Pick<SearchModalPropsType, 'open' | 'onClose'>;
@@ -27,13 +28,12 @@ const SearchMovieModal = ({ open, onClose }: SearchMovieModal) => {
 			setSearch={setSearch}
 			setSearchQuery={setSearchQuery}
 		>
-			{data?.searchMovies?.results?.map(movie => (
-				<Box key={movie?.id} className='mb-4'>
-					<Typography variant='h5' component='h3'>
-						{movie?.title}
-					</Typography>
-				</Box>
-			))}
+			<SearchResultList
+				items={data?.searchMovies?.results}
+				renderItems={(data: any) => (
+					<SearchMovieCardProps key={data.id} movie={data} />
+				)}
+			/>
 		</Modal>
 	);
 };

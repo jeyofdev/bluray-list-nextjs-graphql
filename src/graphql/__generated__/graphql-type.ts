@@ -220,92 +220,23 @@ export type SearchMoviesQuery = {
 			id?: number | null;
 			title?: string | null;
 			original_title?: string | null;
-			homepage?: string | null;
-			overview?: string | null;
-			backdrop_path?: string | null;
 			poster_path?: string | null;
-			original_language?: string | null;
-			release_date?: string | null;
-			vote_average?: number | null;
-			genres?: Array<{
-				__typename?: 'Genre';
-				id?: number | null;
-				name?: string | null;
-			} | null> | null;
-			production_countries?: Array<{
-				__typename?: 'ProductionCountry';
-				iso_3166_1?: string | null;
-				name?: string | null;
-			} | null> | null;
 		} | null>;
 	} | null;
-};
-
-export type MoviesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type MoviesQuery = {
-	__typename?: 'Query';
-	movies?: Array<{
-		__typename?: 'MovieResponse';
-		id?: string | null;
-		details?: {
-			__typename?: 'MovieDetails';
-			id?: number | null;
-			title?: string | null;
-			original_title?: string | null;
-			homepage?: string | null;
-			original_language?: string | null;
-			backdrop_path?: string | null;
-			overview?: string | null;
-			poster_path?: string | null;
-			release_date?: string | null;
-			vote_average?: number | null;
-			genres?: Array<{
-				__typename?: 'Genre';
-				id?: number | null;
-				name?: string | null;
-			} | null> | null;
-			production_countries?: Array<{
-				__typename?: 'ProductionCountry';
-				iso_3166_1?: string | null;
-				name?: string | null;
-			} | null> | null;
-		} | null;
-		support?: {
-			__typename?: 'Support';
-			bluray?: boolean | null;
-			bluray_hd?: boolean | null;
-			dvd?: boolean | null;
-		} | null;
-	} | null> | null;
 };
 
 export const SearchMoviesDocument = gql`
 	query SearchMovies($searchOptions: SearchOptionsInput) {
 		searchMovies(searchOptions: $searchOptions) {
 			page
+			total_pages
+			total_results
 			results {
 				id
 				title
 				original_title
-				homepage
-				overview
-				backdrop_path
 				poster_path
-				genres {
-					id
-					name
-				}
-				original_language
-				release_date
-				vote_average
-				production_countries {
-					iso_3166_1
-					name
-				}
 			}
-			total_pages
-			total_results
 		}
 	}
 `;
@@ -374,91 +305,4 @@ export type SearchMoviesSuspenseQueryHookResult = ReturnType<
 export type SearchMoviesQueryResult = Apollo.QueryResult<
 	SearchMoviesQuery,
 	SearchMoviesQueryVariables
->;
-export const MoviesDocument = gql`
-	query Movies {
-		movies {
-			id
-			details {
-				id
-				title
-				original_title
-				homepage
-				genres {
-					id
-					name
-				}
-				original_language
-				backdrop_path
-				overview
-				poster_path
-				production_countries {
-					iso_3166_1
-					name
-				}
-				release_date
-				vote_average
-			}
-			support {
-				bluray
-				bluray_hd
-				dvd
-			}
-		}
-	}
-`;
-
-/**
- * __useMoviesQuery__
- *
- * To run a query within a React component, call `useMoviesQuery` and pass it any options that fit your needs.
- * When your component renders, `useMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMoviesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useMoviesQuery(
-	baseOptions?: Apollo.QueryHookOptions<MoviesQuery, MoviesQueryVariables>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useQuery<MoviesQuery, MoviesQueryVariables>(
-		MoviesDocument,
-		options,
-	);
-}
-export function useMoviesLazyQuery(
-	baseOptions?: Apollo.LazyQueryHookOptions<MoviesQuery, MoviesQueryVariables>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useLazyQuery<MoviesQuery, MoviesQueryVariables>(
-		MoviesDocument,
-		options,
-	);
-}
-export function useMoviesSuspenseQuery(
-	baseOptions?: Apollo.SuspenseQueryHookOptions<
-		MoviesQuery,
-		MoviesQueryVariables
-	>,
-) {
-	const options = { ...defaultOptions, ...baseOptions };
-	return Apollo.useSuspenseQuery<MoviesQuery, MoviesQueryVariables>(
-		MoviesDocument,
-		options,
-	);
-}
-export type MoviesQueryHookResult = ReturnType<typeof useMoviesQuery>;
-export type MoviesLazyQueryHookResult = ReturnType<typeof useMoviesLazyQuery>;
-export type MoviesSuspenseQueryHookResult = ReturnType<
-	typeof useMoviesSuspenseQuery
->;
-export type MoviesQueryResult = Apollo.QueryResult<
-	MoviesQuery,
-	MoviesQueryVariables
 >;
