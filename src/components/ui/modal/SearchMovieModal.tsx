@@ -1,7 +1,10 @@
 import SearchMovieCardProps from '@components/cards/SearchMovieCard';
 import SearchResultList from '@components/ui/list/SearchResultList';
 import Modal, { SearchModalPropsType } from '@components/ui/modal/Modal';
-import { useSearchMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
+import {
+	useAddMovieMutation,
+	useSearchMoviesSuspenseQuery,
+} from '@graphql/__generated__/graphql-type';
 import usePagination from '@hooks/usePagination';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -26,6 +29,8 @@ const SearchMovieModal = ({ open, onClose }: SearchMovieModal) => {
 		},
 	});
 
+	const [addMovie, { data: movieAdded }] = useAddMovieMutation();
+
 	return (
 		<Modal
 			open={open}
@@ -46,7 +51,11 @@ const SearchMovieModal = ({ open, onClose }: SearchMovieModal) => {
 					<SearchResultList
 						items={data?.searchMovies?.results}
 						renderItems={(data: any) => (
-							<SearchMovieCardProps key={data.id} movie={data} />
+							<SearchMovieCardProps
+								key={data.id}
+								movie={data}
+								addMovie={addMovie}
+							/>
 						)}
 					/>
 
