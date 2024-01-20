@@ -1,5 +1,6 @@
 'use client';
 
+import NoSSRWrapper from '@components/NoSSRWrapper';
 import MovieCard from '@components/cards/MovieCard';
 import ContentContainer from '@components/containers/ContentContainer';
 import { ButtonAction } from '@components/ui/buttons/ButtonAction';
@@ -26,37 +27,39 @@ const MoviesPage = () => {
 	};
 
 	return (
-		<ContentContainer>
-			<Typography variant='h4' component='h1' className='text-center'>
-				Movies
-			</Typography>
+		<NoSSRWrapper>
+			<ContentContainer>
+				<Typography variant='h4' component='h1' className='text-center'>
+					Movies
+				</Typography>
 
-			<Suspense fallback={<h1>load</h1>}>
-				<ItemsList
-					items={data.movies}
-					renderItems={(movie: any) => (
-						<MovieCard
-							key={movie.id}
-							movie={movie.details}
-							supports={movie.support}
-							onClick={() => {}}
-						/>
-					)}
+				<Suspense fallback={<h1>load</h1>}>
+					<ItemsList
+						items={data.movies}
+						renderItems={(movie: any) => (
+							<MovieCard
+								key={movie.id}
+								movie={movie.details}
+								supports={movie.support}
+								onClick={() => {}}
+							/>
+						)}
+					/>
+				</Suspense>
+
+				<Box className='mt-4 flex justify-center'>
+					<ButtonAction
+						icon={<AddIcon className='size-6' />}
+						onClick={handleOpenSearchModal}
+					/>
+				</Box>
+
+				<SearchMovieModal
+					open={showSearchModal}
+					onClose={handleCloseSearchModal}
 				/>
-			</Suspense>
-
-			<Box className='mt-4 flex justify-center'>
-				<ButtonAction
-					icon={<AddIcon className='size-6' />}
-					onClick={handleOpenSearchModal}
-				/>
-			</Box>
-
-			<SearchMovieModal
-				open={showSearchModal}
-				onClose={handleCloseSearchModal}
-			/>
-		</ContentContainer>
+			</ContentContainer>
+		</NoSSRWrapper>
 	);
 };
 
