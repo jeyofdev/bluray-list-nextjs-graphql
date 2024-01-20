@@ -59,10 +59,10 @@ export const darkTheme = createTheme({
 			contrastText: tailwindConfig.theme.colors.sky['50'],
 		},
 		secondary: {
-			light: tailwindConfig.theme.colors.purple['400'],
-			main: tailwindConfig.theme.colors.purple['600'],
-			dark: tailwindConfig.theme.colors.purple['800'],
-			contrastText: tailwindConfig.theme.colors.purple['50'],
+			light: tailwindConfig.theme.colors.blue['700'],
+			main: tailwindConfig.theme.colors.blue['900'],
+			dark: tailwindConfig.theme.colors.blue['800'],
+			contrastText: tailwindConfig.theme.colors.blue['50'],
 		},
 		error: {
 			light: tailwindConfig.theme.colors.red['400'],

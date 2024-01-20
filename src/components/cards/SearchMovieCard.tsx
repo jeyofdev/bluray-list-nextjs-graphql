@@ -1,5 +1,7 @@
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
 import {
+	Box,
+	Button,
 	Card,
 	CardActionArea,
 	CardContent,
@@ -12,8 +14,24 @@ type SearchMovieCardProps = {
 };
 
 const SearchMovieCardProps = ({ movie }: SearchMovieCardProps) => {
+	const handleClick = () => {
+		// eslint-disable-next-line no-console
+		console.log('click ok');
+	};
+
 	return (
-		<Card className='flex items-stretch'>
+		<Card className='group relative flex items-stretch'>
+			<Box className='absolute left-0 top-0 z-50 hidden size-full flex-col items-center justify-center p-4 hover:flex group-hover:flex'>
+				<Box className='absolute -z-10 size-full bg-primary-200 opacity-90'></Box>
+				<Typography variant='h6' className='mb-4 text-center text-primary-900'>
+					Select the platform(s)
+				</Typography>
+
+				<Button variant='contained' color='secondary' onClick={handleClick}>
+					Add to list
+				</Button>
+			</Box>
+
 			<CardActionArea className='flex flex-col items-center justify-start'>
 				<CardMedia
 					component='img'
