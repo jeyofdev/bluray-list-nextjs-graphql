@@ -14,7 +14,7 @@ import { Suspense, useState } from 'react';
 const MoviesPage = () => {
 	const [showSearchModal, setshowSearchModal] = useState<boolean>(false);
 
-	const { data } = useMoviesSuspenseQuery({
+	const { data, refetch } = useMoviesSuspenseQuery({
 		fetchPolicy: 'cache-and-network',
 	});
 
@@ -57,6 +57,7 @@ const MoviesPage = () => {
 				<SearchMovieModal
 					open={showSearchModal}
 					onClose={handleCloseSearchModal}
+					refetch={refetch}
 				/>
 			</ContentContainer>
 		</NoSSRWrapper>
