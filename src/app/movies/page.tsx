@@ -29,7 +29,7 @@ const MoviesPage = () => {
 	return (
 		<NoSSRWrapper>
 			<ContentContainer>
-				<Typography variant='h4' component='h1' className='text-center'>
+				<Typography variant='h4' component='h1' className='mb-4 text-center'>
 					Movies
 				</Typography>
 

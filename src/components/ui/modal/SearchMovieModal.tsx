@@ -33,10 +33,17 @@ const SearchMovieModal = ({ open, onClose, refetch }: SearchMovieModal) => {
 
 	const [addMovie, { data: movieAdded }] = useAddMovieMutation();
 
+	// clear modal data
+	const handleClose = () => {
+		onClose();
+		setSearch('');
+		setSearchQuery('');
+	};
+
 	return (
 		<Modal
 			open={open}
-			onClose={onClose}
+			onClose={handleClose}
 			title='Search movie'
 			search={search}
 			setSearch={setSearch}
@@ -58,6 +65,7 @@ const SearchMovieModal = ({ open, onClose, refetch }: SearchMovieModal) => {
 								movie={data}
 								addMovie={addMovie}
 								refetch={refetch}
+								onClose={handleClose}
 							/>
 						)}
 					/>

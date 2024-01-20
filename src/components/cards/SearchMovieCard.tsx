@@ -18,12 +18,14 @@ type SearchMovieCardProps = {
 	movie: MovieDetails;
 	addMovie?: any;
 	refetch: any;
+	onClose: () => void;
 };
 
 const SearchMovieCard = ({
 	movie,
 	addMovie,
 	refetch,
+	onClose,
 }: SearchMovieCardProps) => {
 	const [movieSupports, setMovieSupports] = useState<SupportType>({
 		bluray: false,
@@ -48,6 +50,8 @@ const SearchMovieCard = ({
 			},
 			onCompleted: refetch,
 		});
+
+		onClose();
 	};
 
 	return (
