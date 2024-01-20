@@ -1,4 +1,4 @@
-import SearchMovieCardProps from '@components/cards/SearchMovieCard';
+import SearchMovieCard from '@components/cards/SearchMovieCard';
 import SearchResultList from '@components/ui/list/SearchResultList';
 import Modal, { SearchModalPropsType } from '@components/ui/modal/Modal';
 import {
@@ -12,13 +12,16 @@ import { Box, Pagination, PaginationItem } from '@mui/material';
 import { Suspense, useState } from 'react';
 import ShowResultsNumber from '../result/ShowResultNumber';
 
-type SearchMovieModal = Pick<SearchModalPropsType, 'open' | 'onClose'>;
+type SearchMovieModal = Pick<SearchModalPropsType, 'open' | 'onClose'> & {
+	refetch: any;
+};
 
-const SearchMovieModal = ({ open, onClose }: SearchMovieModal) => {
+const SearchMovieModal = ({ open, onClose, refetch }: SearchMovieModal) => {
 	const [search, setSearch] = useState<string>('');
 	const [searchQuery, setSearchQuery] = useState<string>('');
 
-	const { currentPage, handleChangeCurrentPage } = usePagination();
+	const { currentPage, handleChangeCurrentPage, resetCurrentPage } =
+		usePagination();
 
 	const { data } = useSearchMoviesSuspenseQuery({
 		variables: {
@@ -31,10 +34,18 @@ const SearchMovieModal = ({ open, onClose }: SearchMovieModal) => {
 
 	const [addMovie, { data: movieAdded }] = useAddMovieMutation();
 
+	// clear modal data
+	const handleClose = () => {
+		onClose();
+		setSearch('');
+		setSearchQuery('');
+		resetCurrentPage();
+	};
+
 	return (
 		<Modal
 			open={open}
-			onClose={onClose}
+			onClose={handleClose}
 			title='Search movie'
 			search={search}
 			setSearch={setSearch}
@@ -51,10 +62,12 @@ const SearchMovieModal = ({ open, onClose }: SearchMovieModal) => {
 					<SearchResultList
 						items={data?.searchMovies?.results}
 						renderItems={(data: any) => (
-							<SearchMovieCardProps
+							<SearchMovieCard
 								key={data.id}
 								movie={data}
 								addMovie={addMovie}
+								refetch={refetch}
+								onClose={handleClose}
 							/>
 						)}
 					/>

@@ -17,9 +17,16 @@ import { SupportType } from '../../types';
 type SearchMovieCardProps = {
 	movie: MovieDetails;
 	addMovie?: any;
+	refetch: any;
+	onClose: () => void;
 };
 
-const SearchMovieCardProps = ({ movie, addMovie }: SearchMovieCardProps) => {
+const SearchMovieCard = ({
+	movie,
+	addMovie,
+	refetch,
+	onClose,
+}: SearchMovieCardProps) => {
 	const [movieSupports, setMovieSupports] = useState<SupportType>({
 		bluray: false,
 		bluray_hd: false,
@@ -41,7 +48,10 @@ const SearchMovieCardProps = ({ movie, addMovie }: SearchMovieCardProps) => {
 				tmdbMovieId: movie.id,
 				support: movieSupports,
 			},
+			onCompleted: refetch,
 		});
+
+		onClose();
 	};
 
 	return (
@@ -94,4 +104,4 @@ const SearchMovieCardProps = ({ movie, addMovie }: SearchMovieCardProps) => {
 	);
 };
 
-export default SearchMovieCardProps;
+export default SearchMovieCard;
