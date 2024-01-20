@@ -20,7 +20,8 @@ const SearchMovieModal = ({ open, onClose, refetch }: SearchMovieModal) => {
 	const [search, setSearch] = useState<string>('');
 	const [searchQuery, setSearchQuery] = useState<string>('');
 
-	const { currentPage, handleChangeCurrentPage } = usePagination();
+	const { currentPage, handleChangeCurrentPage, resetCurrentPage } =
+		usePagination();
 
 	const { data } = useSearchMoviesSuspenseQuery({
 		variables: {
@@ -38,6 +39,7 @@ const SearchMovieModal = ({ open, onClose, refetch }: SearchMovieModal) => {
 		onClose();
 		setSearch('');
 		setSearchQuery('');
+		resetCurrentPage();
 	};
 
 	return (
