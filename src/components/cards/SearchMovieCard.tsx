@@ -16,9 +16,10 @@ import { SupportType } from '../../types';
 
 type SearchMovieCardProps = {
 	movie: MovieDetails;
+	addMovie?: any;
 };
 
-const SearchMovieCardProps = ({ movie }: SearchMovieCardProps) => {
+const SearchMovieCardProps = ({ movie, addMovie }: SearchMovieCardProps) => {
 	const [movieSupports, setMovieSupports] = useState<SupportType>({
 		bluray: false,
 		bluray_hd: false,
@@ -35,8 +36,12 @@ const SearchMovieCardProps = ({ movie }: SearchMovieCardProps) => {
 	};
 
 	const handleClick = () => {
-		// eslint-disable-next-line no-console
-		console.log('click ok');
+		addMovie({
+			variables: {
+				tmdbMovieId: movie.id,
+				support: movieSupports,
+			},
+		});
 	};
 
 	return (

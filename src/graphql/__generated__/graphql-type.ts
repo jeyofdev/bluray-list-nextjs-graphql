@@ -204,6 +204,31 @@ export type SupportInput = {
 	dvd?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type AddMovieMutationVariables = Exact<{
+	tmdbMovieId?: InputMaybe<Scalars['Int']['input']>;
+	support?: InputMaybe<SupportInput>;
+}>;
+
+export type AddMovieMutation = {
+	__typename?: 'Mutation';
+	addMovie?: {
+		__typename?: 'MovieResponse';
+		id?: string | null;
+		details?: {
+			__typename?: 'MovieDetails';
+			id?: number | null;
+			original_title?: string | null;
+			title?: string | null;
+		} | null;
+		support?: {
+			__typename?: 'Support';
+			bluray?: boolean | null;
+			bluray_hd?: boolean | null;
+			dvd?: boolean | null;
+		} | null;
+	} | null;
+};
+
 export type SearchMoviesQueryVariables = Exact<{
 	searchOptions?: InputMaybe<SearchOptionsInput>;
 }>;
@@ -225,6 +250,64 @@ export type SearchMoviesQuery = {
 	} | null;
 };
 
+export const AddMovieDocument = gql`
+	mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
+		addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
+			id
+			details {
+				id
+				original_title
+				title
+			}
+			support {
+				bluray
+				bluray_hd
+				dvd
+			}
+		}
+	}
+`;
+export type AddMovieMutationFn = Apollo.MutationFunction<
+	AddMovieMutation,
+	AddMovieMutationVariables
+>;
+
+/**
+ * __useAddMovieMutation__
+ *
+ * To run a mutation, you first call `useAddMovieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddMovieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addMovieMutation, { data, loading, error }] = useAddMovieMutation({
+ *   variables: {
+ *      tmdbMovieId: // value for 'tmdbMovieId'
+ *      support: // value for 'support'
+ *   },
+ * });
+ */
+export function useAddMovieMutation(
+	baseOptions?: Apollo.MutationHookOptions<
+		AddMovieMutation,
+		AddMovieMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<AddMovieMutation, AddMovieMutationVariables>(
+		AddMovieDocument,
+		options,
+	);
+}
+export type AddMovieMutationHookResult = ReturnType<typeof useAddMovieMutation>;
+export type AddMovieMutationResult = Apollo.MutationResult<AddMovieMutation>;
+export type AddMovieMutationOptions = Apollo.BaseMutationOptions<
+	AddMovieMutation,
+	AddMovieMutationVariables
+>;
 export const SearchMoviesDocument = gql`
 	query SearchMovies($searchOptions: SearchOptionsInput) {
 		searchMovies(searchOptions: $searchOptions) {

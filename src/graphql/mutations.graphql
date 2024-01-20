@@ -1,0 +1,15 @@
+mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
+	addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
+		id
+		details {
+			id
+			original_title
+			title
+		}
+		support {
+			bluray
+			bluray_hd
+			dvd
+		}
+	}
+}
