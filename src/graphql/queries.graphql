@@ -11,3 +11,26 @@ query SearchMovies($searchOptions: SearchOptionsInput) {
 		}
 	}
 }
+
+query Movies {
+	movies {
+		id
+		details {
+			id
+			title
+			original_title
+			genres {
+				id
+				name
+			}
+			poster_path
+			release_date
+			vote_average
+		}
+		support {
+			bluray
+			bluray_hd
+			dvd
+		}
+	}
+}
