@@ -8,14 +8,32 @@ import {
 	CardActionArea,
 	CardContent,
 	CardMedia,
+	Checkbox,
 	Typography,
 } from '@mui/material';
+import { useState } from 'react';
+import { SupportType } from '../../types';
 
 type SearchMovieCardProps = {
 	movie: MovieDetails;
 };
 
 const SearchMovieCardProps = ({ movie }: SearchMovieCardProps) => {
+	const [movieSupports, setMovieSupports] = useState<SupportType>({
+		bluray: false,
+		bluray_hd: false,
+		dvd: false,
+	});
+
+	const handleChangeMovieSupports = (
+		support: 'bluray' | 'bluray_hd' | 'dvd',
+	) => {
+		setMovieSupports({
+			...movieSupports,
+			[support]: !movieSupports[support],
+		});
+	};
+
 	const handleClick = () => {
 		// eslint-disable-next-line no-console
 		console.log('click ok');
@@ -30,8 +48,19 @@ const SearchMovieCardProps = ({ movie }: SearchMovieCardProps) => {
 				</Typography>
 
 				<Box>
-					<BlurayIcon className='text-5xl text-primary-900' />
-					<BlurayUltraHDIcon className='text-7xl text-primary-900' />
+					<Checkbox
+						icon={<BlurayIcon className='text-5xl text-gray-900' />}
+						checkedIcon={<BlurayIcon className='text-5xl text-sky-400' />}
+						onChange={() => handleChangeMovieSupports('bluray')}
+					/>
+
+					<Checkbox
+						icon={<BlurayUltraHDIcon className='text-7xl text-gray-900' />}
+						checkedIcon={
+							<BlurayUltraHDIcon className='text-7xl text-sky-400' />
+						}
+						onChange={() => handleChangeMovieSupports('bluray_hd')}
+					/>
 				</Box>
 
 				<Button variant='contained' color='secondary' onClick={handleClick}>

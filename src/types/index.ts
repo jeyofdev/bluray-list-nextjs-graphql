@@ -7,3 +7,9 @@ export type PageType = {
 	path: string;
 	label: string;
 };
+
+export type SupportType = {
+	bluray: boolean;
+	bluray_hd: boolean;
+	dvd: boolean;
+};
