@@ -250,6 +250,36 @@ export type SearchMoviesQuery = {
 	} | null;
 };
 
+export type MoviesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type MoviesQuery = {
+	__typename?: 'Query';
+	movies?: Array<{
+		__typename?: 'MovieResponse';
+		id?: string | null;
+		details?: {
+			__typename?: 'MovieDetails';
+			id?: number | null;
+			title?: string | null;
+			original_title?: string | null;
+			poster_path?: string | null;
+			release_date?: string | null;
+			vote_average?: number | null;
+			genres?: Array<{
+				__typename?: 'Genre';
+				id?: number | null;
+				name?: string | null;
+			} | null> | null;
+		} | null;
+		support?: {
+			__typename?: 'Support';
+			bluray?: boolean | null;
+			bluray_hd?: boolean | null;
+			dvd?: boolean | null;
+		} | null;
+	} | null> | null;
+};
+
 export const AddMovieDocument = gql`
 	mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
 		addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
@@ -388,4 +418,83 @@ export type SearchMoviesSuspenseQueryHookResult = ReturnType<
 export type SearchMoviesQueryResult = Apollo.QueryResult<
 	SearchMoviesQuery,
 	SearchMoviesQueryVariables
+>;
+export const MoviesDocument = gql`
+	query Movies {
+		movies {
+			id
+			details {
+				id
+				title
+				original_title
+				genres {
+					id
+					name
+				}
+				poster_path
+				release_date
+				vote_average
+			}
+			support {
+				bluray
+				bluray_hd
+				dvd
+			}
+		}
+	}
+`;
+
+/**
+ * __useMoviesQuery__
+ *
+ * To run a query within a React component, call `useMoviesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMoviesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMoviesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMoviesQuery(
+	baseOptions?: Apollo.QueryHookOptions<MoviesQuery, MoviesQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<MoviesQuery, MoviesQueryVariables>(
+		MoviesDocument,
+		options,
+	);
+}
+export function useMoviesLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<MoviesQuery, MoviesQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<MoviesQuery, MoviesQueryVariables>(
+		MoviesDocument,
+		options,
+	);
+}
+export function useMoviesSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		MoviesQuery,
+		MoviesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<MoviesQuery, MoviesQueryVariables>(
+		MoviesDocument,
+		options,
+	);
+}
+export type MoviesQueryHookResult = ReturnType<typeof useMoviesQuery>;
+export type MoviesLazyQueryHookResult = ReturnType<typeof useMoviesLazyQuery>;
+export type MoviesSuspenseQueryHookResult = ReturnType<
+	typeof useMoviesSuspenseQuery
+>;
+export type MoviesQueryResult = Apollo.QueryResult<
+	MoviesQuery,
+	MoviesQueryVariables
 >;
