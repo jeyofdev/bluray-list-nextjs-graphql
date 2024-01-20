@@ -27,6 +27,20 @@ const globalTheme = createTheme({
 				},
 			},
 		},
+		MuiAlert: {
+			styleOverrides: {
+				root: {
+					padding: '1rem',
+				},
+				message: {
+					padding: 0,
+				},
+				icon: {
+					padding: 0,
+					alignItems: 'center',
+				},
+			},
+		},
 	},
 });
 
