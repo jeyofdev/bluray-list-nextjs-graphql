@@ -13,3 +13,14 @@ mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
 		}
 	}
 }
+
+mutation deleteMovie($movieId: ID!) {
+	deleteMovie(movieId: $movieId) {
+		id
+		details {
+			id
+			title
+			original_title
+		}
+	}
+}

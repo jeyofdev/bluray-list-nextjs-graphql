@@ -6,13 +6,20 @@ import ContentContainer from '@components/containers/ContentContainer';
 import { ButtonAction } from '@components/ui/buttons/ButtonAction';
 import ItemsList from '@components/ui/list/ItemList';
 import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
+import Toast from '@components/ui/toast/Toast';
 import { useMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
+import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { Suspense, useState } from 'react';
 
 const MoviesPage = () => {
 	const [showSearchModal, setshowSearchModal] = useState<boolean>(false);
+	const {
+		toast,
+		onOpen: handleOpenToast,
+		onClose: handleCloseToast,
+	} = useToast();
 
 	const { data, refetch } = useMoviesSuspenseQuery({
 		fetchPolicy: 'cache-and-network',
@@ -39,9 +46,15 @@ const MoviesPage = () => {
 						renderItems={(movie: any) => (
 							<MovieCard
 								key={movie.id}
+								id={movie.id}
 								movie={movie.details}
 								supports={movie.support}
 								onClick={() => {}}
+								refetch={refetch}
+								toast={{
+									onOpen: handleOpenToast,
+									onClose: handleCloseToast,
+								}}
 							/>
 						)}
 					/>
@@ -53,13 +66,19 @@ const MoviesPage = () => {
 						onClick={handleOpenSearchModal}
 					/>
 				</Box>
-
-				<SearchMovieModal
-					open={showSearchModal}
-					onClose={handleCloseSearchModal}
-					refetch={refetch}
-				/>
 			</ContentContainer>
+
+			<SearchMovieModal
+				open={showSearchModal}
+				onClose={handleCloseSearchModal}
+				refetch={refetch}
+			/>
+
+			<Toast
+				open={toast.open}
+				onClose={handleCloseToast}
+				message={toast.message}
+			/>
 		</NoSSRWrapper>
 	);
 };
