@@ -64,13 +64,13 @@ const SearchMovieCard = ({
 
 				<Box>
 					<Checkbox
-						icon={<BlurayIcon className='text-5xl text-gray-900' />}
+						icon={<BlurayIcon className='text-5xl text-primary-900' />}
 						checkedIcon={<BlurayIcon className='text-5xl text-sky-400' />}
 						onChange={() => handleChangeMovieSupports('bluray')}
 					/>
 
 					<Checkbox
-						icon={<BlurayUltraHDIcon className='text-7xl text-gray-900' />}
+						icon={<BlurayUltraHDIcon className='text-7xl text-primary-900' />}
 						checkedIcon={
 							<BlurayUltraHDIcon className='text-7xl text-sky-400' />
 						}

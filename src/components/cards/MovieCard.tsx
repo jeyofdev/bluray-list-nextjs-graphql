@@ -1,5 +1,6 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
+import CardSettings from '@components/ui/menu/CardSettings';
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
 import {
 	Box,
@@ -9,7 +10,7 @@ import {
 	CardMedia,
 	Typography,
 } from '@mui/material';
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { SupportType } from '../../types';
 
 type MovieCardPropsType = {
@@ -19,8 +20,16 @@ type MovieCardPropsType = {
 };
 
 const MovieCard = ({ movie, supports, onClick }: MovieCardPropsType) => {
+	const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
+	const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
+
 	return (
-		<Card>
+		<Card className='relative'>
+			<CardSettings
+				title='Movie settings'
+				setShowModalDelete={setShowModalDelete}
+				setShowModalEdit={setShowModalEdit}
+			/>
 			<CardActionArea onClick={onClick}>
 				<CardMedia
 					component='img'
@@ -28,6 +37,7 @@ const MovieCard = ({ movie, supports, onClick }: MovieCardPropsType) => {
 					image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
 					title={movie?.title as string}
 				/>
+
 				<CardContent>
 					<Typography
 						variant='h6'
@@ -39,11 +49,11 @@ const MovieCard = ({ movie, supports, onClick }: MovieCardPropsType) => {
 
 					<Box className='flex items-center justify-center gap-4'>
 						{supports?.bluray && (
-							<BlurayIcon className='text-4xl text-gray-900' />
+							<BlurayIcon className='text-4xl text-primary-900' />
 						)}
 
 						{supports?.bluray_hd && (
-							<BlurayUltraHDIcon className='text-6xl text-gray-900' />
+							<BlurayUltraHDIcon className='text-6xl text-primary-900' />
 						)}
 					</Box>
 				</CardContent>

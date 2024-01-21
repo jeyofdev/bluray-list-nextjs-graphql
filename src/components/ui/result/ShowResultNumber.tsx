@@ -8,7 +8,11 @@ const ShowResultsNumber = ({ totalResults }: ShowResultsNumberPropsType) => {
 	return (
 		<>
 			{totalResults && totalResults > 0 ? (
-				<Typography variant='h6' component='h5' className='mb-3 text-gray-400'>
+				<Typography
+					variant='h6'
+					component='h5'
+					className='mb-3 text-primary-400'
+				>
 					{totalResults} results found
 				</Typography>
 			) : (
