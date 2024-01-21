@@ -117,7 +117,7 @@ export const darkTheme = createTheme({
 			contrastText: tailwindConfig.theme.colors.sky['50'],
 		},
 		success: {
-			light: tailwindConfig.theme.colors.green['300'],
+			light: tailwindConfig.theme.colors.green['400'],
 			main: tailwindConfig.theme.colors.green['500'],
 			dark: tailwindConfig.theme.colors.green['600'],
 			contrastText: tailwindConfig.theme.colors.green['50'],

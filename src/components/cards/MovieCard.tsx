@@ -15,7 +15,7 @@ import {
 	Typography,
 } from '@mui/material';
 import { MouseEventHandler, useState } from 'react';
-import { SupportType } from '../../types';
+import { SupportType, ToastType } from '../../types';
 
 type MovieCardPropsType = {
 	id: string;
@@ -23,6 +23,7 @@ type MovieCardPropsType = {
 	supports?: SupportType;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 	refetch: any;
+	toast: ToastType;
 };
 
 const MovieCard = ({
@@ -31,6 +32,7 @@ const MovieCard = ({
 	supports,
 	onClick,
 	refetch,
+	toast,
 }: MovieCardPropsType) => {
 	const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
 	const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
@@ -91,6 +93,7 @@ const MovieCard = ({
 						onCompleted: refetch,
 					});
 				}}
+				toast={toast}
 			/>
 		</>
 	);

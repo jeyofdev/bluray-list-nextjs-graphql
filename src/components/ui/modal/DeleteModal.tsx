@@ -8,12 +8,14 @@ import {
 	DialogContentText,
 } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
+import { ToastType } from '../../../types';
 
 type DeleteModalPropsType = {
 	open: boolean;
 	onClick: Dispatch<SetStateAction<boolean>>;
 	onDelete: any;
 	itemTitle: string;
+	toast: ToastType;
 };
 
 const DeleteModal = ({
@@ -21,6 +23,7 @@ const DeleteModal = ({
 	open,
 	onClick,
 	onDelete,
+	toast,
 }: DeleteModalPropsType) => {
 	const handleClose = () => {
 		onClick(false);
@@ -29,6 +32,7 @@ const DeleteModal = ({
 	const handleDelete = () => {
 		onDelete();
 		handleClose();
+		toast.onOpen(`The movie "${itemTitle}" has been removed from the list`);
 	};
 
 	return (
