@@ -32,7 +32,7 @@ const DeleteModal = ({
 	const handleDelete = () => {
 		onDelete();
 		handleClose();
-		toast.onOpen(`The movie "${itemTitle}" has been removed from the list`);
+		toast.onOpen(`The movie "${itemTitle}" has been removed from the list.`);
 	};
 
 	return (

@@ -1,5 +1,6 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
+import { SupportEnum } from '@enums/indeX';
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
 import {
 	Box,
@@ -33,9 +34,7 @@ const SearchMovieCard = ({
 		dvd: false,
 	});
 
-	const handleChangeMovieSupports = (
-		support: 'bluray' | 'bluray_hd' | 'dvd',
-	) => {
+	const handleChangeMovieSupports = (support: SupportEnum) => {
 		setMovieSupports({
 			...movieSupports,
 			[support]: !movieSupports[support],
@@ -66,7 +65,7 @@ const SearchMovieCard = ({
 					<Checkbox
 						icon={<BlurayIcon className='text-5xl text-primary-900' />}
 						checkedIcon={<BlurayIcon className='text-5xl text-sky-400' />}
-						onChange={() => handleChangeMovieSupports('bluray')}
+						onChange={() => handleChangeMovieSupports(SupportEnum.BLURAY)}
 					/>
 
 					<Checkbox
@@ -74,7 +73,7 @@ const SearchMovieCard = ({
 						checkedIcon={
 							<BlurayUltraHDIcon className='text-7xl text-sky-400' />
 						}
-						onChange={() => handleChangeMovieSupports('bluray_hd')}
+						onChange={() => handleChangeMovieSupports(SupportEnum.BLURAY_HD)}
 					/>
 				</Box>
 

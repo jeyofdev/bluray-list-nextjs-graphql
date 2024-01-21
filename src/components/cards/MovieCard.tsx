@@ -2,9 +2,11 @@ import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import CardSettings from '@components/ui/menu/CardSettings';
 import DeleteModal from '@components/ui/modal/DeleteModal';
+import UpdateModal from '@components/ui/modal/UpdateModal';
 import {
 	MovieDetails,
 	useDeleteMovieMutation,
+	useUpdateMovieMutation,
 } from '@graphql/__generated__/graphql-type';
 import {
 	Box,
@@ -35,9 +37,10 @@ const MovieCard = ({
 	toast,
 }: MovieCardPropsType) => {
 	const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
-	const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
+	const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
 
 	const [deleteMovie, { data: deletedMovie }] = useDeleteMovieMutation();
+	const [updateMovie, { data: updatedMovie }] = useUpdateMovieMutation();
 
 	return (
 		<>
@@ -45,7 +48,7 @@ const MovieCard = ({
 				<CardSettings
 					title='Movie settings'
 					setShowModalDelete={setShowModalDelete}
-					setShowModalEdit={setShowModalEdit}
+					setShowModalEdit={setShowModalUpdate}
 				/>
 
 				<CardActionArea
@@ -94,6 +97,17 @@ const MovieCard = ({
 					});
 				}}
 				toast={toast}
+			/>
+
+			<UpdateModal
+				itemId={id}
+				itemTitle={movie.title as string}
+				itemSupports={supports as SupportType}
+				open={showModalUpdate}
+				onClick={setShowModalUpdate}
+				onUpdate={updateMovie}
+				toast={toast}
+				refetch={refetch}
 			/>
 		</>
 	);
