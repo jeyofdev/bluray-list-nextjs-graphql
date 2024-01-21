@@ -1,6 +1,7 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import CardSettings from '@components/ui/menu/CardSettings';
+import DeleteModal from '@components/ui/modal/DeleteModal';
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
 import {
 	Box,
@@ -24,41 +25,57 @@ const MovieCard = ({ movie, supports, onClick }: MovieCardPropsType) => {
 	const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
 
 	return (
-		<Card className='relative'>
-			<CardSettings
-				title='Movie settings'
-				setShowModalDelete={setShowModalDelete}
-				setShowModalEdit={setShowModalEdit}
-			/>
-			<CardActionArea onClick={onClick}>
-				<CardMedia
-					component='img'
-					className='w-full'
-					image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-					title={movie?.title as string}
+		<>
+			<Card className='relative flex items-stretch'>
+				<CardSettings
+					title='Movie settings'
+					setShowModalDelete={setShowModalDelete}
+					setShowModalEdit={setShowModalEdit}
 				/>
 
-				<CardContent>
-					<Typography
-						variant='h6'
-						component='h3'
-						className='text-center text-lg leading-6'
-					>
-						{movie.title}
-					</Typography>
+				<CardActionArea
+					className='flex flex-col items-center justify-start'
+					onClick={onClick}
+				>
+					<CardMedia
+						component='img'
+						className='w-full'
+						image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+						title={movie?.title as string}
+					/>
 
-					<Box className='flex items-center justify-center gap-4'>
-						{supports?.bluray && (
-							<BlurayIcon className='text-4xl text-primary-900' />
-						)}
+					<CardContent>
+						<Typography
+							variant='h6'
+							component='h3'
+							className='text-center text-lg leading-6'
+						>
+							{movie.title}
+						</Typography>
 
-						{supports?.bluray_hd && (
-							<BlurayUltraHDIcon className='text-6xl text-primary-900' />
-						)}
-					</Box>
-				</CardContent>
-			</CardActionArea>
-		</Card>
+						<Box className='flex items-center justify-center gap-4'>
+							{supports?.bluray && (
+								<BlurayIcon className='text-4xl text-primary-900' />
+							)}
+
+							{supports?.bluray_hd && (
+								<BlurayUltraHDIcon className='text-6xl text-primary-900' />
+							)}
+						</Box>
+					</CardContent>
+				</CardActionArea>
+			</Card>
+
+			<DeleteModal
+				itemTitle={movie.title as string}
+				open={showModalDelete}
+				onClick={setShowModalDelete}
+				onDelete={() => {
+					// eslint-disable-next-line no-console
+					console.log('delete ok');
+				}}
+			/>
+		</>
 	);
 };
 
