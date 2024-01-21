@@ -19,6 +19,24 @@ const theme = createTheme({
 const globalTheme = createTheme({
 	...theme,
 	components: {
+		MuiContainer: {
+			styleOverrides: {
+				root: {
+					paddingLeft: '1rem',
+					paddingRight: '1rem',
+
+					[theme.breakpoints.up('sm')]: {
+						paddingLeft: '1.5rem',
+						paddingRight: '1.5rem',
+					},
+
+					[theme.breakpoints.up('md')]: {
+						paddingLeft: '1.75rem',
+						paddingRight: '1.75rem',
+					},
+				},
+			},
+		},
 		MuiButton: {
 			styleOverrides: {
 				root: {
@@ -38,6 +56,22 @@ const globalTheme = createTheme({
 				icon: {
 					padding: 0,
 					alignItems: 'center',
+				},
+			},
+		},
+		MuiMenuItem: {
+			styleOverrides: {
+				root: {
+					paddingLeft: '0.25rem',
+					paddingRight: '0.25rem',
+				},
+			},
+		},
+		MuiPaginationItem: {
+			styleOverrides: {
+				root: {
+					minWidth: 'auto',
+					minHeight: 'auto',
 				},
 			},
 		},
