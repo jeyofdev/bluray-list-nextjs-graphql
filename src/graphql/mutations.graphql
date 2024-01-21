@@ -14,8 +14,19 @@ mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
 	}
 }
 
-mutation deleteMovie($movieId: ID!) {
+mutation DeleteMovie($movieId: ID!) {
 	deleteMovie(movieId: $movieId) {
+		id
+		details {
+			id
+			title
+			original_title
+		}
+	}
+}
+
+mutation UpdateMovie($movieId: ID, $support: SupportInput) {
+	updateMovie(movieId: $movieId, support: $support) {
 		id
 		details {
 			id

@@ -6,6 +6,7 @@ import UpdateModal from '@components/ui/modal/UpdateModal';
 import {
 	MovieDetails,
 	useDeleteMovieMutation,
+	useUpdateMovieMutation,
 } from '@graphql/__generated__/graphql-type';
 import {
 	Box,
@@ -39,6 +40,7 @@ const MovieCard = ({
 	const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
 
 	const [deleteMovie, { data: deletedMovie }] = useDeleteMovieMutation();
+	const [updateMovie, { data: updatedMovie }] = useUpdateMovieMutation();
 
 	return (
 		<>
@@ -98,14 +100,14 @@ const MovieCard = ({
 			/>
 
 			<UpdateModal
+				itemId={id}
 				itemTitle={movie.title as string}
+				itemSupports={supports as SupportType}
 				open={showModalUpdate}
 				onClick={setShowModalUpdate}
-				onUpdate={() => {
-					// eslint-disable-next-line no-console
-					console.log('update success');
-				}}
+				onUpdate={updateMovie}
 				toast={toast}
+				refetch={refetch}
 			/>
 		</>
 	);
