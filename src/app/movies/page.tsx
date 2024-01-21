@@ -39,9 +39,11 @@ const MoviesPage = () => {
 						renderItems={(movie: any) => (
 							<MovieCard
 								key={movie.id}
+								id={movie.id}
 								movie={movie.details}
 								supports={movie.support}
 								onClick={() => {}}
+								refetch={refetch}
 							/>
 						)}
 					/>

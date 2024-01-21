@@ -2,7 +2,10 @@ import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import CardSettings from '@components/ui/menu/CardSettings';
 import DeleteModal from '@components/ui/modal/DeleteModal';
-import { MovieDetails } from '@graphql/__generated__/graphql-type';
+import {
+	MovieDetails,
+	useDeleteMovieMutation,
+} from '@graphql/__generated__/graphql-type';
 import {
 	Box,
 	Card,
@@ -15,14 +18,24 @@ import { MouseEventHandler, useState } from 'react';
 import { SupportType } from '../../types';
 
 type MovieCardPropsType = {
+	id: string;
 	movie: MovieDetails;
 	supports?: SupportType;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
+	refetch: any;
 };
 
-const MovieCard = ({ movie, supports, onClick }: MovieCardPropsType) => {
+const MovieCard = ({
+	id,
+	movie,
+	supports,
+	onClick,
+	refetch,
+}: MovieCardPropsType) => {
 	const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
 	const [showModalEdit, setShowModalEdit] = useState<boolean>(false);
+
+	const [deleteMovie, { data: deletedMovie }] = useDeleteMovieMutation();
 
 	return (
 		<>
@@ -71,8 +84,12 @@ const MovieCard = ({ movie, supports, onClick }: MovieCardPropsType) => {
 				open={showModalDelete}
 				onClick={setShowModalDelete}
 				onDelete={() => {
-					// eslint-disable-next-line no-console
-					console.log('delete ok');
+					deleteMovie({
+						variables: {
+							movieId: id,
+						},
+						onCompleted: refetch,
+					});
 				}}
 			/>
 		</>
