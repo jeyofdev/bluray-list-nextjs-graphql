@@ -1,5 +1,5 @@
 import { ToastOnCloseType } from '@hooks/useToast';
-import { ReactNode } from 'react';
+import { ChangeEvent, ReactNode } from 'react';
 
 export type ChildrenType = ReactNode;
 
@@ -19,3 +19,8 @@ export type ToastType = {
 	onOpen: (message: string) => void;
 	onClose: ToastOnCloseType;
 };
+
+export type PaginationHandleChangeCurrentPage = (
+	_: ChangeEvent<unknown>,
+	value: number,
+) => void;

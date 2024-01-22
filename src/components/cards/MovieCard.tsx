@@ -1,8 +1,8 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import CardSettings from '@components/ui/menu/CardSettings';
-import DeleteModal from '@components/ui/modal/DeleteModal';
-import UpdateModal from '@components/ui/modal/UpdateModal';
+import DeleteActionModal from '@components/ui/modal/DeleteActionModal';
+import UpdateActionModal from '@components/ui/modal/UpdateActionModal';
 import {
 	MovieDetails,
 	useDeleteMovieMutation,
@@ -84,7 +84,7 @@ const MovieCard = ({
 				</CardActionArea>
 			</Card>
 
-			<DeleteModal
+			<DeleteActionModal
 				itemTitle={movie.title as string}
 				open={showModalDelete}
 				onClick={setShowModalDelete}
@@ -99,7 +99,7 @@ const MovieCard = ({
 				toast={toast}
 			/>
 
-			<UpdateModal
+			<UpdateActionModal
 				itemId={id}
 				itemTitle={movie.title as string}
 				itemSupports={supports as SupportType}

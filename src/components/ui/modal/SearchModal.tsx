@@ -1,8 +1,13 @@
 import SearchTextField from '@components/ui/form/SearchTextField';
+import Pagination from '@components/ui/pagination/Pagination';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Box, Container, IconButton, Modal, Typography } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
-import { ChildrenType } from '../../../types';
+import { Dispatch, SetStateAction, Suspense } from 'react';
+import {
+	ChildrenType,
+	PaginationHandleChangeCurrentPage,
+} from '../../../types';
+import ShowResultsNumber from '../result/ShowResultNumber';
 
 export type SearchModalPropsType = {
 	open: boolean;
@@ -10,8 +15,12 @@ export type SearchModalPropsType = {
 	title: string;
 	search: string;
 	setSearch: Dispatch<SetStateAction<string>>;
+	searchQuery: string;
 	setSearchQuery: Dispatch<SetStateAction<string>>;
-	children: ChildrenType;
+	totalResults: number;
+	currentPage: number;
+	handleChangeCurrentPage: PaginationHandleChangeCurrentPage;
+	list: ChildrenType;
 };
 
 const SearchModal = ({
@@ -20,8 +29,12 @@ const SearchModal = ({
 	title,
 	search,
 	setSearch,
+	searchQuery,
 	setSearchQuery,
-	children,
+	totalResults,
+	currentPage,
+	handleChangeCurrentPage,
+	list,
 }: SearchModalPropsType) => {
 	return (
 		<Modal open={open}>
@@ -57,7 +70,25 @@ const SearchModal = ({
 							setSearchQuery={setSearchQuery}
 						/>
 
-						{children}
+						<Box className='mt-8'>
+							<Suspense fallback={<h1>loading...</h1>}>
+								{searchQuery ? (
+									<ShowResultsNumber totalResults={totalResults} />
+								) : null}
+
+								{list}
+
+								{searchQuery && totalResults && totalResults > 0 ? (
+									<Box className='my-8 flex justify-center'>
+										<Pagination
+											totalItems={totalResults}
+											page={currentPage}
+											onChange={handleChangeCurrentPage}
+										/>
+									</Box>
+								) : null}
+							</Suspense>
+						</Box>
 					</Box>
 				</Container>
 			</Box>
