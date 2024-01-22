@@ -1,6 +1,6 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
-import { SupportEnum } from '@enums/indeX';
+import { SupportEnum } from '@enums/index';
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
 import {
 	Box,
