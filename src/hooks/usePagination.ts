@@ -1,8 +1,9 @@
 import { ChangeEvent, useState } from 'react';
+import { PaginationHandleChangeCurrentPage } from '../types';
 
 type UsePaginationType = {
 	currentPage: number;
-	handleChangeCurrentPage: (_: ChangeEvent<unknown>, value: number) => void;
+	handleChangeCurrentPage: PaginationHandleChangeCurrentPage;
 	resetCurrentPage: () => void;
 };
 
