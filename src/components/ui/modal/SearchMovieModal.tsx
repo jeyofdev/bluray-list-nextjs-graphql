@@ -4,7 +4,7 @@ import {
 	useSearchMoviesSuspenseQuery,
 } from '@graphql/__generated__/graphql-type';
 import usePagination from '@hooks/usePagination';
-import { useState } from 'react';
+import useSearch from '@hooks/useSearch';
 import SearchResultList from '../list/SearchResultList';
 import SearchModal, { SearchModalPropsType } from './SearchModal';
 
@@ -13,9 +13,7 @@ type SearchMovieModal = Pick<SearchModalPropsType, 'open' | 'onClose'> & {
 };
 
 const SearchMovieModal = ({ open, onClose, refetch }: SearchMovieModal) => {
-	const [search, setSearch] = useState<string>('');
-	const [searchQuery, setSearchQuery] = useState<string>('');
-
+	const { search, searchQuery, setSearch, setSearchQuery } = useSearch();
 	const { currentPage, handleChangeCurrentPage, resetCurrentPage } =
 		usePagination();
 

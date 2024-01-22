@@ -1,7 +1,6 @@
 import SearchTextField from '@components/ui/form/SearchTextField';
+import Pagination from '@components/ui/pagination/Pagination';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box, Container, IconButton, Modal, Typography } from '@mui/material';
 import { Dispatch, SetStateAction, Suspense } from 'react';
 import {
@@ -9,7 +8,6 @@ import {
 	PaginationHandleChangeCurrentPage,
 } from '../../../types';
 import ShowResultsNumber from '../result/ShowResultNumber';
-import Pagination from '@components/ui/pagination/Pagination';
 
 export type SearchModalPropsType = {
 	open: boolean;
