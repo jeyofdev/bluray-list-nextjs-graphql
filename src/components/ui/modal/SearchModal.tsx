@@ -2,21 +2,14 @@ import SearchTextField from '@components/ui/form/SearchTextField';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import {
-	Box,
-	Container,
-	IconButton,
-	Modal,
-	Pagination,
-	PaginationItem,
-	Typography,
-} from '@mui/material';
+import { Box, Container, IconButton, Modal, Typography } from '@mui/material';
 import { Dispatch, SetStateAction, Suspense } from 'react';
 import {
 	ChildrenType,
 	PaginationHandleChangeCurrentPage,
 } from '../../../types';
 import ShowResultsNumber from '../result/ShowResultNumber';
+import Pagination from '@components/ui/pagination/Pagination';
 
 export type SearchModalPropsType = {
 	open: boolean;
@@ -90,28 +83,9 @@ const SearchModal = ({
 								{searchQuery && totalResults && totalResults > 0 ? (
 									<Box className='my-8 flex justify-center'>
 										<Pagination
-											classes={{
-												ul: 'gap-2',
-											}}
-											size='small'
-											count={
-												(totalResults as number) > 100 ? 100 : totalResults
-											}
+											totalItems={totalResults}
 											page={currentPage}
 											onChange={handleChangeCurrentPage}
-											renderItem={item => (
-												<PaginationItem
-													classes={{
-														root: 'text-primary-900 text-xl w-9 h-9 rounded-full',
-														selected: 'bg-transparent text-lg',
-													}}
-													slots={{
-														previous: ArrowBackIcon,
-														next: ArrowForwardIcon,
-													}}
-													{...item}
-												/>
-											)}
 										/>
 									</Box>
 								) : null}
