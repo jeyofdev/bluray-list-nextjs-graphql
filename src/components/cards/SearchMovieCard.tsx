@@ -77,6 +77,7 @@ const SearchMovieCard = ({
 					image={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
 					title={movie.title as string}
 				/>
+
 				<CardContent>
 					<Typography
 						variant='h6'
