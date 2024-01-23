@@ -317,6 +317,39 @@ export type MoviesQuery = {
 	} | null> | null;
 };
 
+export type SearchSeriesQueryVariables = Exact<{
+	searchOptions?: InputMaybe<SearchOptionsInput>;
+}>;
+
+export type SearchSeriesQuery = {
+	__typename?: 'Query';
+	searchSeries?: {
+		__typename?: 'SearchSerieResponse';
+		page: number;
+		total_pages: number;
+		total_results: number;
+		results: Array<{
+			__typename?: 'SerieDetails';
+			id?: number | null;
+			name?: string | null;
+			number_of_episodes?: number | null;
+			original_name?: string | null;
+			poster_path?: string | null;
+			seasons?: Array<{
+				__typename?: 'Season';
+				air_date?: string | null;
+				episode_count?: number | null;
+				id?: number | null;
+				name?: string | null;
+				overview?: string | null;
+				poster_path?: string | null;
+				season_number?: number | null;
+				vote_average?: number | null;
+			} | null> | null;
+		} | null>;
+	} | null;
+};
+
 export const AddMovieDocument = gql`
 	mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
 		addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
@@ -645,4 +678,96 @@ export type MoviesSuspenseQueryHookResult = ReturnType<
 export type MoviesQueryResult = Apollo.QueryResult<
 	MoviesQuery,
 	MoviesQueryVariables
+>;
+export const SearchSeriesDocument = gql`
+	query SearchSeries($searchOptions: SearchOptionsInput) {
+		searchSeries(searchOptions: $searchOptions) {
+			page
+			total_pages
+			total_results
+			results {
+				id
+				name
+				number_of_episodes
+				original_name
+				poster_path
+				seasons {
+					air_date
+					episode_count
+					id
+					name
+					overview
+					poster_path
+					season_number
+					vote_average
+				}
+			}
+		}
+	}
+`;
+
+/**
+ * __useSearchSeriesQuery__
+ *
+ * To run a query within a React component, call `useSearchSeriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchSeriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchSeriesQuery({
+ *   variables: {
+ *      searchOptions: // value for 'searchOptions'
+ *   },
+ * });
+ */
+export function useSearchSeriesQuery(
+	baseOptions?: Apollo.QueryHookOptions<
+		SearchSeriesQuery,
+		SearchSeriesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<SearchSeriesQuery, SearchSeriesQueryVariables>(
+		SearchSeriesDocument,
+		options,
+	);
+}
+export function useSearchSeriesLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<
+		SearchSeriesQuery,
+		SearchSeriesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<SearchSeriesQuery, SearchSeriesQueryVariables>(
+		SearchSeriesDocument,
+		options,
+	);
+}
+export function useSearchSeriesSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		SearchSeriesQuery,
+		SearchSeriesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<SearchSeriesQuery, SearchSeriesQueryVariables>(
+		SearchSeriesDocument,
+		options,
+	);
+}
+export type SearchSeriesQueryHookResult = ReturnType<
+	typeof useSearchSeriesQuery
+>;
+export type SearchSeriesLazyQueryHookResult = ReturnType<
+	typeof useSearchSeriesLazyQuery
+>;
+export type SearchSeriesSuspenseQueryHookResult = ReturnType<
+	typeof useSearchSeriesSuspenseQuery
+>;
+export type SearchSeriesQueryResult = Apollo.QueryResult<
+	SearchSeriesQuery,
+	SearchSeriesQueryVariables
 >;

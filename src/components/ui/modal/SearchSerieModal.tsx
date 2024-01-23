@@ -1,30 +1,27 @@
-import SearchMovieCard from '@components/cards/SearchMovieCard';
-import {
-	useAddMovieMutation,
-	useSearchMoviesSuspenseQuery,
-} from '@graphql/__generated__/graphql-type';
+import { useSearchSeriesSuspenseQuery } from '@graphql/__generated__/graphql-type';
 import usePagination from '@hooks/usePagination';
 import useSearch from '@hooks/useSearch';
+import { Typography } from '@mui/material';
 import SearchResultList from '../list/SearchResultList';
 import SearchModal, { SearchModalPropsType } from './SearchModal';
 
-type SearchMovieModalPropsType = Pick<
+type SearchSerieModalPropsType = Pick<
 	SearchModalPropsType,
 	'open' | 'onClose'
 > & {
 	refetch: any;
 };
 
-const SearchMovieModal = ({
+const SearchSerieModal = ({
 	open,
 	onClose,
 	refetch,
-}: SearchMovieModalPropsType) => {
+}: SearchSerieModalPropsType) => {
 	const { search, searchQuery, setSearch, setSearchQuery } = useSearch();
 	const { currentPage, handleChangeCurrentPage, resetCurrentPage } =
 		usePagination();
 
-	const { data } = useSearchMoviesSuspenseQuery({
+	const { data } = useSearchSeriesSuspenseQuery({
 		variables: {
 			searchOptions: {
 				query: searchQuery,
@@ -32,8 +29,6 @@ const SearchMovieModal = ({
 			},
 		},
 	});
-
-	const [addMovie, { data: movieAdded }] = useAddMovieMutation();
 
 	// clear modal data
 	const handleClose = () => {
@@ -47,31 +42,23 @@ const SearchMovieModal = ({
 		<SearchModal
 			open={open}
 			onClose={handleClose}
-			title='Search movie'
+			title='Search serie'
 			search={search}
 			setSearch={setSearch}
 			searchQuery={searchQuery}
 			setSearchQuery={setSearchQuery}
-			totalResults={data?.searchMovies?.total_results as number}
+			totalResults={data?.searchSeries?.total_results as number}
 			currentPage={currentPage}
 			handleChangeCurrentPage={handleChangeCurrentPage}
 			list={
 				<SearchResultList
-					items={data?.searchMovies?.results}
-					renderItems={(data: any) => (
-						<SearchMovieCard
-							key={data.id}
-							movie={data}
-							addMovie={addMovie}
-							refetch={refetch}
-							onClose={handleClose}
-						/>
-					)}
+					items={data?.searchSeries?.results}
+					renderItems={(data: any) => <Typography>{data.name}</Typography>}
 				/>
 			}
-			searchTextFieldPlaceholder='Enter a movie'
+			searchTextFieldPlaceholder='Enter a serie'
 		/>
 	);
 };
 
-export default SearchMovieModal;
+export default SearchSerieModal;

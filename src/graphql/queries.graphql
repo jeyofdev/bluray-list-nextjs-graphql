@@ -34,3 +34,28 @@ query Movies {
 		}
 	}
 }
+
+query SearchSeries($searchOptions: SearchOptionsInput) {
+	searchSeries(searchOptions: $searchOptions) {
+		page
+		total_pages
+		total_results
+		results {
+			id
+			name
+			number_of_episodes
+			original_name
+			poster_path
+			seasons {
+				air_date
+				episode_count
+				id
+				name
+				overview
+				poster_path
+				season_number
+				vote_average
+			}
+		}
+	}
+}
