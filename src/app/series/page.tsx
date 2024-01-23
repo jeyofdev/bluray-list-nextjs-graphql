@@ -1,17 +1,18 @@
 'use client';
 
+import NoSSRWrapper from '@components/NoSSRWrapper';
 import ContentContainer from '@components/containers/ContentContainer';
-import { Typography, useTheme } from '@mui/material';
+import { Typography } from '@mui/material';
 
 const SeriesPage = () => {
-	const theme = useTheme();
-
 	return (
-		<ContentContainer>
-			<Typography variant='h4' component='h1' className='text-center'>
-				Series
-			</Typography>
-		</ContentContainer>
+		<NoSSRWrapper>
+			<ContentContainer>
+				<Typography variant='h4' component='h1' className='mb-4 text-center'>
+					Series
+				</Typography>
+			</ContentContainer>
+		</NoSSRWrapper>
 	);
 };
 
