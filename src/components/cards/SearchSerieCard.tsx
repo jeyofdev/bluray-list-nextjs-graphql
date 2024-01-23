@@ -1,7 +1,7 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import { SupportEnum } from '@enums/index';
-import { MovieDetails } from '@graphql/__generated__/graphql-type';
+import { SerieDetails } from '@graphql/__generated__/graphql-type';
 import useSupport from '@hooks/useSupport';
 import {
 	Box,
@@ -14,25 +14,26 @@ import {
 	Typography,
 } from '@mui/material';
 
-type SearchMovieCardProps = {
-	movie: MovieDetails;
-	addMovie?: any;
+type SearchSerieCardProps = {
+	serie: SerieDetails;
+	addSerie?: any;
 	refetch: any;
 	onClose: () => void;
 };
 
-const SearchMovieCard = ({
-	movie,
-	addMovie,
+const SearchSerieCard = ({
+	serie,
+	addSerie,
 	refetch,
 	onClose,
-}: SearchMovieCardProps) => {
+}: SearchSerieCardProps) => {
 	const { itemSupports, onChange: handleChangeItemSupports } = useSupport();
 
 	const handleClick = () => {
-		addMovie({
+		addSerie({
 			variables: {
-				tmdbMovieId: movie.id,
+				tmdbSerieId: serie.id,
+				season: 1,
 				support: itemSupports,
 			},
 			onCompleted: refetch,
@@ -74,8 +75,8 @@ const SearchMovieCard = ({
 				<CardMedia
 					component='img'
 					className='w-full'
-					image={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
-					title={movie.title as string}
+					image={`https://image.tmdb.org/t/p/w500${serie?.poster_path}`}
+					title={serie.name as string}
 				/>
 
 				<CardContent>
@@ -84,7 +85,7 @@ const SearchMovieCard = ({
 						component='h3'
 						className='text-center text-lg leading-6'
 					>
-						{movie?.title}
+						{serie?.name}
 					</Typography>
 				</CardContent>
 			</CardActionArea>
@@ -92,4 +93,4 @@ const SearchMovieCard = ({
 	);
 };
 
-export default SearchMovieCard;
+export default SearchSerieCard;

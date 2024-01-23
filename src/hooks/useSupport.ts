@@ -3,25 +3,25 @@ import { SupportType } from '../types';
 import { SupportEnum } from '@enums/index';
 
 type UseSupportType = {
-	movieSupports: SupportType;
+	itemSupports: SupportType;
 	onChange: (support: SupportEnum) => void;
 };
 
 const useSupport = (): UseSupportType => {
-	const [movieSupports, setMovieSupports] = useState<SupportType>({
+	const [itemSupports, setItemSupports] = useState<SupportType>({
 		bluray: false,
 		bluray_hd: false,
 		dvd: false,
 	});
 
 	const onChange = (support: SupportEnum) => {
-		setMovieSupports({
-			...movieSupports,
-			[support]: !movieSupports[support],
+		setItemSupports({
+			...itemSupports,
+			[support]: !itemSupports[support],
 		});
 	};
 
-	return { movieSupports, onChange };
+	return { itemSupports, onChange };
 };
 
 export default useSupport;

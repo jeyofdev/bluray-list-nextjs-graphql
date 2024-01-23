@@ -1,7 +1,10 @@
-import { useSearchSeriesSuspenseQuery } from '@graphql/__generated__/graphql-type';
+import SearchSerieCard from '@components/cards/SearchSerieCard';
+import {
+	useAddSerieMutation,
+	useSearchSeriesSuspenseQuery,
+} from '@graphql/__generated__/graphql-type';
 import usePagination from '@hooks/usePagination';
 import useSearch from '@hooks/useSearch';
-import { Typography } from '@mui/material';
 import SearchResultList from '../list/SearchResultList';
 import SearchModal, { SearchModalPropsType } from './SearchModal';
 
@@ -30,6 +33,8 @@ const SearchSerieModal = ({
 		},
 	});
 
+	const [addSerie, { data: serieAdded }] = useAddSerieMutation();
+
 	// clear modal data
 	const handleClose = () => {
 		onClose();
@@ -53,7 +58,15 @@ const SearchSerieModal = ({
 			list={
 				<SearchResultList
 					items={data?.searchSeries?.results}
-					renderItems={(data: any) => <Typography>{data.name}</Typography>}
+					renderItems={(data: any) => (
+						<SearchSerieCard
+							key={data.id}
+							serie={data}
+							addSerie={addSerie}
+							refetch={refetch}
+							onClose={handleClose}
+						/>
+					)}
 				/>
 			}
 			searchTextFieldPlaceholder='Enter a serie'

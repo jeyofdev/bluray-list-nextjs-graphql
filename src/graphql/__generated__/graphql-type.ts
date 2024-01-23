@@ -266,6 +266,39 @@ export type UpdateMovieMutation = {
 	} | null;
 };
 
+export type AddSerieMutationVariables = Exact<{
+	tmdbSerieId?: InputMaybe<Scalars['Int']['input']>;
+	season?: InputMaybe<Scalars['Int']['input']>;
+	support?: InputMaybe<SupportInput>;
+}>;
+
+export type AddSerieMutation = {
+	__typename?: 'Mutation';
+	addSerie?: {
+		__typename?: 'SerieResponse';
+		id?: string | null;
+		season?: number | null;
+		details?: {
+			__typename?: 'SerieDetails';
+			id?: number | null;
+			name?: string | null;
+			original_name?: string | null;
+			seasons?: Array<{
+				__typename?: 'Season';
+				id?: number | null;
+				name?: string | null;
+				season_number?: number | null;
+			} | null> | null;
+		} | null;
+		support?: {
+			__typename?: 'Support';
+			bluray?: boolean | null;
+			bluray_hd?: boolean | null;
+			dvd?: boolean | null;
+		} | null;
+	} | null;
+};
+
 export type SearchMoviesQueryVariables = Exact<{
 	searchOptions?: InputMaybe<SearchOptionsInput>;
 }>;
@@ -518,6 +551,71 @@ export type UpdateMovieMutationResult =
 export type UpdateMovieMutationOptions = Apollo.BaseMutationOptions<
 	UpdateMovieMutation,
 	UpdateMovieMutationVariables
+>;
+export const AddSerieDocument = gql`
+	mutation AddSerie($tmdbSerieId: Int, $season: Int, $support: SupportInput) {
+		addSerie(tmdbSerieId: $tmdbSerieId, season: $season, support: $support) {
+			id
+			season
+			details {
+				id
+				name
+				original_name
+				seasons {
+					id
+					name
+					season_number
+				}
+			}
+			support {
+				bluray
+				bluray_hd
+				dvd
+			}
+		}
+	}
+`;
+export type AddSerieMutationFn = Apollo.MutationFunction<
+	AddSerieMutation,
+	AddSerieMutationVariables
+>;
+
+/**
+ * __useAddSerieMutation__
+ *
+ * To run a mutation, you first call `useAddSerieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddSerieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addSerieMutation, { data, loading, error }] = useAddSerieMutation({
+ *   variables: {
+ *      tmdbSerieId: // value for 'tmdbSerieId'
+ *      season: // value for 'season'
+ *      support: // value for 'support'
+ *   },
+ * });
+ */
+export function useAddSerieMutation(
+	baseOptions?: Apollo.MutationHookOptions<
+		AddSerieMutation,
+		AddSerieMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<AddSerieMutation, AddSerieMutationVariables>(
+		AddSerieDocument,
+		options,
+	);
+}
+export type AddSerieMutationHookResult = ReturnType<typeof useAddSerieMutation>;
+export type AddSerieMutationResult = Apollo.MutationResult<AddSerieMutation>;
+export type AddSerieMutationOptions = Apollo.BaseMutationOptions<
+	AddSerieMutation,
+	AddSerieMutationVariables
 >;
 export const SearchMoviesDocument = gql`
 	query SearchMovies($searchOptions: SearchOptionsInput) {

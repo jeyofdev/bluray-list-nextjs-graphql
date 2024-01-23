@@ -35,3 +35,25 @@ mutation UpdateMovie($movieId: ID, $support: SupportInput) {
 		}
 	}
 }
+
+mutation AddSerie($tmdbSerieId: Int, $season: Int, $support: SupportInput) {
+	addSerie(tmdbSerieId: $tmdbSerieId, season: $season, support: $support) {
+		id
+		season
+		details {
+			id
+			name
+			original_name
+			seasons {
+				id
+				name
+				season_number
+			}
+		}
+		support {
+			bluray
+			bluray_hd
+			dvd
+		}
+	}
+}
