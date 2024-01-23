@@ -2,6 +2,7 @@ import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import { SupportEnum } from '@enums/index';
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
+import useSupport from '@hooks/useSupport';
 import {
 	Box,
 	Button,
@@ -12,8 +13,6 @@ import {
 	Checkbox,
 	Typography,
 } from '@mui/material';
-import { useState } from 'react';
-import { SupportType } from '../../types';
 
 type SearchMovieCardProps = {
 	movie: MovieDetails;
@@ -28,18 +27,7 @@ const SearchMovieCard = ({
 	refetch,
 	onClose,
 }: SearchMovieCardProps) => {
-	const [movieSupports, setMovieSupports] = useState<SupportType>({
-		bluray: false,
-		bluray_hd: false,
-		dvd: false,
-	});
-
-	const handleChangeMovieSupports = (support: SupportEnum) => {
-		setMovieSupports({
-			...movieSupports,
-			[support]: !movieSupports[support],
-		});
-	};
+	const { movieSupports, onChange: handleChangeMovieSupports } = useSupport();
 
 	const handleClick = () => {
 		addMovie({
