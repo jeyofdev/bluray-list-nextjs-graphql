@@ -107,7 +107,8 @@ export type Query = {
 	__typename?: 'Query';
 	movie?: Maybe<MovieResponse>;
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
-	searchMovies?: Maybe<SearchSerieResponse>;
+	searchMovies?: Maybe<SearchMovieResponse>;
+	searchSeries?: Maybe<SearchSerieResponse>;
 	serie?: Maybe<SerieResponse>;
 	series?: Maybe<Array<Maybe<SerieResponse>>>;
 };
@@ -117,6 +118,10 @@ export type QueryMovieArgs = {
 };
 
 export type QuerySearchMoviesArgs = {
+	searchOptions?: InputMaybe<SearchOptionsInput>;
+};
+
+export type QuerySearchSeriesArgs = {
 	searchOptions?: InputMaybe<SearchOptionsInput>;
 };
 
@@ -502,10 +507,16 @@ export type QueryResolvers<
 		ContextType
 	>;
 	searchMovies?: Resolver<
-		Maybe<ResolversTypes['SearchSerieResponse']>,
+		Maybe<ResolversTypes['SearchMovieResponse']>,
 		ParentType,
 		ContextType,
 		Partial<QuerySearchMoviesArgs>
+	>;
+	searchSeries?: Resolver<
+		Maybe<ResolversTypes['SearchSerieResponse']>,
+		ParentType,
+		ContextType,
+		Partial<QuerySearchSeriesArgs>
 	>;
 	serie?: Resolver<
 		Maybe<ResolversTypes['SerieResponse']>,

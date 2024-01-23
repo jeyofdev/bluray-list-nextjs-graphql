@@ -2,12 +2,14 @@ import { FormControl, Input } from '@mui/material';
 import { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction } from 'react';
 
 export type SearchTextFieldPropsType = {
+	placeholder: string;
 	search: string;
 	setSearch: Dispatch<SetStateAction<string>>;
 	setSearchQuery: Dispatch<SetStateAction<string>>;
 };
 
 const SearchTextField = ({
+	placeholder,
 	search,
 	setSearch,
 	setSearchQuery,
@@ -33,7 +35,7 @@ const SearchTextField = ({
 		>
 			<Input
 				type={'text'}
-				placeholder='Enter a movie'
+				placeholder={placeholder}
 				value={search}
 				onChange={handleSearch}
 				onKeyUp={onKeyUp}

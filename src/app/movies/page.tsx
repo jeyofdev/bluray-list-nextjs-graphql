@@ -8,13 +8,15 @@ import ItemsList from '@components/ui/list/ItemList';
 import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
 import Toast from '@components/ui/toast/Toast';
 import { useMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
+import useSearch from '@hooks/useSearch';
 import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 
 const MoviesPage = () => {
-	const [showSearchModal, setshowSearchModal] = useState<boolean>(false);
+	const { showSearchModal, onOpenSearchModal, onCloseSearchModal } =
+		useSearch();
 	const {
 		toast,
 		onOpen: handleOpenToast,
@@ -24,14 +26,6 @@ const MoviesPage = () => {
 	const { data, refetch } = useMoviesSuspenseQuery({
 		fetchPolicy: 'cache-and-network',
 	});
-
-	const handleOpenSearchModal = () => {
-		setshowSearchModal(true);
-	};
-
-	const handleCloseSearchModal = () => {
-		setshowSearchModal(false);
-	};
 
 	return (
 		<NoSSRWrapper>
@@ -63,14 +57,14 @@ const MoviesPage = () => {
 				<Box className='mt-4 flex justify-center'>
 					<ButtonAction
 						icon={<AddIcon className='size-6' />}
-						onClick={handleOpenSearchModal}
+						onClick={onOpenSearchModal}
 					/>
 				</Box>
 			</ContentContainer>
 
 			<SearchMovieModal
 				open={showSearchModal}
-				onClose={handleCloseSearchModal}
+				onClose={onCloseSearchModal}
 				refetch={refetch}
 			/>
 

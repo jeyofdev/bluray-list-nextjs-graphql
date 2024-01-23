@@ -626,6 +626,31 @@
 						],
 						"type": {
 							"kind": "OBJECT",
+							"name": "SearchMovieResponse",
+							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "searchSeries",
+						"description": null,
+						"args": [
+							{
+								"name": "searchOptions",
+								"description": null,
+								"type": {
+									"kind": "INPUT_OBJECT",
+									"name": "SearchOptionsInput",
+									"ofType": null
+								},
+								"defaultValue": null,
+								"isDeprecated": false,
+								"deprecationReason": null
+							}
+						],
+						"type": {
+							"kind": "OBJECT",
 							"name": "SearchSerieResponse",
 							"ofType": null
 						},

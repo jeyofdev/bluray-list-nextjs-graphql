@@ -21,6 +21,7 @@ export type SearchModalPropsType = {
 	currentPage: number;
 	handleChangeCurrentPage: PaginationHandleChangeCurrentPage;
 	list: ChildrenType;
+	searchTextFieldPlaceholder: string;
 };
 
 const SearchModal = ({
@@ -35,6 +36,7 @@ const SearchModal = ({
 	currentPage,
 	handleChangeCurrentPage,
 	list,
+	searchTextFieldPlaceholder,
 }: SearchModalPropsType) => {
 	return (
 		<Modal open={open}>
@@ -68,6 +70,7 @@ const SearchModal = ({
 							search={search}
 							setSearch={setSearch}
 							setSearchQuery={setSearchQuery}
+							placeholder={searchTextFieldPlaceholder}
 						/>
 
 						<Box className='mt-8'>
