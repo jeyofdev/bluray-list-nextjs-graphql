@@ -59,3 +59,33 @@ query SearchSeries($searchOptions: SearchOptionsInput) {
 		}
 	}
 }
+
+query Series {
+	series {
+		id
+		season
+		details {
+			id
+			genres {
+				id
+				name
+			}
+			name
+			number_of_episodes
+			original_name
+			poster_path
+			seasons {
+				id
+				name
+				poster_path
+				season_number
+				vote_average
+			}
+		}
+		support {
+			bluray
+			bluray_hd
+			dvd
+		}
+	}
+}

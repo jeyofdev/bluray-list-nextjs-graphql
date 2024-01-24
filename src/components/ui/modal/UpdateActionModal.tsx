@@ -1,6 +1,6 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
-import { SupportEnum } from '@enums/index';
+import { SupportEnum, TypeEnum } from '@enums/index';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Checkbox } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -8,6 +8,7 @@ import { SupportType, ToastType } from '../../../types';
 import ActionModal from './ActionModal';
 
 type UpdateActionModalPropsType = {
+	type: TypeEnum;
 	open: boolean;
 	onClick: Dispatch<SetStateAction<boolean>>;
 	onUpdate: any;
@@ -19,6 +20,7 @@ type UpdateActionModalPropsType = {
 };
 
 const UpdateActionModal = ({
+	type,
 	itemId,
 	itemTitle,
 	itemSupports,
@@ -39,15 +41,17 @@ const UpdateActionModal = ({
 	};
 
 	const handleUpdate = () => {
+		const variables =
+			type === 'movie'
+				? { movieId: itemId, support: movieSupports }
+				: { serieId: itemId, season: 1, support: movieSupports };
+
 		onUpdate({
-			variables: {
-				movieId: itemId,
-				support: movieSupports,
-			},
+			variables,
 			onCompleted: refetch,
 		});
 		handleClose();
-		toast.onOpen(`The movie "${itemTitle}" has been updated with success.`);
+		toast.onOpen(`The ${type} "${itemTitle}" has been updated with success.`);
 	};
 
 	const handleChangeMovieSupports = (support: SupportEnum) => {

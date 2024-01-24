@@ -1,53 +1,53 @@
 import ListItemCard from '@components/cards/ListItemCard';
 import {
-	MovieDetails,
-	useDeleteMovieMutation,
-	useUpdateMovieMutation,
+	SerieDetails,
+	useDeleteSerieMutation,
+	useUpdateSerieMutation,
 } from '@graphql/__generated__/graphql-type';
 import { MouseEventHandler } from 'react';
 import { SupportType, ToastType } from '../../types';
 
-type MovieCardPropsType = {
+type SerieCardPropsType = {
 	id: string;
-	movie: MovieDetails;
+	serie: SerieDetails;
 	supports?: SupportType;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 	refetch: any;
 	toast: ToastType;
 };
 
-const MovieCard = ({
+const SerieCard = ({
 	id,
-	movie,
+	serie,
 	supports,
 	onClick,
 	refetch,
 	toast,
-}: MovieCardPropsType) => {
-	const [deleteMovie, { data: deletedMovie }] = useDeleteMovieMutation();
-	const [updateMovie, { data: updatedMovie }] = useUpdateMovieMutation();
+}: SerieCardPropsType) => {
+	const [deleteSerie, { data: deletedMovie }] = useDeleteSerieMutation();
+	const [updateSerie, { data: updatedMovie }] = useUpdateSerieMutation();
 
 	return (
 		<ListItemCard
-			type='movie'
+			type='serie'
 			id={id}
-			posterPath={movie.poster_path as string}
-			title={movie?.title as string}
+			posterPath={serie.poster_path as string}
+			title={serie?.name as string}
 			supports={supports}
 			onClick={onClick}
 			onDelete={() => {
-				deleteMovie({
+				deleteSerie({
 					variables: {
-						movieId: id,
+						serieId: id,
 					},
 					onCompleted: refetch,
 				});
 			}}
-			onUpdate={updateMovie}
+			onUpdate={updateSerie}
 			refetch={refetch}
 			toast={toast}
 		/>
 	);
 };
 
-export default MovieCard;
+export default SerieCard;

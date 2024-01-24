@@ -57,3 +57,27 @@ mutation AddSerie($tmdbSerieId: Int, $season: Int, $support: SupportInput) {
 		}
 	}
 }
+
+mutation DeleteSerie($serieId: ID) {
+	deleteSerie(serieId: $serieId) {
+		id
+		season
+		details {
+			id
+			name
+			original_name
+		}
+	}
+}
+
+mutation UpdateSerie($serieId: ID, $season: Int, $support: SupportInput) {
+	updateSerie(serieId: $serieId, season: $season, support: $support) {
+		id
+		season
+		details {
+			id
+			name
+			original_name
+		}
+	}
+}

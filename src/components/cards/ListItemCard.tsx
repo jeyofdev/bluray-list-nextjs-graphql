@@ -3,6 +3,7 @@ import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import CardSettings from '@components/ui/menu/CardSettings';
 import DeleteActionModal from '@components/ui/modal/DeleteActionModal';
 import UpdateActionModal from '@components/ui/modal/UpdateActionModal';
+import { TypeEnum } from '@enums/index';
 import {
 	Box,
 	Card,
@@ -15,6 +16,7 @@ import { MouseEventHandler, useState } from 'react';
 import { SupportType, ToastType } from '../../types';
 
 type ListItemCardPropsType = {
+	type: TypeEnum;
 	id: string;
 	posterPath: string;
 	title: string;
@@ -28,6 +30,7 @@ type ListItemCardPropsType = {
 
 const ListItemCard = ({
 	id,
+	type,
 	posterPath,
 	title,
 	onDelete,
@@ -83,6 +86,7 @@ const ListItemCard = ({
 			</Card>
 
 			<DeleteActionModal
+				type={type}
 				itemTitle={title}
 				open={showModalDelete}
 				onClick={setShowModalDelete}
@@ -91,6 +95,7 @@ const ListItemCard = ({
 			/>
 
 			<UpdateActionModal
+				type={type}
 				itemId={id}
 				itemTitle={title}
 				itemSupports={supports as SupportType}

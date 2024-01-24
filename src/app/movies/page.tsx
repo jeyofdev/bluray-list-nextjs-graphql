@@ -17,6 +17,7 @@ import { Suspense } from 'react';
 const MoviesPage = () => {
 	const { showSearchModal, onOpenSearchModal, onCloseSearchModal } =
 		useSearch();
+
 	const {
 		toast,
 		onOpen: handleOpenToast,

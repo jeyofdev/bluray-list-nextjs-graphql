@@ -299,6 +299,46 @@ export type AddSerieMutation = {
 	} | null;
 };
 
+export type DeleteSerieMutationVariables = Exact<{
+	serieId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type DeleteSerieMutation = {
+	__typename?: 'Mutation';
+	deleteSerie?: {
+		__typename?: 'SerieResponse';
+		id?: string | null;
+		season?: number | null;
+		details?: {
+			__typename?: 'SerieDetails';
+			id?: number | null;
+			name?: string | null;
+			original_name?: string | null;
+		} | null;
+	} | null;
+};
+
+export type UpdateSerieMutationVariables = Exact<{
+	serieId?: InputMaybe<Scalars['ID']['input']>;
+	season?: InputMaybe<Scalars['Int']['input']>;
+	support?: InputMaybe<SupportInput>;
+}>;
+
+export type UpdateSerieMutation = {
+	__typename?: 'Mutation';
+	updateSerie?: {
+		__typename?: 'SerieResponse';
+		id?: string | null;
+		season?: number | null;
+		details?: {
+			__typename?: 'SerieDetails';
+			id?: number | null;
+			name?: string | null;
+			original_name?: string | null;
+		} | null;
+	} | null;
+};
+
 export type SearchMoviesQueryVariables = Exact<{
 	searchOptions?: InputMaybe<SearchOptionsInput>;
 }>;
@@ -381,6 +421,44 @@ export type SearchSeriesQuery = {
 			} | null> | null;
 		} | null>;
 	} | null;
+};
+
+export type SeriesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SeriesQuery = {
+	__typename?: 'Query';
+	series?: Array<{
+		__typename?: 'SerieResponse';
+		id?: string | null;
+		season?: number | null;
+		details?: {
+			__typename?: 'SerieDetails';
+			id?: number | null;
+			name?: string | null;
+			number_of_episodes?: number | null;
+			original_name?: string | null;
+			poster_path?: string | null;
+			genres?: Array<{
+				__typename?: 'Genre';
+				id?: number | null;
+				name?: string | null;
+			} | null> | null;
+			seasons?: Array<{
+				__typename?: 'Season';
+				id?: number | null;
+				name?: string | null;
+				poster_path?: string | null;
+				season_number?: number | null;
+				vote_average?: number | null;
+			} | null> | null;
+		} | null;
+		support?: {
+			__typename?: 'Support';
+			bluray?: boolean | null;
+			bluray_hd?: boolean | null;
+			dvd?: boolean | null;
+		} | null;
+	} | null> | null;
 };
 
 export const AddMovieDocument = gql`
@@ -616,6 +694,120 @@ export type AddSerieMutationResult = Apollo.MutationResult<AddSerieMutation>;
 export type AddSerieMutationOptions = Apollo.BaseMutationOptions<
 	AddSerieMutation,
 	AddSerieMutationVariables
+>;
+export const DeleteSerieDocument = gql`
+	mutation DeleteSerie($serieId: ID) {
+		deleteSerie(serieId: $serieId) {
+			id
+			season
+			details {
+				id
+				name
+				original_name
+			}
+		}
+	}
+`;
+export type DeleteSerieMutationFn = Apollo.MutationFunction<
+	DeleteSerieMutation,
+	DeleteSerieMutationVariables
+>;
+
+/**
+ * __useDeleteSerieMutation__
+ *
+ * To run a mutation, you first call `useDeleteSerieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSerieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteSerieMutation, { data, loading, error }] = useDeleteSerieMutation({
+ *   variables: {
+ *      serieId: // value for 'serieId'
+ *   },
+ * });
+ */
+export function useDeleteSerieMutation(
+	baseOptions?: Apollo.MutationHookOptions<
+		DeleteSerieMutation,
+		DeleteSerieMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<DeleteSerieMutation, DeleteSerieMutationVariables>(
+		DeleteSerieDocument,
+		options,
+	);
+}
+export type DeleteSerieMutationHookResult = ReturnType<
+	typeof useDeleteSerieMutation
+>;
+export type DeleteSerieMutationResult =
+	Apollo.MutationResult<DeleteSerieMutation>;
+export type DeleteSerieMutationOptions = Apollo.BaseMutationOptions<
+	DeleteSerieMutation,
+	DeleteSerieMutationVariables
+>;
+export const UpdateSerieDocument = gql`
+	mutation UpdateSerie($serieId: ID, $season: Int, $support: SupportInput) {
+		updateSerie(serieId: $serieId, season: $season, support: $support) {
+			id
+			season
+			details {
+				id
+				name
+				original_name
+			}
+		}
+	}
+`;
+export type UpdateSerieMutationFn = Apollo.MutationFunction<
+	UpdateSerieMutation,
+	UpdateSerieMutationVariables
+>;
+
+/**
+ * __useUpdateSerieMutation__
+ *
+ * To run a mutation, you first call `useUpdateSerieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSerieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSerieMutation, { data, loading, error }] = useUpdateSerieMutation({
+ *   variables: {
+ *      serieId: // value for 'serieId'
+ *      season: // value for 'season'
+ *      support: // value for 'support'
+ *   },
+ * });
+ */
+export function useUpdateSerieMutation(
+	baseOptions?: Apollo.MutationHookOptions<
+		UpdateSerieMutation,
+		UpdateSerieMutationVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useMutation<UpdateSerieMutation, UpdateSerieMutationVariables>(
+		UpdateSerieDocument,
+		options,
+	);
+}
+export type UpdateSerieMutationHookResult = ReturnType<
+	typeof useUpdateSerieMutation
+>;
+export type UpdateSerieMutationResult =
+	Apollo.MutationResult<UpdateSerieMutation>;
+export type UpdateSerieMutationOptions = Apollo.BaseMutationOptions<
+	UpdateSerieMutation,
+	UpdateSerieMutationVariables
 >;
 export const SearchMoviesDocument = gql`
 	query SearchMovies($searchOptions: SearchOptionsInput) {
@@ -868,4 +1060,90 @@ export type SearchSeriesSuspenseQueryHookResult = ReturnType<
 export type SearchSeriesQueryResult = Apollo.QueryResult<
 	SearchSeriesQuery,
 	SearchSeriesQueryVariables
+>;
+export const SeriesDocument = gql`
+	query Series {
+		series {
+			id
+			season
+			details {
+				id
+				genres {
+					id
+					name
+				}
+				name
+				number_of_episodes
+				original_name
+				poster_path
+				seasons {
+					id
+					name
+					poster_path
+					season_number
+					vote_average
+				}
+			}
+			support {
+				bluray
+				bluray_hd
+				dvd
+			}
+		}
+	}
+`;
+
+/**
+ * __useSeriesQuery__
+ *
+ * To run a query within a React component, call `useSeriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSeriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSeriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSeriesQuery(
+	baseOptions?: Apollo.QueryHookOptions<SeriesQuery, SeriesQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<SeriesQuery, SeriesQueryVariables>(
+		SeriesDocument,
+		options,
+	);
+}
+export function useSeriesLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<SeriesQuery, SeriesQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<SeriesQuery, SeriesQueryVariables>(
+		SeriesDocument,
+		options,
+	);
+}
+export function useSeriesSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		SeriesQuery,
+		SeriesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<SeriesQuery, SeriesQueryVariables>(
+		SeriesDocument,
+		options,
+	);
+}
+export type SeriesQueryHookResult = ReturnType<typeof useSeriesQuery>;
+export type SeriesLazyQueryHookResult = ReturnType<typeof useSeriesLazyQuery>;
+export type SeriesSuspenseQueryHookResult = ReturnType<
+	typeof useSeriesSuspenseQuery
+>;
+export type SeriesQueryResult = Apollo.QueryResult<
+	SeriesQuery,
+	SeriesQueryVariables
 >;
