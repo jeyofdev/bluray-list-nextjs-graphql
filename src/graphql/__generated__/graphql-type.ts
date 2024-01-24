@@ -383,6 +383,44 @@ export type SearchSeriesQuery = {
 	} | null;
 };
 
+export type SeriesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SeriesQuery = {
+	__typename?: 'Query';
+	series?: Array<{
+		__typename?: 'SerieResponse';
+		id?: string | null;
+		season?: number | null;
+		details?: {
+			__typename?: 'SerieDetails';
+			id?: number | null;
+			name?: string | null;
+			number_of_episodes?: number | null;
+			original_name?: string | null;
+			poster_path?: string | null;
+			genres?: Array<{
+				__typename?: 'Genre';
+				id?: number | null;
+				name?: string | null;
+			} | null> | null;
+			seasons?: Array<{
+				__typename?: 'Season';
+				id?: number | null;
+				name?: string | null;
+				poster_path?: string | null;
+				season_number?: number | null;
+				vote_average?: number | null;
+			} | null> | null;
+		} | null;
+		support?: {
+			__typename?: 'Support';
+			bluray?: boolean | null;
+			bluray_hd?: boolean | null;
+			dvd?: boolean | null;
+		} | null;
+	} | null> | null;
+};
+
 export const AddMovieDocument = gql`
 	mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
 		addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
@@ -868,4 +906,90 @@ export type SearchSeriesSuspenseQueryHookResult = ReturnType<
 export type SearchSeriesQueryResult = Apollo.QueryResult<
 	SearchSeriesQuery,
 	SearchSeriesQueryVariables
+>;
+export const SeriesDocument = gql`
+	query Series {
+		series {
+			id
+			season
+			details {
+				id
+				genres {
+					id
+					name
+				}
+				name
+				number_of_episodes
+				original_name
+				poster_path
+				seasons {
+					id
+					name
+					poster_path
+					season_number
+					vote_average
+				}
+			}
+			support {
+				bluray
+				bluray_hd
+				dvd
+			}
+		}
+	}
+`;
+
+/**
+ * __useSeriesQuery__
+ *
+ * To run a query within a React component, call `useSeriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSeriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSeriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSeriesQuery(
+	baseOptions?: Apollo.QueryHookOptions<SeriesQuery, SeriesQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<SeriesQuery, SeriesQueryVariables>(
+		SeriesDocument,
+		options,
+	);
+}
+export function useSeriesLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<SeriesQuery, SeriesQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<SeriesQuery, SeriesQueryVariables>(
+		SeriesDocument,
+		options,
+	);
+}
+export function useSeriesSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		SeriesQuery,
+		SeriesQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<SeriesQuery, SeriesQueryVariables>(
+		SeriesDocument,
+		options,
+	);
+}
+export type SeriesQueryHookResult = ReturnType<typeof useSeriesQuery>;
+export type SeriesLazyQueryHookResult = ReturnType<typeof useSeriesLazyQuery>;
+export type SeriesSuspenseQueryHookResult = ReturnType<
+	typeof useSeriesSuspenseQuery
+>;
+export type SeriesQueryResult = Apollo.QueryResult<
+	SeriesQuery,
+	SeriesQueryVariables
 >;
