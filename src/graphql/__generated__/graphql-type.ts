@@ -391,6 +391,47 @@ export type MoviesQuery = {
 	} | null> | null;
 };
 
+export type MovieQueryVariables = Exact<{
+	movieId: Scalars['ID']['input'];
+}>;
+
+export type MovieQuery = {
+	__typename?: 'Query';
+	movie?: {
+		__typename?: 'MovieResponse';
+		id?: string | null;
+		details?: {
+			__typename?: 'MovieDetails';
+			id?: number | null;
+			title?: string | null;
+			original_title?: string | null;
+			homepage?: string | null;
+			overview?: string | null;
+			backdrop_path?: string | null;
+			poster_path?: string | null;
+			original_language?: string | null;
+			release_date?: string | null;
+			vote_average?: number | null;
+			genres?: Array<{
+				__typename?: 'Genre';
+				id?: number | null;
+				name?: string | null;
+			} | null> | null;
+			production_countries?: Array<{
+				__typename?: 'ProductionCountry';
+				iso_3166_1?: string | null;
+				name?: string | null;
+			} | null> | null;
+		} | null;
+		support?: {
+			__typename?: 'Support';
+			dvd?: boolean | null;
+			bluray_hd?: boolean | null;
+			bluray?: boolean | null;
+		} | null;
+	} | null;
+};
+
 export type SearchSeriesQueryVariables = Exact<{
 	searchOptions?: InputMaybe<SearchOptionsInput>;
 }>;
@@ -970,6 +1011,94 @@ export type MoviesSuspenseQueryHookResult = ReturnType<
 export type MoviesQueryResult = Apollo.QueryResult<
 	MoviesQuery,
 	MoviesQueryVariables
+>;
+export const MovieDocument = gql`
+	query Movie($movieId: ID!) {
+		movie(movieId: $movieId) {
+			id
+			details {
+				id
+				title
+				original_title
+				homepage
+				overview
+				backdrop_path
+				poster_path
+				genres {
+					id
+					name
+				}
+				original_language
+				release_date
+				vote_average
+				production_countries {
+					iso_3166_1
+					name
+				}
+			}
+			support {
+				dvd
+				bluray_hd
+				bluray
+			}
+		}
+	}
+`;
+
+/**
+ * __useMovieQuery__
+ *
+ * To run a query within a React component, call `useMovieQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMovieQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMovieQuery({
+ *   variables: {
+ *      movieId: // value for 'movieId'
+ *   },
+ * });
+ */
+export function useMovieQuery(
+	baseOptions: Apollo.QueryHookOptions<MovieQuery, MovieQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<MovieQuery, MovieQueryVariables>(
+		MovieDocument,
+		options,
+	);
+}
+export function useMovieLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<MovieQuery, MovieQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<MovieQuery, MovieQueryVariables>(
+		MovieDocument,
+		options,
+	);
+}
+export function useMovieSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		MovieQuery,
+		MovieQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<MovieQuery, MovieQueryVariables>(
+		MovieDocument,
+		options,
+	);
+}
+export type MovieQueryHookResult = ReturnType<typeof useMovieQuery>;
+export type MovieLazyQueryHookResult = ReturnType<typeof useMovieLazyQuery>;
+export type MovieSuspenseQueryHookResult = ReturnType<
+	typeof useMovieSuspenseQuery
+>;
+export type MovieQueryResult = Apollo.QueryResult<
+	MovieQuery,
+	MovieQueryVariables
 >;
 export const SearchSeriesDocument = gql`
 	query SearchSeries($searchOptions: SearchOptionsInput) {

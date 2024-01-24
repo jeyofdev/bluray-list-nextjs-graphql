@@ -36,6 +36,37 @@ query Movies {
 	}
 }
 
+query Movie($movieId: ID!) {
+	movie(movieId: $movieId) {
+		id
+		details {
+			id
+			title
+			original_title
+			homepage
+			overview
+			backdrop_path
+			poster_path
+			genres {
+				id
+				name
+			}
+			original_language
+			release_date
+			vote_average
+			production_countries {
+				iso_3166_1
+				name
+			}
+		}
+		support {
+			dvd
+			bluray_hd
+			bluray
+		}
+	}
+}
+
 query SearchSeries($searchOptions: SearchOptionsInput) {
 	searchSeries(searchOptions: $searchOptions) {
 		page
