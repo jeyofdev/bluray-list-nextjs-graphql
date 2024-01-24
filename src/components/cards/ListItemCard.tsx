@@ -3,6 +3,7 @@ import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import CardSettings from '@components/ui/menu/CardSettings';
 import DeleteActionModal from '@components/ui/modal/DeleteActionModal';
 import UpdateActionModal from '@components/ui/modal/UpdateActionModal';
+import ChipRating from '@components/ui/rating/ChipRating';
 import { TypeEnum } from '@enums/index';
 import {
 	Box,
@@ -53,17 +54,23 @@ const ListItemCard = ({
 				/>
 
 				<CardActionArea
-					className='flex flex-col items-center justify-start'
+					className='relative flex flex-col items-center justify-start'
 					onClick={onClick}
 				>
-					<CardMedia
-						component='img'
-						className='w-full'
-						image={`https://image.tmdb.org/t/p/w500${posterPath}`}
-						title={title}
-					/>
+					<Box className='relative'>
+						<Box className='absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2'>
+							<ChipRating rating={3} precision={0.5} />
+						</Box>
 
-					<CardContent>
+						<CardMedia
+							component='img'
+							className='w-full'
+							image={`https://image.tmdb.org/t/p/w500${posterPath}`}
+							title={title}
+						/>
+					</Box>
+
+					<CardContent className='mt-4'>
 						<Typography
 							variant='h6'
 							component='h3'

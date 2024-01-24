@@ -45,6 +45,13 @@ const globalTheme = createTheme({
 				},
 			},
 		},
+		MuiChip: {
+			styleOverrides: {
+				root: {
+					height: 'auto',
+				},
+			},
+		},
 		MuiAlert: {
 			styleOverrides: {
 				root: {

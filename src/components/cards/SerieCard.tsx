@@ -1,4 +1,5 @@
 import ListItemCard from '@components/cards/ListItemCard';
+import { TypeEnum } from '@enums/index';
 import {
 	SerieDetails,
 	useDeleteSerieMutation,
@@ -29,7 +30,7 @@ const SerieCard = ({
 
 	return (
 		<ListItemCard
-			type='serie'
+			type={TypeEnum.SERIE}
 			id={id}
 			posterPath={serie.poster_path as string}
 			title={serie?.name as string}
