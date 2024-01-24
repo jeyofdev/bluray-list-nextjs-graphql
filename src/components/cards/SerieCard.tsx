@@ -1,4 +1,5 @@
 import ListItemCard from '@components/cards/ListItemCard';
+import { TypeEnum } from '@enums/index';
 import {
 	SerieDetails,
 	useDeleteSerieMutation,
@@ -9,6 +10,7 @@ import { SupportType, ToastType } from '../../types';
 
 type SerieCardPropsType = {
 	id: string;
+	season: number;
 	serie: SerieDetails;
 	supports?: SupportType;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -18,6 +20,7 @@ type SerieCardPropsType = {
 
 const SerieCard = ({
 	id,
+	season,
 	serie,
 	supports,
 	onClick,
@@ -29,10 +32,11 @@ const SerieCard = ({
 
 	return (
 		<ListItemCard
-			type='serie'
+			type={TypeEnum.SERIE}
 			id={id}
 			posterPath={serie.poster_path as string}
 			title={serie?.name as string}
+			rating={serie?.seasons?.[season]?.vote_average as number}
 			supports={supports}
 			onClick={onClick}
 			onDelete={() => {

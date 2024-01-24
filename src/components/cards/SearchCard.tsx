@@ -1,5 +1,6 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
+import ChipRating from '@components/ui/rating/ChipRating';
 import { SupportEnum } from '@enums/index';
 import {
 	Box,
@@ -15,6 +16,7 @@ import {
 type SearchCardProps = {
 	title: string;
 	posterPath: string;
+	rating?: number;
 	addButtonLabel: string;
 	onClick: () => void;
 	onChangeItemSupports: (support: SupportEnum) => void;
@@ -23,6 +25,7 @@ type SearchCardProps = {
 const SearchCard = ({
 	title,
 	posterPath,
+	rating,
 	addButtonLabel,
 	onClick,
 	onChangeItemSupports,
@@ -57,14 +60,22 @@ const SearchCard = ({
 			</Box>
 
 			<CardActionArea className='flex flex-col items-center justify-start'>
-				<CardMedia
-					component='img'
-					className='w-full'
-					image={`https://image.tmdb.org/t/p/w500${posterPath}`}
-					title={title}
-				/>
+				<Box className='relative'>
+					<CardMedia
+						component='img'
+						className='w-full'
+						image={`https://image.tmdb.org/t/p/w500${posterPath}`}
+						title={title}
+					/>
 
-				<CardContent>
+					{rating ? (
+						<Box className='absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2'>
+							<ChipRating rating={rating} precision={0.5} />
+						</Box>
+					) : null}
+				</Box>
+
+				<CardContent className='mt-4'>
 					<Typography
 						variant='h6'
 						component='h3'

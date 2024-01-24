@@ -1,4 +1,5 @@
 import ListItemCard from '@components/cards/ListItemCard';
+import { TypeEnum } from '@enums/index';
 import {
 	MovieDetails,
 	useDeleteMovieMutation,
@@ -29,10 +30,11 @@ const MovieCard = ({
 
 	return (
 		<ListItemCard
-			type='movie'
+			type={TypeEnum.MOVIE}
 			id={id}
 			posterPath={movie.poster_path as string}
 			title={movie?.title as string}
+			rating={movie?.vote_average as number}
 			supports={supports}
 			onClick={onClick}
 			onDelete={() => {

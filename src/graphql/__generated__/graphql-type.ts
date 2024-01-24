@@ -356,6 +356,7 @@ export type SearchMoviesQuery = {
 			title?: string | null;
 			original_title?: string | null;
 			poster_path?: string | null;
+			vote_average?: number | null;
 		} | null>;
 	} | null;
 };
@@ -820,6 +821,7 @@ export const SearchMoviesDocument = gql`
 				title
 				original_title
 				poster_path
+				vote_average
 			}
 		}
 	}

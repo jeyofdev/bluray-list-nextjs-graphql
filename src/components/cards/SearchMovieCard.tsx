@@ -33,6 +33,7 @@ const SearchMovieCard = ({
 		<SearchCard
 			title={movie?.title as string}
 			posterPath={movie?.poster_path as string}
+			rating={movie?.vote_average as number}
 			addButtonLabel='Add to list'
 			onClick={handleClick}
 			onChangeItemSupports={handleChangeItemSupports}
