@@ -34,6 +34,7 @@ const MovieCard = ({
 			id={id}
 			posterPath={movie.poster_path as string}
 			title={movie?.title as string}
+			rating={movie?.vote_average as number}
 			supports={supports}
 			onClick={onClick}
 			onDelete={() => {

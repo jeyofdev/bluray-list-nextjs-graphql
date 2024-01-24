@@ -6,11 +6,15 @@ type ChipRatingPropsType = {
 };
 
 export const ChipRating = ({ rating, precision }: ChipRatingPropsType) => {
+	const getRating = (rating: number, precision?: number) => {
+		return !precision ? Math.round(rating / 2) : rating / 2;
+	};
+
 	return (
 		<Chip
 			label={
 				<Rating
-					value={rating}
+					value={getRating(rating, precision)}
 					precision={precision}
 					readOnly
 					classes={{

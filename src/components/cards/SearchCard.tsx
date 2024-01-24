@@ -16,6 +16,7 @@ import {
 type SearchCardProps = {
 	title: string;
 	posterPath: string;
+	rating?: number;
 	addButtonLabel: string;
 	onClick: () => void;
 	onChangeItemSupports: (support: SupportEnum) => void;
@@ -24,6 +25,7 @@ type SearchCardProps = {
 const SearchCard = ({
 	title,
 	posterPath,
+	rating,
 	addButtonLabel,
 	onClick,
 	onChangeItemSupports,
@@ -66,9 +68,11 @@ const SearchCard = ({
 						title={title}
 					/>
 
-					<Box className='absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2'>
-						<ChipRating rating={3} precision={0.5} />
-					</Box>
+					{rating ? (
+						<Box className='absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2'>
+							<ChipRating rating={rating} precision={0.5} />
+						</Box>
+					) : null}
 				</Box>
 
 				<CardContent className='mt-4'>

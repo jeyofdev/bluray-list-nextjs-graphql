@@ -42,6 +42,7 @@ const SeriesPage = () => {
 							<SerieCard
 								key={serie.id}
 								id={serie.id}
+								season={serie.season}
 								serie={serie.details}
 								supports={serie.support}
 								onClick={() => {}}

@@ -25,7 +25,7 @@ class SearchServices extends DataServices {
 	}
 
 	/**
-	 * Search movie by title
+	 * Search movie or series by title
 	 */
 	async searchByName(
 		type: 'movie' | 'tv',

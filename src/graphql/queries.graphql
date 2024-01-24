@@ -8,6 +8,7 @@ query SearchMovies($searchOptions: SearchOptionsInput) {
 			title
 			original_title
 			poster_path
+			vote_average
 		}
 	}
 }

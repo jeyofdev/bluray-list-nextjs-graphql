@@ -21,6 +21,7 @@ type ListItemCardPropsType = {
 	id: string;
 	posterPath: string;
 	title: string;
+	rating: number;
 	onDelete: any;
 	onUpdate: any;
 	supports?: SupportType;
@@ -34,6 +35,7 @@ const ListItemCard = ({
 	type,
 	posterPath,
 	title,
+	rating,
 	onDelete,
 	onUpdate,
 	supports,
@@ -59,7 +61,7 @@ const ListItemCard = ({
 				>
 					<Box className='relative'>
 						<Box className='absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2'>
-							<ChipRating rating={3} precision={0.5} />
+							<ChipRating rating={rating} precision={0.5} />
 						</Box>
 
 						<CardMedia
