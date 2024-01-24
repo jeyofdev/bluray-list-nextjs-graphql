@@ -63,7 +63,7 @@ const UpdateActionModal = ({
 			onClose={handleClose}
 			title={`select one or more support`}
 			icon={<EditIcon className='text-green-400' />}
-			type='delete'
+			type='update'
 			onAction={handleUpdate}
 		>
 			<Box>
