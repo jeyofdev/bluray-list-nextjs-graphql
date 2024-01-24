@@ -1,5 +1,9 @@
 import ListItemCard from '@components/cards/ListItemCard';
-import { SerieDetails } from '@graphql/__generated__/graphql-type';
+import {
+	SerieDetails,
+	useDeleteSerieMutation,
+	useUpdateSerieMutation,
+} from '@graphql/__generated__/graphql-type';
 import { MouseEventHandler } from 'react';
 import { SupportType, ToastType } from '../../types';
 
@@ -20,15 +24,26 @@ const SerieCard = ({
 	refetch,
 	toast,
 }: SerieCardPropsType) => {
+	const [deleteSerie, { data: deletedMovie }] = useDeleteSerieMutation();
+	const [updateSerie, { data: updatedMovie }] = useUpdateSerieMutation();
+
 	return (
 		<ListItemCard
+			type='serie'
 			id={id}
 			posterPath={serie.poster_path as string}
 			title={serie?.name as string}
 			supports={supports}
 			onClick={onClick}
-			onDelete={() => {}}
-			onUpdate={() => {}}
+			onDelete={() => {
+				deleteSerie({
+					variables: {
+						serieId: id,
+					},
+					onCompleted: refetch,
+				});
+			}}
+			onUpdate={updateSerie}
 			refetch={refetch}
 			toast={toast}
 		/>

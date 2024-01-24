@@ -29,6 +29,7 @@ const MovieCard = ({
 
 	return (
 		<ListItemCard
+			type='movie'
 			id={id}
 			posterPath={movie.poster_path as string}
 			title={movie?.title as string}
