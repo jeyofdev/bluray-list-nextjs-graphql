@@ -12,9 +12,12 @@ import useSearch from '@hooks/useSearch';
 import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
 const MoviesPage = () => {
+	const router = useRouter();
+
 	const { showSearchModal, onOpenSearchModal, onCloseSearchModal } =
 		useSearch();
 
@@ -44,7 +47,7 @@ const MoviesPage = () => {
 								id={movie.id}
 								movie={movie.details}
 								supports={movie.support}
-								onClick={() => {}}
+								onClick={() => router.push(`/movies/${movie?.id}`)}
 								refetch={refetch}
 								toast={{
 									onOpen: handleOpenToast,
