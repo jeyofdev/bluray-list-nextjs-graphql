@@ -217,6 +217,18 @@
 						"deprecationReason": null
 					},
 					{
+						"name": "runtime",
+						"description": null,
+						"args": [],
+						"type": {
+							"kind": "SCALAR",
+							"name": "Int",
+							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
 						"name": "title",
 						"description": null,
 						"args": [],

@@ -48,6 +48,7 @@ export type MovieDetails = {
 	poster_path?: Maybe<Scalars['String']['output']>;
 	production_countries?: Maybe<Array<Maybe<ProductionCountry>>>;
 	release_date?: Maybe<Scalars['String']['output']>;
+	runtime?: Maybe<Scalars['Int']['output']>;
 	title?: Maybe<Scalars['String']['output']>;
 	vote_average?: Maybe<Scalars['Float']['output']>;
 };
@@ -411,6 +412,7 @@ export type MovieQuery = {
 			poster_path?: string | null;
 			original_language?: string | null;
 			release_date?: string | null;
+			runtime?: number | null;
 			vote_average?: number | null;
 			genres?: Array<{
 				__typename?: 'Genre';
@@ -1085,6 +1087,7 @@ export const MovieDocument = gql`
 				}
 				original_language
 				release_date
+				runtime
 				vote_average
 				production_countries {
 					iso_3166_1

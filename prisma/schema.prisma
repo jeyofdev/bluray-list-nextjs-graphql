@@ -41,6 +41,7 @@ type MoviesDetails {
   release_date         String
   title                String
   vote_average         Float
+	runtime              Int
 }
 
 type SeriesDetail {
