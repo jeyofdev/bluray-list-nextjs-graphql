@@ -1,5 +1,6 @@
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
 import { Box, Typography } from '@mui/material';
+import { formatDate, formatNumberToHours } from '@utils/index';
 import { SupportType } from '../../types';
 import SingleCard from './SingleCard';
 
@@ -28,7 +29,7 @@ export const SingleMovieCard = ({
 							component='h6'
 							className='font-semibold'
 						>
-							{data?.release_date}
+							{formatDate(data?.release_date as string)}
 						</Typography>
 						-
 						<Typography
@@ -44,7 +45,7 @@ export const SingleMovieCard = ({
 							component='h6'
 							className='font-semibold'
 						>
-							{139}
+							{formatNumberToHours(139)}
 						</Typography>
 					</>
 				</Box>
