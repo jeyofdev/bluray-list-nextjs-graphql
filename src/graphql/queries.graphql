@@ -121,3 +121,47 @@ query Series {
 		}
 	}
 }
+
+query Serie($serieId: ID) {
+	serie(serieId: $serieId) {
+		id
+		season
+		details {
+			id
+			backdrop_path
+			first_air_date
+			genres {
+				id
+				name
+			}
+			homepage
+			name
+			number_of_episodes
+			number_of_seasons
+			original_language
+			original_name
+			overview
+			poster_path
+			production_countries {
+				iso_3166_1
+				name
+			}
+			seasons {
+				air_date
+				episode_count
+				id
+				name
+				overview
+				poster_path
+				season_number
+				vote_average
+			}
+			vote_average
+		}
+		support {
+			bluray
+			bluray_hd
+			dvd
+		}
+	}
+}
