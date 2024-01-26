@@ -45,7 +45,7 @@ export const SingleMovieCard = ({
 							component='h6'
 							className='font-semibold'
 						>
-							{formatNumberToHours(139)}
+							{formatNumberToHours(data?.runtime as number)}
 						</Typography>
 					</>
 				</Box>

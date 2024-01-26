@@ -53,6 +53,7 @@ query Movie($movieId: ID!) {
 			}
 			original_language
 			release_date
+			runtime
 			vote_average
 			production_countries {
 				iso_3166_1

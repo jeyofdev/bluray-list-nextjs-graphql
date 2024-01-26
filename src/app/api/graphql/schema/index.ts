@@ -35,6 +35,7 @@ const schema = gql`
 		release_date: String
 		vote_average: Float
 		production_countries: [ProductionCountry]
+		runtime: Int
 	}
 
 	type SerieDetails {

@@ -58,6 +58,7 @@ class MovieServices extends DataServices {
 					release_date: TMDB_movie.release_date,
 					vote_average: TMDB_movie.vote_average,
 					production_countries: TMDB_movie.production_countries,
+					runtime: TMDB_movie.runtime,
 				},
 				support: {
 					bluray: args.support?.bluray,

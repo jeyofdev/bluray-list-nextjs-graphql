@@ -46,6 +46,7 @@ export type MovieDetails = {
 	poster_path?: Maybe<Scalars['String']['output']>;
 	production_countries?: Maybe<Array<Maybe<ProductionCountry>>>;
 	release_date?: Maybe<Scalars['String']['output']>;
+	runtime?: Maybe<Scalars['Int']['output']>;
 	title?: Maybe<Scalars['String']['output']>;
 	vote_average?: Maybe<Scalars['Float']['output']>;
 };
@@ -409,6 +410,7 @@ export type MovieDetailsResolvers<
 		ParentType,
 		ContextType
 	>;
+	runtime?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	vote_average?: Resolver<
 		Maybe<ResolversTypes['Float']>,
