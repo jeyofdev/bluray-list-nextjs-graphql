@@ -25,3 +25,10 @@ export const formatDate = (date: string) => {
 	const newDate = new Date(date);
 	return format(newDate, 'MMMM dd, yyyy');
 };
+
+/**
+ * Calcul the rating
+ */
+export const getRating = (rating: number, precision?: number) => {
+	return !precision ? Math.round(rating / 2) : rating / 2;
+};

@@ -1,5 +1,6 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
+import { ContentItem } from '@components/ui/content/ContentItem';
 import ChipRating from '@components/ui/rating/ChipRating';
 import { Box, CardContent, CardMedia, Paper, Typography } from '@mui/material';
 import { ReactNode } from 'react';
@@ -47,6 +48,22 @@ export const SingleCard = ({
 				</Typography>
 
 				{subtitle}
+
+				<Box className='mt-8'>
+					<ContentItem
+						title='Original title'
+						value={originalTitle}
+						titleClassName='text-lg leading-4'
+						valueClassName='text-base mb-4'
+					/>
+
+					<ContentItem
+						title='Synopsys'
+						value={overview}
+						titleClassName='text-xl'
+						valueClassName='text-base'
+					/>
+				</Box>
 
 				<Box className='flex items-center gap-4'>
 					{supports?.bluray && (

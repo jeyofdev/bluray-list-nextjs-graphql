@@ -1,15 +1,12 @@
 import { Chip, Rating } from '@mui/material';
+import { getRating } from '@utils/index';
 
 type ChipRatingPropsType = {
 	rating: number;
-	precision?: number | undefined;
+	precision?: number;
 };
 
 export const ChipRating = ({ rating, precision }: ChipRatingPropsType) => {
-	const getRating = (rating: number, precision?: number) => {
-		return !precision ? Math.round(rating / 2) : rating / 2;
-	};
-
 	return (
 		<Chip
 			label={
@@ -18,7 +15,7 @@ export const ChipRating = ({ rating, precision }: ChipRatingPropsType) => {
 					precision={precision}
 					readOnly
 					classes={{
-						icon: 'text-yellow-300 text-xl',
+						icon: 'mt-1 text-yellow-300 text-xl',
 					}}
 				/>
 			}
