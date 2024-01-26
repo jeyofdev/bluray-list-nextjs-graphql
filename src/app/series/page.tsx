@@ -12,9 +12,12 @@ import useSearch from '@hooks/useSearch';
 import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
 const SeriesPage = () => {
+	const router = useRouter();
+
 	const { showSearchModal, onOpenSearchModal, onCloseSearchModal } =
 		useSearch();
 
@@ -45,7 +48,7 @@ const SeriesPage = () => {
 								season={serie.season}
 								serie={serie.details}
 								supports={serie.support}
-								onClick={() => {}}
+								onClick={() => router.push(`/series/${serie?.id}`)}
 								refetch={refetch}
 								toast={{
 									onOpen: handleOpenToast,

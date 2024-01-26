@@ -503,6 +503,61 @@ export type SeriesQuery = {
 	} | null> | null;
 };
 
+export type SerieQueryVariables = Exact<{
+	serieId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type SerieQuery = {
+	__typename?: 'Query';
+	serie?: {
+		__typename?: 'SerieResponse';
+		id?: string | null;
+		season?: number | null;
+		details?: {
+			__typename?: 'SerieDetails';
+			id?: number | null;
+			backdrop_path?: string | null;
+			first_air_date?: string | null;
+			homepage?: string | null;
+			name?: string | null;
+			number_of_episodes?: number | null;
+			number_of_seasons?: number | null;
+			original_language?: string | null;
+			original_name?: string | null;
+			overview?: string | null;
+			poster_path?: string | null;
+			vote_average?: number | null;
+			genres?: Array<{
+				__typename?: 'Genre';
+				id?: number | null;
+				name?: string | null;
+			} | null> | null;
+			production_countries?: Array<{
+				__typename?: 'ProductionCountry';
+				iso_3166_1?: string | null;
+				name?: string | null;
+			} | null> | null;
+			seasons?: Array<{
+				__typename?: 'Season';
+				air_date?: string | null;
+				episode_count?: number | null;
+				id?: number | null;
+				name?: string | null;
+				overview?: string | null;
+				poster_path?: string | null;
+				season_number?: number | null;
+				vote_average?: number | null;
+			} | null> | null;
+		} | null;
+		support?: {
+			__typename?: 'Support';
+			bluray?: boolean | null;
+			bluray_hd?: boolean | null;
+			dvd?: boolean | null;
+		} | null;
+	} | null;
+};
+
 export const AddMovieDocument = gql`
 	mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
 		addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
@@ -1277,4 +1332,105 @@ export type SeriesSuspenseQueryHookResult = ReturnType<
 export type SeriesQueryResult = Apollo.QueryResult<
 	SeriesQuery,
 	SeriesQueryVariables
+>;
+export const SerieDocument = gql`
+	query Serie($serieId: ID) {
+		serie(serieId: $serieId) {
+			id
+			season
+			details {
+				id
+				backdrop_path
+				first_air_date
+				genres {
+					id
+					name
+				}
+				homepage
+				name
+				number_of_episodes
+				number_of_seasons
+				original_language
+				original_name
+				overview
+				poster_path
+				production_countries {
+					iso_3166_1
+					name
+				}
+				seasons {
+					air_date
+					episode_count
+					id
+					name
+					overview
+					poster_path
+					season_number
+					vote_average
+				}
+				vote_average
+			}
+			support {
+				bluray
+				bluray_hd
+				dvd
+			}
+		}
+	}
+`;
+
+/**
+ * __useSerieQuery__
+ *
+ * To run a query within a React component, call `useSerieQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSerieQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSerieQuery({
+ *   variables: {
+ *      serieId: // value for 'serieId'
+ *   },
+ * });
+ */
+export function useSerieQuery(
+	baseOptions?: Apollo.QueryHookOptions<SerieQuery, SerieQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<SerieQuery, SerieQueryVariables>(
+		SerieDocument,
+		options,
+	);
+}
+export function useSerieLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<SerieQuery, SerieQueryVariables>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<SerieQuery, SerieQueryVariables>(
+		SerieDocument,
+		options,
+	);
+}
+export function useSerieSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		SerieQuery,
+		SerieQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<SerieQuery, SerieQueryVariables>(
+		SerieDocument,
+		options,
+	);
+}
+export type SerieQueryHookResult = ReturnType<typeof useSerieQuery>;
+export type SerieLazyQueryHookResult = ReturnType<typeof useSerieLazyQuery>;
+export type SerieSuspenseQueryHookResult = ReturnType<
+	typeof useSerieSuspenseQuery
+>;
+export type SerieQueryResult = Apollo.QueryResult<
+	SerieQuery,
+	SerieQueryVariables
 >;
