@@ -2,6 +2,7 @@ import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import { ContentItem } from '@components/ui/content/ContentItem';
 import ChipRating from '@components/ui/rating/ChipRating';
+import { Cast, Crew } from '@graphql/__generated__/graphql-type';
 import { Box, CardContent, CardMedia, Paper, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { SupportType } from '../../types';
@@ -12,6 +13,9 @@ type SingleCardPropsType = {
 	overview: string;
 	posterPath: string;
 	rating: number;
+	cast: Cast[];
+	crew: Crew[];
+	crewData: any;
 	supports: SupportType;
 	subtitle?: ReactNode;
 };
@@ -22,6 +26,9 @@ export const SingleCard = ({
 	overview,
 	posterPath,
 	rating,
+	cast,
+	crew,
+	crewData,
 	supports,
 	subtitle,
 }: SingleCardPropsType) => {
@@ -64,6 +71,8 @@ export const SingleCard = ({
 						valueClassName='text-base'
 					/>
 				</Box>
+
+				{crewData}
 
 				<Box className='flex items-center gap-4'>
 					{supports?.bluray && (

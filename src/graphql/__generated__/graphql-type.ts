@@ -30,6 +30,32 @@ export type Scalars = {
 	Float: { input: number; output: number };
 };
 
+export type Cast = {
+	__typename?: 'Cast';
+	cast_id?: Maybe<Scalars['Int']['output']>;
+	character?: Maybe<Scalars['String']['output']>;
+	credit_id?: Maybe<Scalars['String']['output']>;
+	gender?: Maybe<Scalars['Int']['output']>;
+	id?: Maybe<Scalars['Int']['output']>;
+	known_for_department?: Maybe<Scalars['String']['output']>;
+	name?: Maybe<Scalars['String']['output']>;
+	original_name?: Maybe<Scalars['String']['output']>;
+	profile_path?: Maybe<Scalars['String']['output']>;
+};
+
+export type Crew = {
+	__typename?: 'Crew';
+	credit_id?: Maybe<Scalars['String']['output']>;
+	department?: Maybe<Scalars['String']['output']>;
+	gender?: Maybe<Scalars['Int']['output']>;
+	id?: Maybe<Scalars['Int']['output']>;
+	job?: Maybe<Scalars['String']['output']>;
+	known_for_department?: Maybe<Scalars['String']['output']>;
+	name?: Maybe<Scalars['String']['output']>;
+	original_name?: Maybe<Scalars['String']['output']>;
+	profile_path?: Maybe<Scalars['String']['output']>;
+};
+
 export type Genre = {
 	__typename?: 'Genre';
 	id?: Maybe<Scalars['Int']['output']>;
@@ -109,15 +135,21 @@ export type ProductionCountry = {
 export type Query = {
 	__typename?: 'Query';
 	movie?: Maybe<MovieResponse>;
+	movieCredits?: Maybe<CreditsResponse>;
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
 	searchMovies?: Maybe<SearchMovieResponse>;
 	searchSeries?: Maybe<SearchSerieResponse>;
 	serie?: Maybe<SerieResponse>;
+	serieCredits?: Maybe<CreditsResponse>;
 	series?: Maybe<Array<Maybe<SerieResponse>>>;
 };
 
 export type QueryMovieArgs = {
 	movieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryMovieCreditsArgs = {
+	itemId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QuerySearchMoviesArgs = {
@@ -130,6 +162,10 @@ export type QuerySearchSeriesArgs = {
 
 export type QuerySerieArgs = {
 	serieId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QuerySerieCreditsArgs = {
+	itemId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type SearchMovieResponse = {
@@ -203,6 +239,13 @@ export type SupportInput = {
 	bluray?: InputMaybe<Scalars['Boolean']['input']>;
 	bluray_hd?: InputMaybe<Scalars['Boolean']['input']>;
 	dvd?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type CreditsResponse = {
+	__typename?: 'creditsResponse';
+	cast?: Maybe<Array<Maybe<Cast>>>;
+	crew?: Maybe<Array<Maybe<Crew>>>;
+	id?: Maybe<Scalars['Int']['output']>;
 };
 
 export type AddMovieMutationVariables = Exact<{
@@ -431,6 +474,42 @@ export type MovieQuery = {
 			bluray_hd?: boolean | null;
 			bluray?: boolean | null;
 		} | null;
+	} | null;
+};
+
+export type MovieCreditsQueryVariables = Exact<{
+	movieId?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type MovieCreditsQuery = {
+	__typename?: 'Query';
+	movieCredits?: {
+		__typename?: 'creditsResponse';
+		id?: number | null;
+		cast?: Array<{
+			__typename?: 'Cast';
+			gender?: number | null;
+			id?: number | null;
+			known_for_department?: string | null;
+			name?: string | null;
+			original_name?: string | null;
+			profile_path?: string | null;
+			cast_id?: number | null;
+			character?: string | null;
+			credit_id?: string | null;
+		} | null> | null;
+		crew?: Array<{
+			__typename?: 'Crew';
+			gender?: number | null;
+			id?: number | null;
+			known_for_department?: string | null;
+			name?: string | null;
+			original_name?: string | null;
+			profile_path?: string | null;
+			credit_id?: string | null;
+			department?: string | null;
+			job?: string | null;
+		} | null> | null;
 	} | null;
 };
 
@@ -1157,6 +1236,101 @@ export type MovieSuspenseQueryHookResult = ReturnType<
 export type MovieQueryResult = Apollo.QueryResult<
 	MovieQuery,
 	MovieQueryVariables
+>;
+export const MovieCreditsDocument = gql`
+	query MovieCredits($movieId: Int) {
+		movieCredits(itemId: $movieId) {
+			id
+			cast {
+				gender
+				id
+				known_for_department
+				name
+				original_name
+				profile_path
+				cast_id
+				character
+				credit_id
+			}
+			crew {
+				gender
+				id
+				known_for_department
+				name
+				original_name
+				profile_path
+				credit_id
+				department
+				job
+			}
+		}
+	}
+`;
+
+/**
+ * __useMovieCreditsQuery__
+ *
+ * To run a query within a React component, call `useMovieCreditsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMovieCreditsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMovieCreditsQuery({
+ *   variables: {
+ *      movieId: // value for 'movieId'
+ *   },
+ * });
+ */
+export function useMovieCreditsQuery(
+	baseOptions?: Apollo.QueryHookOptions<
+		MovieCreditsQuery,
+		MovieCreditsQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<MovieCreditsQuery, MovieCreditsQueryVariables>(
+		MovieCreditsDocument,
+		options,
+	);
+}
+export function useMovieCreditsLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<
+		MovieCreditsQuery,
+		MovieCreditsQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<MovieCreditsQuery, MovieCreditsQueryVariables>(
+		MovieCreditsDocument,
+		options,
+	);
+}
+export function useMovieCreditsSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		MovieCreditsQuery,
+		MovieCreditsQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<MovieCreditsQuery, MovieCreditsQueryVariables>(
+		MovieCreditsDocument,
+		options,
+	);
+}
+export type MovieCreditsQueryHookResult = ReturnType<
+	typeof useMovieCreditsQuery
+>;
+export type MovieCreditsLazyQueryHookResult = ReturnType<
+	typeof useMovieCreditsLazyQuery
+>;
+export type MovieCreditsSuspenseQueryHookResult = ReturnType<
+	typeof useMovieCreditsSuspenseQuery
+>;
+export type MovieCreditsQueryResult = Apollo.QueryResult<
+	MovieCreditsQuery,
+	MovieCreditsQueryVariables
 >;
 export const SearchSeriesDocument = gql`
 	query SearchSeries($searchOptions: SearchOptionsInput) {
