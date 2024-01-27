@@ -194,3 +194,31 @@ query Serie($serieId: ID) {
 		}
 	}
 }
+
+query SerieCredits($serieId: Int) {
+	serieCredits(itemId: $serieId) {
+		cast {
+			gender
+			id
+			known_for_department
+			name
+			original_name
+			profile_path
+			cast_id
+			character
+			credit_id
+		}
+		crew {
+			gender
+			id
+			known_for_department
+			name
+			original_name
+			profile_path
+			credit_id
+			department
+			job
+		}
+		id
+	}
+}

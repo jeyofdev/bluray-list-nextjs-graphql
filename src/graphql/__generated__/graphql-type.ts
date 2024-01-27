@@ -639,6 +639,42 @@ export type SerieQuery = {
 	} | null;
 };
 
+export type SerieCreditsQueryVariables = Exact<{
+	serieId?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type SerieCreditsQuery = {
+	__typename?: 'Query';
+	serieCredits?: {
+		__typename?: 'creditsResponse';
+		id?: number | null;
+		cast?: Array<{
+			__typename?: 'Cast';
+			gender?: number | null;
+			id?: number | null;
+			known_for_department?: string | null;
+			name?: string | null;
+			original_name?: string | null;
+			profile_path?: string | null;
+			cast_id?: number | null;
+			character?: string | null;
+			credit_id?: string | null;
+		} | null> | null;
+		crew?: Array<{
+			__typename?: 'Crew';
+			gender?: number | null;
+			id?: number | null;
+			known_for_department?: string | null;
+			name?: string | null;
+			original_name?: string | null;
+			profile_path?: string | null;
+			credit_id?: string | null;
+			department?: string | null;
+			job?: string | null;
+		} | null> | null;
+	} | null;
+};
+
 export const AddMovieDocument = gql`
 	mutation AddMovie($tmdbMovieId: Int, $support: SupportInput) {
 		addMovie(tmdbMovieId: $tmdbMovieId, support: $support) {
@@ -1610,4 +1646,99 @@ export type SerieSuspenseQueryHookResult = ReturnType<
 export type SerieQueryResult = Apollo.QueryResult<
 	SerieQuery,
 	SerieQueryVariables
+>;
+export const SerieCreditsDocument = gql`
+	query SerieCredits($serieId: Int) {
+		serieCredits(itemId: $serieId) {
+			cast {
+				gender
+				id
+				known_for_department
+				name
+				original_name
+				profile_path
+				cast_id
+				character
+				credit_id
+			}
+			crew {
+				gender
+				id
+				known_for_department
+				name
+				original_name
+				profile_path
+				credit_id
+				department
+				job
+			}
+			id
+		}
+	}
+`;
+
+/**
+ * __useSerieCreditsQuery__
+ *
+ * To run a query within a React component, call `useSerieCreditsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSerieCreditsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSerieCreditsQuery({
+ *   variables: {
+ *      serieId: // value for 'serieId'
+ *   },
+ * });
+ */
+export function useSerieCreditsQuery(
+	baseOptions?: Apollo.QueryHookOptions<
+		SerieCreditsQuery,
+		SerieCreditsQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<SerieCreditsQuery, SerieCreditsQueryVariables>(
+		SerieCreditsDocument,
+		options,
+	);
+}
+export function useSerieCreditsLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<
+		SerieCreditsQuery,
+		SerieCreditsQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<SerieCreditsQuery, SerieCreditsQueryVariables>(
+		SerieCreditsDocument,
+		options,
+	);
+}
+export function useSerieCreditsSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		SerieCreditsQuery,
+		SerieCreditsQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<SerieCreditsQuery, SerieCreditsQueryVariables>(
+		SerieCreditsDocument,
+		options,
+	);
+}
+export type SerieCreditsQueryHookResult = ReturnType<
+	typeof useSerieCreditsQuery
+>;
+export type SerieCreditsLazyQueryHookResult = ReturnType<
+	typeof useSerieCreditsLazyQuery
+>;
+export type SerieCreditsSuspenseQueryHookResult = ReturnType<
+	typeof useSerieCreditsSuspenseQuery
+>;
+export type SerieCreditsQueryResult = Apollo.QueryResult<
+	SerieCreditsQuery,
+	SerieCreditsQueryVariables
 >;
