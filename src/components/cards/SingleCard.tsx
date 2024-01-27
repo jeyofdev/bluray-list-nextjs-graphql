@@ -1,7 +1,9 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
+import PersonAvatar from '@components/ui/avatar/PersonAvatar';
 import { ContentItem } from '@components/ui/content/ContentItem';
 import ChipRating from '@components/ui/rating/ChipRating';
+import { Cast, Crew } from '@graphql/__generated__/graphql-type';
 import { Box, CardContent, CardMedia, Paper, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { SupportType } from '../../types';
@@ -12,8 +14,10 @@ type SingleCardPropsType = {
 	overview: string;
 	posterPath: string;
 	rating: number;
-	crewData: ReactNode;
-	castData: ReactNode;
+	director: Crew;
+	music: Crew;
+	producers: Crew[];
+	cast: Cast[];
 	supports: SupportType;
 	subtitle?: ReactNode;
 };
@@ -24,8 +28,10 @@ export const SingleCard = ({
 	overview,
 	posterPath,
 	rating,
-	crewData,
-	castData,
+	director,
+	music,
+	producers,
+	cast,
 	supports,
 	subtitle,
 }: SingleCardPropsType) => {
@@ -67,8 +73,42 @@ export const SingleCard = ({
 					/>
 				</Box>
 
-				{crewData}
-				{castData}
+				<Box className='mt-4 flex flex-wrap gap-8'>
+					<PersonAvatar
+						data={director}
+						title='Directed By'
+						titleClassName='text-lg'
+						valueClassName='text-sm'
+						horizontalAlign='center'
+					/>
+
+					<PersonAvatar
+						data={music}
+						title='Music By'
+						titleClassName='text-lg'
+						valueClassName='text-sm'
+						horizontalAlign='center'
+					/>
+
+					<PersonAvatar
+						data={producers}
+						title='Produced By'
+						titleClassName='text-lg'
+						valueClassName='text-sm'
+						horizontalAlign='center'
+					/>
+				</Box>
+
+				<Box className='mt-4 flex flex-wrap gap-8'>
+					<PersonAvatar
+						data={cast.slice(0, 6)}
+						title='Cast'
+						titleClassName='text-lg'
+						valueClassName='text-sm'
+						horizontalAlign='start'
+						isCast
+					/>
+				</Box>
 
 				<Box className='flex items-center gap-4'>
 					{supports?.bluray && (
