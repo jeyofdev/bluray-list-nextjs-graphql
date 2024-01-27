@@ -12,6 +12,8 @@ type SingleCardPropsType = {
 	overview: string;
 	posterPath: string;
 	rating: number;
+	crewData: ReactNode;
+	castData: ReactNode;
 	supports: SupportType;
 	subtitle?: ReactNode;
 };
@@ -22,6 +24,8 @@ export const SingleCard = ({
 	overview,
 	posterPath,
 	rating,
+	crewData,
+	castData,
 	supports,
 	subtitle,
 }: SingleCardPropsType) => {
@@ -42,13 +46,11 @@ export const SingleCard = ({
 				/>
 			</Paper>
 
-			<CardContent className='w-2/3'>
+			<CardContent className='w-2/3 py-0'>
 				<Typography variant='h2' component='h3' className='mb-4 font-semibold'>
 					{title}
 				</Typography>
-
 				{subtitle}
-
 				<Box className='mt-8'>
 					<ContentItem
 						title='Original title'
@@ -64,6 +66,9 @@ export const SingleCard = ({
 						valueClassName='text-base'
 					/>
 				</Box>
+
+				{crewData}
+				{castData}
 
 				<Box className='flex items-center gap-4'>
 					{supports?.bluray && (
