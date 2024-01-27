@@ -1,5 +1,6 @@
 import {
 	QueryMovieArgs,
+	QueryMovieCreditsArgs,
 	QuerySerieArgs,
 } from '../__generated__/resolvers-types';
 import { IContext } from '../context';
@@ -22,6 +23,12 @@ const queries = {
 	},
 	searchSeries: (_: never, args: any, ctx: IContext) => {
 		return ctx.dataSource.search.searchByName('tv', args);
+	},
+	movieCredits: (_: never, args: QueryMovieCreditsArgs, ctx: IContext) => {
+		return ctx.dataSource.credits.findAllCastAndCrew('movie', args);
+	},
+	serieCredits: (_: never, args: QueryMovieCreditsArgs, ctx: IContext) => {
+		return ctx.dataSource.credits.findAllCastAndCrew('tv', args);
 	},
 };
 

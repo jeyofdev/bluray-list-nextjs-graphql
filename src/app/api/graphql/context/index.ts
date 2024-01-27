@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import MovieServices from '../services/movies.services';
 import SerieServices from '../services/series.services';
 import SearchServices from '../services/search.services';
+import CreditsServices from '../services/cast.services';
 
 export interface IContext {
 	prisma: any;
@@ -9,6 +10,7 @@ export interface IContext {
 		movies: MovieServices;
 		series: SerieServices;
 		search: SearchServices;
+		credits: CreditsServices;
 	};
 }
 
@@ -21,6 +23,7 @@ const context: IContext = {
 		movies: new MovieServices(),
 		series: new SerieServices(),
 		search: new SearchServices(),
+		credits: new CreditsServices(),
 	},
 };
 
