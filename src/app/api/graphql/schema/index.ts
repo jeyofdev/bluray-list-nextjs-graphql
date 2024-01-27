@@ -22,6 +22,30 @@ const schema = gql`
 		vote_average: Float
 	}
 
+	type Cast {
+		gender: Int
+		id: Int
+		known_for_department: String
+		name: String
+		original_name: String
+		profile_path: String
+		cast_id: Int
+		character: String
+		credit_id: String
+	}
+
+	type Crew {
+		gender: Int
+		id: Int
+		known_for_department: String
+		name: String
+		original_name: String
+		profile_path: String
+		credit_id: String
+		department: String
+		job: String
+	}
+
 	type MovieDetails {
 		id: Int
 		title: String
@@ -89,6 +113,12 @@ const schema = gql`
 		total_results: Int!
 	}
 
+	type creditsResponse {
+		id: Int
+		cast: [Cast]
+		crew: [Crew]
+	}
+
 	input SupportInput {
 		bluray: Boolean
 		bluray_hd: Boolean
@@ -107,6 +137,8 @@ const schema = gql`
 		movie(movieId: ID): MovieResponse
 		series: [SerieResponse]
 		serie(serieId: ID): SerieResponse
+		movieCredits(itemId: Int): creditsResponse
+		serieCredits(itemId: Int): creditsResponse
 		searchMovies(searchOptions: SearchOptionsInput): SearchMovieResponse
 		searchSeries(searchOptions: SearchOptionsInput): SearchSerieResponse
 	}
