@@ -1,3 +1,4 @@
+import PersonAvatar from '@components/ui/avatar/PersonAvatar';
 import { ContentItem } from '@components/ui/content/ContentItem';
 import { Cast, Crew, MovieDetails } from '@graphql/__generated__/graphql-type';
 import { Box, Typography } from '@mui/material';
@@ -21,20 +22,13 @@ export const SingleMovieCard = ({
 	const director = crew.find(
 		item =>
 			item.job === 'Director' || item.known_for_department === 'Directing',
-	)?.name;
+	);
 
-	const music = () => {
-		const musicCrew = crew.filter(
-			item => item.job === 'Music' || item.job === 'Original Music Composer',
-		);
+	const music = crew.find(
+		item => item.job === 'Music' || item.job === 'Original Music Composer',
+	);
 
-		return musicCrew[0]?.name;
-	};
-
-	const producers = crew
-		.filter(item => item.job === 'Producer')
-		.map(producer => producer.name)
-		.join(', ');
+	const producers = crew.filter(item => item.job === 'Producer').slice(0, 3);
 
 	const actors = cast
 		.slice(0, 10)
@@ -82,32 +76,32 @@ export const SingleMovieCard = ({
 			}
 			crewData={
 				<Box className='mt-4 flex flex-wrap gap-4'>
-					<ContentItem
+					<PersonAvatar
+						data={director as Crew}
 						title='Directed By'
-						value={director as string}
 						titleClassName='text-lg'
-						valueClassName='text-base'
+						valueClassName='text-sm'
 					/>
 
-					<ContentItem
+					<PersonAvatar
+						data={music as Crew}
 						title='Music By'
-						value={music() as string}
 						titleClassName='text-lg'
-						valueClassName='text-base'
+						valueClassName='text-sm'
 					/>
 
-					<ContentItem
+					<PersonAvatar
+						data={producers as Crew[]}
 						title='Produced By'
-						value={producers as string}
 						titleClassName='text-lg'
-						valueClassName='text-base'
+						valueClassName='text-sm'
 					/>
 
 					<ContentItem
 						title='Cast'
 						value={actors as string}
 						titleClassName='text-lg'
-						valueClassName='text-base'
+						valueClassName='text-sm'
 					/>
 				</Box>
 			}
