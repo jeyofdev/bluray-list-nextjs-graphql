@@ -1,4 +1,3 @@
-import PersonAvatar from '@components/ui/avatar/PersonAvatar';
 import { Cast, Crew, SerieDetails } from '@graphql/__generated__/graphql-type';
 import { Box, Typography } from '@mui/material';
 import { SupportType } from '../../types';
@@ -45,6 +44,10 @@ export const SingleSerieCard = ({
 			}
 			posterPath={data?.poster_path as string}
 			rating={data?.vote_average as number}
+			director={director as Crew}
+			music={music as Crew}
+			producers={producers}
+			cast={cast}
 			supports={supports}
 			subtitle={
 				<Box className='flex gap-2'>
@@ -81,45 +84,6 @@ export const SingleSerieCard = ({
 							{data?.seasons?.[season]?.episode_count} episodes
 						</Typography>
 					</>
-				</Box>
-			}
-			crewData={
-				<Box className='mt-4 flex flex-wrap gap-8'>
-					<PersonAvatar
-						data={director as Crew}
-						title='Directed By'
-						titleClassName='text-lg text-center'
-						valueClassName='text-sm'
-						horizontalAlign='center'
-					/>
-
-					<PersonAvatar
-						data={music as Crew}
-						title='Music By'
-						titleClassName='text-lg text-center'
-						valueClassName='text-sm'
-						horizontalAlign='center'
-					/>
-
-					<PersonAvatar
-						data={producers as Crew[]}
-						title='Produced By'
-						titleClassName='text-lg text-center'
-						valueClassName='text-sm'
-						horizontalAlign='center'
-					/>
-				</Box>
-			}
-			castData={
-				<Box className='mt-4 flex flex-wrap gap-8'>
-					<PersonAvatar
-						data={cast.slice(0, 6) as Crew[]}
-						title='Cast'
-						titleClassName='text-lg'
-						valueClassName='text-sm'
-						horizontalAlign='start'
-						isCast
-					/>
 				</Box>
 			}
 		/>
