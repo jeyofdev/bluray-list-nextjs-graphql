@@ -44,7 +44,7 @@ const PersonAvatar = ({
 					</Typography>
 				</>
 			) : (
-				<Box className='flex flex-wrap items-center justify-start gap-3'>
+				<Box className='flex flex-wrap items-center justify-start gap-7'>
 					{data?.map(item => (
 						<Box key={item.id} className='flex flex-col items-center'>
 							<Avatar
