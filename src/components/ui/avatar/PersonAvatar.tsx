@@ -1,12 +1,13 @@
-import { Crew } from '@graphql/__generated__/graphql-type';
+import { Cast, Crew } from '@graphql/__generated__/graphql-type';
 import { Avatar, Box, Typography } from '@mui/material';
 
 type PersonAvatarPropsType = {
 	title: string;
-	data: Crew | Crew[];
+	data: Cast | Cast[] | Crew | Crew[];
 	titleClassName: string;
 	valueClassName: string;
 	multiple?: boolean;
+	horizontalAlign: 'start' | 'end' | 'center';
 };
 
 const PersonAvatar = ({
@@ -14,10 +15,11 @@ const PersonAvatar = ({
 	title,
 	titleClassName,
 	valueClassName,
-	multiple,
+	horizontalAlign,
 }: PersonAvatarPropsType) => {
 	return (
-		<Box className='flex flex-col items-center justify-center'>
+		// eslint-disable-next-line tailwindcss/no-custom-classname
+		<Box className={`justify- items-${horizontalAlign} flex flex-col`}>
 			<Typography
 				component='h6'
 				className={`mb-1 w-full font-semibold ${titleClassName}`}
@@ -31,7 +33,7 @@ const PersonAvatar = ({
 						alt={`photo of ${data?.name as string}`}
 						src={`https://image.tmdb.org/t/p/w500${data?.profile_path as string}`}
 						classes={{
-							root: 'w-16 h-16',
+							root: 'w-20 h-20',
 						}}
 					/>
 
@@ -40,20 +42,20 @@ const PersonAvatar = ({
 					</Typography>
 				</>
 			) : (
-				<Box className='flex items-center justify-center gap-4'>
+				<Box className='flex flex-wrap items-center justify-start gap-8'>
 					{data?.map(item => (
 						<Box key={item.id} className='flex flex-col items-center'>
 							<Avatar
 								alt={`photo of ${item?.name as string}`}
 								src={`https://image.tmdb.org/t/p/w500${item?.profile_path as string}`}
 								classes={{
-									root: 'w-16 h-16',
+									root: 'w-20 h-20',
 								}}
 							/>
 
 							<Typography
 								component='p'
-								className={`font-normal ${valueClassName}`}
+								className={`text-center font-normal ${valueClassName}`}
 							>
 								{item?.name as string}
 							</Typography>

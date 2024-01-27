@@ -1,5 +1,4 @@
 import PersonAvatar from '@components/ui/avatar/PersonAvatar';
-import { ContentItem } from '@components/ui/content/ContentItem';
 import { Cast, Crew, MovieDetails } from '@graphql/__generated__/graphql-type';
 import { Box, Typography } from '@mui/material';
 import { formatDate, formatNumberToHours } from '@utils/index';
@@ -30,11 +29,6 @@ export const SingleMovieCard = ({
 
 	const producers = crew.filter(item => item.job === 'Producer').slice(0, 3);
 
-	const actors = cast
-		.slice(0, 10)
-		.map(actor => actor.name)
-		.join(', ');
-
 	return (
 		<SingleCard
 			title={data?.title as string}
@@ -42,8 +36,6 @@ export const SingleMovieCard = ({
 			overview={data?.overview as string}
 			posterPath={data?.poster_path as string}
 			rating={data?.vote_average as number}
-			cast={cast}
-			crew={crew}
 			supports={supports}
 			subtitle={
 				<Box className='flex gap-2'>
@@ -75,12 +67,13 @@ export const SingleMovieCard = ({
 				</Box>
 			}
 			crewData={
-				<Box className='mt-4 flex flex-wrap gap-4'>
+				<Box className='mt-4 flex flex-wrap gap-8'>
 					<PersonAvatar
 						data={director as Crew}
 						title='Directed By'
 						titleClassName='text-lg'
 						valueClassName='text-sm'
+						horizontalAlign='center'
 					/>
 
 					<PersonAvatar
@@ -88,6 +81,7 @@ export const SingleMovieCard = ({
 						title='Music By'
 						titleClassName='text-lg'
 						valueClassName='text-sm'
+						horizontalAlign='center'
 					/>
 
 					<PersonAvatar
@@ -95,13 +89,18 @@ export const SingleMovieCard = ({
 						title='Produced By'
 						titleClassName='text-lg'
 						valueClassName='text-sm'
+						horizontalAlign='center'
 					/>
-
-					<ContentItem
+				</Box>
+			}
+			castData={
+				<Box className='mt-4 flex flex-wrap gap-8'>
+					<PersonAvatar
+						data={cast.slice(0, 6) as Crew[]}
 						title='Cast'
-						value={actors as string}
 						titleClassName='text-lg'
 						valueClassName='text-sm'
+						horizontalAlign='start'
 					/>
 				</Box>
 			}
