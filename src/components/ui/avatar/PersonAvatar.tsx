@@ -8,6 +8,7 @@ type PersonAvatarPropsType = {
 	valueClassName: string;
 	multiple?: boolean;
 	horizontalAlign: 'start' | 'end' | 'center';
+	isCast?: boolean;
 };
 
 const PersonAvatar = ({
@@ -16,6 +17,7 @@ const PersonAvatar = ({
 	titleClassName,
 	valueClassName,
 	horizontalAlign,
+	isCast,
 }: PersonAvatarPropsType) => {
 	return (
 		// eslint-disable-next-line tailwindcss/no-custom-classname
@@ -42,7 +44,7 @@ const PersonAvatar = ({
 					</Typography>
 				</>
 			) : (
-				<Box className='flex flex-wrap items-center justify-start gap-8'>
+				<Box className='flex flex-wrap items-center justify-start gap-3'>
 					{data?.map(item => (
 						<Box key={item.id} className='flex flex-col items-center'>
 							<Avatar
@@ -58,6 +60,11 @@ const PersonAvatar = ({
 								className={`text-center font-normal ${valueClassName}`}
 							>
 								{item?.name as string}
+								{isCast ? (
+									<span className='block text-xs text-primary-400'>
+										({(item as Cast)?.character})
+									</span>
+								) : null}
 							</Typography>
 						</Box>
 					))}

@@ -101,6 +101,7 @@ export const SingleMovieCard = ({
 						titleClassName='text-lg'
 						valueClassName='text-sm'
 						horizontalAlign='start'
+						isCast
 					/>
 				</Box>
 			}
