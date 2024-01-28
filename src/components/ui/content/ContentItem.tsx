@@ -14,17 +14,21 @@ export const ContentItem = ({
 	valueClassName,
 }: ContentItemPropsType) => {
 	return (
-		<Box>
-			<Typography
-				component='h6'
-				className={`mb-1 font-semibold ${titleClassName}`}
-			>
-				{title} :
-			</Typography>
+		<>
+			{value ? (
+				<Box>
+					<Typography
+						component='h6'
+						className={`mb-1 font-semibold ${titleClassName}`}
+					>
+						{title} :
+					</Typography>
 
-			<Typography component='p' className={`font-normal ${valueClassName}`}>
-				{value}
-			</Typography>
-		</Box>
+					<Typography component='p' className={`font-normal ${valueClassName}`}>
+						{value}
+					</Typography>
+				</Box>
+			) : null}
+		</>
 	);
 };

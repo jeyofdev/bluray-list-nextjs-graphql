@@ -14,9 +14,9 @@ type SingleCardPropsType = {
 	overview: string;
 	posterPath: string;
 	rating: number;
-	director: Crew;
-	music: Crew;
-	producers: Crew[];
+	director: Crew | undefined;
+	music: Crew | undefined;
+	producers: Crew[] | undefined;
 	cast: Cast[];
 	supports: SupportType;
 	subtitle?: ReactNode;
@@ -56,7 +56,9 @@ export const SingleCard = ({
 				<Typography variant='h2' component='h3' className='mb-4 font-semibold'>
 					{title}
 				</Typography>
+
 				{subtitle}
+
 				<Box className='mt-8'>
 					<ContentItem
 						title='Original title'
@@ -101,7 +103,7 @@ export const SingleCard = ({
 
 				<Box className='mt-4 flex flex-wrap gap-8'>
 					<PersonAvatar
-						data={cast.slice(0, 6)}
+						data={cast.length > 0 ? cast.slice(0, 6) : undefined}
 						title='Cast'
 						titleClassName='text-lg'
 						valueClassName='text-sm'

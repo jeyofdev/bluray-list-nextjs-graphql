@@ -76,7 +76,10 @@ const SearchModal = ({
 						<Box className='mt-8'>
 							<Suspense fallback={<h1>loading...</h1>}>
 								{searchQuery ? (
-									<ShowResultsNumber totalResults={totalResults} />
+									<ShowResultsNumber
+										totalResults={totalResults}
+										severity='error'
+									/>
 								) : null}
 
 								{list}

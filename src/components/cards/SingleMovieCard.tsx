@@ -1,4 +1,3 @@
-import PersonAvatar from '@components/ui/avatar/PersonAvatar';
 import { Cast, Crew, MovieDetails } from '@graphql/__generated__/graphql-type';
 import { Box, Typography } from '@mui/material';
 import { formatDate, formatNumberToHours } from '@utils/index';
@@ -27,7 +26,14 @@ export const SingleMovieCard = ({
 		item => item.job === 'Music' || item.job === 'Original Music Composer',
 	);
 
-	const producers = crew.filter(item => item.job === 'Producer').slice(0, 3);
+	const producers = () => {
+		const producersResult = crew.filter(item => item.job === 'Producer');
+		if (producersResult.length > 0) {
+			return producersResult.slice(0, 3);
+		}
+
+		return undefined;
+	};
 
 	return (
 		<SingleCard
@@ -36,9 +42,9 @@ export const SingleMovieCard = ({
 			overview={data?.overview as string}
 			posterPath={data?.poster_path as string}
 			rating={data?.vote_average as number}
-			director={director as Crew}
-			music={music as Crew}
-			producers={producers}
+			director={director}
+			music={music}
+			producers={producers()}
 			cast={cast}
 			supports={supports}
 			subtitle={
