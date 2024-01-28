@@ -11,8 +11,10 @@ import {
 	CardActionArea,
 	CardContent,
 	CardMedia,
+	Tooltip,
 	Typography,
 } from '@mui/material';
+import { truncate } from '@utils/index';
 import { MouseEventHandler, useState } from 'react';
 import { SupportType, ToastType } from '../../types';
 
@@ -73,13 +75,33 @@ const ListItemCard = ({
 					</Box>
 
 					<CardContent className='mt-4'>
-						<Typography
-							variant='h6'
-							component='h3'
-							className='text-center text-lg leading-6'
-						>
-							{title}
-						</Typography>
+						{title.length > 30 ? (
+							<Tooltip
+								title={title}
+								placement='top-start'
+								arrow
+								classes={{
+									tooltip: 'bg-primary-900 text-primary-50 rounded-xl max-w-60',
+									arrow: 'text-primary-900',
+								}}
+							>
+								<Typography
+									variant='h6'
+									component='h3'
+									className='text-center text-lg leading-6 text-primary-900'
+								>
+									{truncate(title, 30)}
+								</Typography>
+							</Tooltip>
+						) : (
+							<Typography
+								variant='h6'
+								component='h3'
+								className='text-center text-lg leading-6'
+							>
+								{truncate(title, 30)}
+							</Typography>
+						)}
 
 						<Box className='flex items-center justify-center gap-4'>
 							{supports?.bluray && (

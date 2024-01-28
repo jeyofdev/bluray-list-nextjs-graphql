@@ -5,6 +5,7 @@ import { ContentItem } from '@components/ui/content/ContentItem';
 import ChipRating from '@components/ui/rating/ChipRating';
 import { Cast, Crew } from '@graphql/__generated__/graphql-type';
 import { Box, CardContent, CardMedia, Paper, Typography } from '@mui/material';
+import { truncate } from '@utils/index';
 import { ReactNode } from 'react';
 import { SupportType } from '../../types';
 
@@ -53,8 +54,12 @@ export const SingleCard = ({
 			</Paper>
 
 			<CardContent className='w-2/3 py-0'>
-				<Typography variant='h2' component='h3' className='mb-4 font-semibold'>
-					{title}
+				<Typography
+					variant='h2'
+					component='h3'
+					className='mb-4 text-5xl font-semibold'
+				>
+					{truncate(title, 60)}
 				</Typography>
 
 				{subtitle}
