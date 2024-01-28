@@ -64,6 +64,9 @@ const globalTheme = createTheme({
 					padding: 0,
 					alignItems: 'center',
 				},
+				standardInfo: {
+					backgroundColor: '#e1edfb',
+				},
 			},
 		},
 		MuiMenuItem: {
