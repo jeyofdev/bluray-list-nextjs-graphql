@@ -12,6 +12,7 @@ import {
 	Checkbox,
 	Typography,
 } from '@mui/material';
+import { truncate } from '@utils/index';
 
 type SearchCardProps = {
 	title: string;
@@ -81,7 +82,7 @@ const SearchCard = ({
 						component='h3'
 						className='text-center text-lg leading-6'
 					>
-						{title}
+						{truncate(title, 30)}
 					</Typography>
 				</CardContent>
 			</CardActionArea>

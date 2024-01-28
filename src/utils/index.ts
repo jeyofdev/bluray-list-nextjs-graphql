@@ -32,3 +32,7 @@ export const formatDate = (date: string) => {
 export const getRating = (rating: number, precision?: number) => {
 	return !precision ? Math.round(rating / 2) : rating / 2;
 };
+
+export const truncate = (text: string, limit: number) => {
+	return text.length > limit ? `${text.slice(0, limit)}...` : text;
+};
