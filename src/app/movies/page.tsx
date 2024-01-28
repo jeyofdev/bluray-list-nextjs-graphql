@@ -5,6 +5,7 @@ import MovieCard from '@components/cards/MovieCard';
 import ContentContainer from '@components/containers/ContentContainer';
 import { ButtonAction } from '@components/ui/buttons/ButtonAction';
 import ItemsList from '@components/ui/list/ItemList';
+import FilterSettings from '@components/ui/menu/FilterSettings';
 import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
 import ShowResultsNumber from '@components/ui/result/ShowResultNumber';
 import Toast from '@components/ui/toast/Toast';
@@ -14,7 +15,7 @@ import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 
 const MoviesPage = () => {
 	const router = useRouter();
@@ -32,6 +33,31 @@ const MoviesPage = () => {
 		fetchPolicy: 'cache-and-network',
 	});
 
+	const [filters, setFilters] = useState({});
+
+	const getGenres = useCallback(() => {
+		const genreByMovie = data?.movies
+			?.map(movie =>
+				movie?.details?.genres?.map(genre => genre?.name)?.join(','),
+			)
+			.join(',')
+			.split(',');
+
+		return Array.from(new Set(genreByMovie));
+	}, [data?.movies]);
+
+	useEffect(() => {
+		const genres = getGenres().reduce(
+			(accumulator, currentValue) => ({
+				...accumulator,
+				[currentValue]: false,
+			}),
+			{},
+		);
+
+		setFilters({ genres });
+	}, [getGenres]);
+
 	return (
 		<NoSSRWrapper>
 			<ContentContainer>
@@ -41,10 +67,20 @@ const MoviesPage = () => {
 
 				<Suspense fallback={<h1>load</h1>}>
 					<>
-						<ShowResultsNumber
-							totalResults={data?.movies?.length as number}
-							severity='info'
-						/>
+						<Box className='flex justify-between'>
+							<ShowResultsNumber
+								totalResults={data?.movies?.length as number}
+								severity='info'
+							/>
+
+							<FilterSettings
+								title='Filters'
+								genresLabel={getGenres()}
+								filters={filters}
+								setFilters={setFilters}
+							/>
+						</Box>
+
 						<ItemsList
 							items={data.movies}
 							renderItems={(movie: any) => (
