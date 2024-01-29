@@ -36,17 +36,16 @@ const FilterSettings = ({
 		setAnchorEl(null);
 	};
 
-	const handleChangeGenre = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement>,
+		filterName: string,
+	) => {
 		setFilters({
 			...filters,
-			genres: { ...filters.genres, [e.target.name]: e.target.checked },
-		});
-	};
-
-	const handleChangeYear = (e: ChangeEvent<HTMLInputElement>) => {
-		setFilters({
-			...filters,
-			years: { ...filters.years, [e.target.name]: e.target.checked },
+			[filterName]: {
+				...filters[filterName as keyof typeof filters],
+				[e.target.name]: e.target.checked,
+			},
 		});
 	};
 
@@ -101,7 +100,7 @@ const FilterSettings = ({
 					title='Genres'
 					filterKey='genres'
 					filtersLabels={genresLabel}
-					onChange={handleChangeGenre}
+					onChange={e => handleChange(e, 'genres')}
 				/>
 
 				<Divider
@@ -115,7 +114,7 @@ const FilterSettings = ({
 					title='Years'
 					filterKey='years'
 					filtersLabels={yearsLabel}
-					onChange={handleChangeYear}
+					onChange={e => handleChange(e, 'years')}
 				/>
 			</Menu>
 		</>
