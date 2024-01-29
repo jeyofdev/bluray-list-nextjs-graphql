@@ -6,31 +6,38 @@ import {
 	useState,
 } from 'react';
 import { FiltersType } from '../types';
-import { MovieResponse } from '@graphql/__generated__/graphql-type';
+import { Genre } from '@graphql/__generated__/graphql-type';
+import { TypeEnum } from '@enums/index';
+import { convertToObjectWithValueFalse } from '@utils/index';
+
+type ItemResponseType = any[];
 
 type UseFilterType = {
 	filters: FiltersType;
 	setFilters: Dispatch<SetStateAction<FiltersType>>;
-	items: MovieResponse[];
-	itemsFiltered: MovieResponse[];
+	itemsFiltered: ItemResponseType;
 	getGenresByItems: () => string[];
 	getYearByItem: () => string[];
 };
 
-const useFilter = (dataItem: MovieResponse[]): UseFilterType => {
+const useFilter = (
+	dataItem: ItemResponseType,
+	type: TypeEnum,
+): UseFilterType => {
 	const [filters, setFilters] = useState<FiltersType>({
 		genres: {},
 		years: [],
 	});
 
-	const [items, setItems] = useState<MovieResponse[]>(dataItem);
+	const [items, setItems] = useState<ItemResponseType>(dataItem);
 
-	const [itemsFiltered, setItemsFiltered] = useState<MovieResponse[]>(dataItem);
+	const [itemsFiltered, setItemsFiltered] =
+		useState<ItemResponseType>(dataItem);
 
 	const getGenresByItems = useCallback(() => {
 		const genresByItem = items
 			?.map(movie =>
-				movie?.details?.genres?.map(genre => genre?.name)?.join(','),
+				movie?.details?.genres?.map((genre: Genre) => genre?.name)?.join(','),
 			)
 			.join(',')
 			.split(',');
@@ -39,21 +46,21 @@ const useFilter = (dataItem: MovieResponse[]): UseFilterType => {
 	}, [items]);
 
 	const getYearByItem = useCallback(() => {
-		const years = items.map(
-			m => m?.details?.release_date?.slice(0, 4) as string,
-		);
+		let years: string[] = [];
+
+		if (type === TypeEnum.MOVIE) {
+			years = items.map(m => m?.details?.release_date?.slice(0, 4) as string);
+		} else if (type === TypeEnum.SERIE) {
+			years = items.map(m => {
+				return m?.details?.seasons[m?.season]?.air_date?.slice(0, 4) as string;
+			});
+		}
 
 		return Array.from(new Set(years));
-	}, [items]);
+	}, [items, type]);
 
-	const setDataInObject = (itemsData: () => string[]) => {
-		return itemsData().reduce(
-			(accumulator, currentValue) => ({
-				...accumulator,
-				[currentValue]: false,
-			}),
-			{},
-		);
+	const setDataInObject = (itemsData: string[]) => {
+		return convertToObjectWithValueFalse(itemsData);
 	};
 
 	const checkIfItemFilterIsActive = (filter: object) => {
@@ -67,8 +74,8 @@ const useFilter = (dataItem: MovieResponse[]): UseFilterType => {
 	};
 
 	useEffect(() => {
-		const genres = setDataInObject(getGenresByItems);
-		const years = setDataInObject(getYearByItem);
+		const genres = convertToObjectWithValueFalse(getGenresByItems());
+		const years = convertToObjectWithValueFalse(getYearByItem());
 
 		setFilters({ genres, years });
 	}, [getGenresByItems, getYearByItem, items, setFilters]);
@@ -82,8 +89,10 @@ const useFilter = (dataItem: MovieResponse[]): UseFilterType => {
 			const yearFilters = getFilters(filters?.years);
 
 			const itemFilterByGenre = items?.filter(m => {
-				const movieGenres = m?.details?.genres?.map(genre => genre?.name);
-				return movieGenres?.some(v => genreFilters.includes(v as string));
+				const movieGenres = m?.details?.genres?.map(
+					(genre: Genre) => genre?.name,
+				);
+				return movieGenres?.some((v: string) => genreFilters.includes(v));
 			});
 
 			const itemFilterByYear = items?.filter(m => {
@@ -99,21 +108,26 @@ const useFilter = (dataItem: MovieResponse[]): UseFilterType => {
 			} else if (genreFilterIsActive && yearFilterIsActive) {
 				setItemsFiltered(
 					itemFilterByGenre?.filter(m => {
-						return yearFilters.includes(
-							m?.details?.release_date?.slice(0, 4) as string,
-						);
+						if (type === TypeEnum.MOVIE) {
+							return yearFilters.includes(
+								m?.details?.release_date?.slice(0, 4) as string,
+							);
+						} else if (type === TypeEnum.SERIE) {
+							return yearFilters.includes(
+								m?.details?.seasons[m?.season]?.air_date?.slice(0, 4) as string,
+							);
+						}
 					}),
 				);
 			}
 		} else {
 			setItemsFiltered(items);
 		}
-	}, [filters, items]);
+	}, [filters, items, type]);
 
 	return {
 		filters,
 		setFilters,
-		items,
 		itemsFiltered,
 		getGenresByItems,
 		getYearByItem,

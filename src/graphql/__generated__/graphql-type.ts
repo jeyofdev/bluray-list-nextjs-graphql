@@ -569,6 +569,7 @@ export type SeriesQuery = {
 			seasons?: Array<{
 				__typename?: 'Season';
 				id?: number | null;
+				air_date?: string | null;
 				name?: string | null;
 				poster_path?: string | null;
 				season_number?: number | null;
@@ -1477,6 +1478,7 @@ export const SeriesDocument = gql`
 				poster_path
 				seasons {
 					id
+					air_date
 					name
 					poster_path
 					season_number

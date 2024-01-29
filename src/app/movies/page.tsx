@@ -9,6 +9,7 @@ import FilterSettings from '@components/ui/menu/FilterSettings';
 import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
 import ShowResultsNumber from '@components/ui/result/ShowResultNumber';
 import Toast from '@components/ui/toast/Toast';
+import { TypeEnum } from '@enums/index';
 import {
 	MovieDetails,
 	MovieResponse,
@@ -42,11 +43,10 @@ const MoviesPage = () => {
 	const {
 		filters,
 		setFilters,
-		items: movies,
 		itemsFiltered: moviesFiltered,
 		getGenresByItems,
 		getYearByItem,
-	} = useFilter(data?.movies as MovieResponse[]);
+	} = useFilter(data?.movies as MovieResponse[], TypeEnum.MOVIE);
 
 	return (
 		<NoSSRWrapper>
@@ -59,11 +59,11 @@ const MoviesPage = () => {
 					<>
 						<Box className='flex justify-between'>
 							<ShowResultsNumber
-								totalResults={movies?.length as number}
+								totalResults={moviesFiltered?.length as number}
 								severity='info'
 							/>
 
-							{movies?.length ? (
+							{moviesFiltered ? (
 								<FilterSettings
 									title='Filters'
 									genresLabel={getGenresByItems()}
