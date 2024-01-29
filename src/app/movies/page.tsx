@@ -14,13 +14,14 @@ import {
 	MovieResponse,
 	useMoviesSuspenseQuery,
 } from '@graphql/__generated__/graphql-type';
+import useFilter from '@hooks/useFilter';
 import useSearch from '@hooks/useSearch';
 import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { Suspense, useCallback, useEffect, useState } from 'react';
-import { FiltersType, SupportType } from '../../types';
+import { Suspense } from 'react';
+import { SupportType } from '../../types';
 
 const MoviesPage = () => {
 	const router = useRouter();
@@ -38,106 +39,14 @@ const MoviesPage = () => {
 		fetchPolicy: 'cache-and-network',
 	});
 
-	const [filters, setFilters] = useState<FiltersType>({
-		genres: {},
-		years: [],
-	});
-
-	const [movies, setMovies] = useState<MovieResponse[]>(
-		data?.movies as MovieResponse[],
-	);
-
-	const [moviesFiltered, setMoviesFiltered] = useState<MovieResponse[]>(
-		data?.movies as MovieResponse[],
-	);
-
-	const getGenresByMovies = useCallback(() => {
-		const genreByMovie = movies
-			?.map(movie =>
-				movie?.details?.genres?.map(genre => genre?.name)?.join(','),
-			)
-			.join(',')
-			.split(',');
-
-		return Array.from(new Set(genreByMovie));
-	}, [movies]);
-
-	const getYearByMovie = useCallback(() => {
-		const years = movies.map(
-			m => m?.details?.release_date?.slice(0, 4) as string,
-		);
-
-		return Array.from(new Set(years));
-	}, [movies]);
-
-	useEffect(() => {
-		const genres = getGenresByMovies().reduce(
-			(accumulator, currentValue) => ({
-				...accumulator,
-				[currentValue]: false,
-			}),
-			{},
-		);
-
-		const years = getYearByMovie().reduce(
-			(accumulator, currentValue) => ({
-				...accumulator,
-				[currentValue]: false,
-			}),
-			{},
-		);
-
-		setFilters({ genres, years });
-	}, [getGenresByMovies, getYearByMovie, movies]);
-
-	useEffect(() => {
-		const genreFilterIsActive = Object.values(filters?.genres).some(
-			item => item === true,
-		);
-
-		const yearFilterIsActive = Object.values(filters?.years).some(
-			item => item === true,
-		);
-
-		if (genreFilterIsActive || yearFilterIsActive) {
-			const genreFilters = Object.keys(filters?.genres).filter(
-				genre => filters?.genres[genre as keyof typeof filters.genres] === true,
-			);
-
-			const movieFilterByGenre = movies?.filter(m => {
-				const movieGenres = m?.details?.genres?.map(genre => genre?.name);
-				return movieGenres?.some(v => genreFilters.includes(v as string));
-			});
-
-			const yearFilters = Object.keys(filters?.years).filter(
-				year => filters?.years[year as keyof typeof filters.years] === true,
-			);
-
-			const movieFilterByYear = movies?.filter(m => {
-				return yearFilters.includes(
-					m?.details?.release_date?.slice(0, 4) as string,
-				);
-			});
-
-			if (genreFilterIsActive && !yearFilterIsActive) {
-				setMoviesFiltered(movieFilterByGenre);
-			}
-			if (!genreFilterIsActive && yearFilterIsActive) {
-				setMoviesFiltered(movieFilterByYear);
-			}
-			if (genreFilterIsActive && yearFilterIsActive) {
-				setMoviesFiltered(
-					movieFilterByGenre?.filter(m => {
-						return yearFilters.includes(
-							m?.details?.release_date?.slice(0, 4) as string,
-						);
-					}),
-				);
-			}
-		} else {
-			setMoviesFiltered(movies);
-		}
-	}, [filters, movies]);
+	const {
+		filters,
+		setFilters,
+		items: movies,
+		itemsFiltered: moviesFiltered,
+		getGenresByItems,
+		getYearByItem,
+	} = useFilter(data?.movies as MovieResponse[]);
 
 	return (
 		<NoSSRWrapper>
@@ -157,8 +66,8 @@ const MoviesPage = () => {
 							{movies?.length ? (
 								<FilterSettings
 									title='Filters'
-									genresLabel={getGenresByMovies()}
-									yearsLabel={getYearByMovie().sort(
+									genresLabel={getGenresByItems()}
+									yearsLabel={getYearByItem().sort(
 										(a: string, b: string) => Number(a) - Number(b),
 									)}
 									filters={filters}
