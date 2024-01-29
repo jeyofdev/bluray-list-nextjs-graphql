@@ -27,4 +27,5 @@ export type PaginationHandleChangeCurrentPage = (
 
 export type FiltersType = {
 	genres: object;
+	years: object;
 };

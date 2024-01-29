@@ -24,6 +24,7 @@ import { FiltersType } from '../../../types';
 type FilterSettingsPropsType = {
 	title: string;
 	genresLabel: string[];
+	yearsLabel: string[];
 	filters: FiltersType;
 	setFilters: Dispatch<SetStateAction<FiltersType>>;
 };
@@ -31,6 +32,7 @@ type FilterSettingsPropsType = {
 const FilterSettings = ({
 	title,
 	genresLabel,
+	yearsLabel,
 	filters,
 	setFilters,
 }: FilterSettingsPropsType) => {
@@ -49,6 +51,13 @@ const FilterSettings = ({
 		setFilters({
 			...filters,
 			genres: { ...filters.genres, [e.target.name]: e.target.checked },
+		});
+	};
+
+	const handleChangeYear = (e: ChangeEvent<HTMLInputElement>) => {
+		setFilters({
+			...filters,
+			years: { ...filters.years, [e.target.name]: e.target.checked },
 		});
 	};
 
@@ -145,6 +154,48 @@ const FilterSettings = ({
 											className='text-sm font-normal text-primary-900'
 										>
 											{genreLabel}
+										</Typography>
+									}
+								/>
+							))}
+						</FormGroup>
+					) : null}
+				</Box>
+
+				<Box className='flex flex-col items-start p-4'>
+					<Typography
+						variant='h6'
+						className='text-lg font-bold text-primary-900'
+					>
+						Years
+					</Typography>
+					{filters?.years ? (
+						<FormGroup>
+							{yearsLabel?.map(yearLabel => (
+								<FormControlLabel
+									key={yearLabel}
+									className='m-0'
+									control={
+										<Checkbox
+											checked={
+												filters?.genres[
+													yearLabel as keyof typeof filters.genres
+												]
+											}
+											inputProps={{ 'aria-label': 'controlled' }}
+											classes={{
+												root: 'text-sm py-2 pl-0 pr-2',
+											}}
+											name={yearLabel}
+											onChange={handleChangeYear}
+										/>
+									}
+									label={
+										<Typography
+											variant='h6'
+											className='text-sm font-normal text-primary-900'
+										>
+											{yearLabel}
 										</Typography>
 									}
 								/>

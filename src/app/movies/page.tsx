@@ -40,6 +40,7 @@ const MoviesPage = () => {
 
 	const [filters, setFilters] = useState<FiltersType>({
 		genres: {},
+		years: [],
 	});
 
 	const [movies, setMovies] = useState<MovieResponse[]>(
@@ -61,6 +62,14 @@ const MoviesPage = () => {
 		return Array.from(new Set(genreByMovie));
 	}, [movies]);
 
+	const getYearByMovie = useCallback(() => {
+		const years = movies.map(
+			m => m?.details?.release_date?.slice(0, 4) as string,
+		);
+
+		return Array.from(new Set(years));
+	}, [movies]);
+
 	useEffect(() => {
 		const genres = getGenresByMovies().reduce(
 			(accumulator, currentValue) => ({
@@ -70,8 +79,16 @@ const MoviesPage = () => {
 			{},
 		);
 
-		setFilters({ genres });
-	}, [getGenresByMovies, movies]);
+		const years = getYearByMovie().reduce(
+			(accumulator, currentValue) => ({
+				...accumulator,
+				[currentValue]: false,
+			}),
+			{},
+		);
+
+		setFilters({ genres, years });
+	}, [getGenresByMovies, getYearByMovie, movies]);
 
 	useEffect(() => {
 		const genreFilterIsOk = Object.values(filters?.genres).some(
@@ -113,6 +130,9 @@ const MoviesPage = () => {
 								<FilterSettings
 									title='Filters'
 									genresLabel={getGenresByMovies()}
+									yearsLabel={getYearByMovie().sort(
+										(a: string, b: string) => Number(a) - Number(b),
+									)}
 									filters={filters}
 									setFilters={setFilters}
 								/>
