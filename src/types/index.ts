@@ -24,3 +24,7 @@ export type PaginationHandleChangeCurrentPage = (
 	_: ChangeEvent<unknown>,
 	value: number,
 ) => void;
+
+export type FiltersType = {
+	genres: object;
+};

@@ -9,13 +9,18 @@ import FilterSettings from '@components/ui/menu/FilterSettings';
 import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
 import ShowResultsNumber from '@components/ui/result/ShowResultNumber';
 import Toast from '@components/ui/toast/Toast';
-import { useMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
+import {
+	MovieDetails,
+	MovieResponse,
+	useMoviesSuspenseQuery,
+} from '@graphql/__generated__/graphql-type';
 import useSearch from '@hooks/useSearch';
 import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useState } from 'react';
+import { FiltersType, SupportType } from '../../types';
 
 const MoviesPage = () => {
 	const router = useRouter();
@@ -33,10 +38,20 @@ const MoviesPage = () => {
 		fetchPolicy: 'cache-and-network',
 	});
 
-	const [filters, setFilters] = useState({});
+	const [filters, setFilters] = useState<FiltersType>({
+		genres: {},
+	});
 
-	const getGenres = useCallback(() => {
-		const genreByMovie = data?.movies
+	const [movies, setMovies] = useState<MovieResponse[]>(
+		data?.movies as MovieResponse[],
+	);
+
+	const [moviesFiltered, setMoviesFiltered] = useState<MovieResponse[]>(
+		data?.movies as MovieResponse[],
+	);
+
+	const getGenresByMovies = useCallback(() => {
+		const genreByMovie = movies
 			?.map(movie =>
 				movie?.details?.genres?.map(genre => genre?.name)?.join(','),
 			)
@@ -44,10 +59,10 @@ const MoviesPage = () => {
 			.split(',');
 
 		return Array.from(new Set(genreByMovie));
-	}, [data?.movies]);
+	}, [movies]);
 
 	useEffect(() => {
-		const genres = getGenres().reduce(
+		const genres = getGenresByMovies().reduce(
 			(accumulator, currentValue) => ({
 				...accumulator,
 				[currentValue]: false,
@@ -56,7 +71,28 @@ const MoviesPage = () => {
 		);
 
 		setFilters({ genres });
-	}, [getGenres]);
+	}, [getGenresByMovies, movies]);
+
+	useEffect(() => {
+		const genreFilterIsOk = Object.values(filters?.genres).some(
+			item => item === true,
+		);
+
+		if (genreFilterIsOk) {
+			const genreFilters = Object.keys(filters?.genres).filter(
+				genre => filters?.genres[genre as keyof typeof filters.genres] === true,
+			);
+
+			const movieFilterByGenre = movies?.filter(m => {
+				const movieGenres = m?.details?.genres?.map(genre => genre?.name);
+				return movieGenres?.some(v => genreFilters.includes(v as string));
+			});
+
+			setMoviesFiltered(movieFilterByGenre);
+		} else {
+			setMoviesFiltered(movies);
+		}
+	}, [filters, movies]);
 
 	return (
 		<NoSSRWrapper>
@@ -69,26 +105,28 @@ const MoviesPage = () => {
 					<>
 						<Box className='flex justify-between'>
 							<ShowResultsNumber
-								totalResults={data?.movies?.length as number}
+								totalResults={movies?.length as number}
 								severity='info'
 							/>
 
-							<FilterSettings
-								title='Filters'
-								genresLabel={getGenres()}
-								filters={filters}
-								setFilters={setFilters}
-							/>
+							{movies?.length ? (
+								<FilterSettings
+									title='Filters'
+									genresLabel={getGenresByMovies()}
+									filters={filters}
+									setFilters={setFilters}
+								/>
+							) : null}
 						</Box>
 
 						<ItemsList
-							items={data.movies}
-							renderItems={(movie: any) => (
+							items={moviesFiltered}
+							renderItems={(movie: MovieResponse) => (
 								<MovieCard
 									key={movie.id}
-									id={movie.id}
-									movie={movie.details}
-									supports={movie.support}
+									id={movie.id as string}
+									movie={movie.details as MovieDetails}
+									supports={movie.support as SupportType | undefined}
 									onClick={() => router.push(`/movies/${movie?.id}`)}
 									refetch={refetch}
 									toast={{

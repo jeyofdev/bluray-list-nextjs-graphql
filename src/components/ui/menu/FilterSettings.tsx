@@ -19,12 +19,13 @@ import {
 	SetStateAction,
 	useState,
 } from 'react';
+import { FiltersType } from '../../../types';
 
 type FilterSettingsPropsType = {
 	title: string;
 	genresLabel: string[];
-	filters: any;
-	setFilters: Dispatch<SetStateAction<{}>>;
+	filters: FiltersType;
+	setFilters: Dispatch<SetStateAction<FiltersType>>;
 };
 
 const FilterSettings = ({
@@ -125,7 +126,11 @@ const FilterSettings = ({
 									className='m-0'
 									control={
 										<Checkbox
-											checked={filters?.genres[genreLabel]}
+											checked={
+												filters?.genres[
+													genreLabel as keyof typeof filters.genres
+												]
+											}
 											inputProps={{ 'aria-label': 'controlled' }}
 											classes={{
 												root: 'text-sm py-2 pl-0 pr-2',
