@@ -1,17 +1,5 @@
-import DeleteIcon from '@mui/icons-material/Delete';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import {
-	Box,
-	Checkbox,
-	Divider,
-	FormControlLabel,
-	FormGroup,
-	IconButton,
-	Menu,
-	MenuItem,
-	Tooltip,
-	Typography,
-} from '@mui/material';
+import { Box, Divider, IconButton, Menu, Tooltip } from '@mui/material';
 import {
 	ChangeEvent,
 	Dispatch,
@@ -20,6 +8,7 @@ import {
 	useState,
 } from 'react';
 import { FiltersType } from '../../../types';
+import FilterCheckbox from '../form/FilterCheckbox';
 
 type FilterSettingsPropsType = {
 	title: string;
@@ -47,17 +36,16 @@ const FilterSettings = ({
 		setAnchorEl(null);
 	};
 
-	const handleChangeGenre = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (
+		e: ChangeEvent<HTMLInputElement>,
+		filterName: string,
+	) => {
 		setFilters({
 			...filters,
-			genres: { ...filters.genres, [e.target.name]: e.target.checked },
-		});
-	};
-
-	const handleChangeYear = (e: ChangeEvent<HTMLInputElement>) => {
-		setFilters({
-			...filters,
-			years: { ...filters.years, [e.target.name]: e.target.checked },
+			[filterName]: {
+				...filters[filterName as keyof typeof filters],
+				[e.target.name]: e.target.checked,
+			},
 		});
 	};
 
@@ -107,11 +95,13 @@ const FilterSettings = ({
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 			>
-				<MenuItem onClick={handleClose}>
-					<IconButton disableRipple onClick={() => {}}>
-						<DeleteIcon className='text-xl' />
-					</IconButton>
-				</MenuItem>
+				<FilterCheckbox
+					filters={filters}
+					title='Genres'
+					filterKey='genres'
+					filtersLabels={genresLabel}
+					onChange={e => handleChange(e, 'genres')}
+				/>
 
 				<Divider
 					classes={{
@@ -119,90 +109,13 @@ const FilterSettings = ({
 					}}
 				/>
 
-				<Box className='flex flex-col items-start p-4'>
-					<Typography
-						variant='h6'
-						className='text-lg font-bold text-primary-900'
-					>
-						Genres
-					</Typography>
-
-					{filters?.genres ? (
-						<FormGroup>
-							{genresLabel?.map(genreLabel => (
-								<FormControlLabel
-									key={genreLabel}
-									className='m-0'
-									control={
-										<Checkbox
-											checked={
-												filters?.genres[
-													genreLabel as keyof typeof filters.genres
-												]
-											}
-											inputProps={{ 'aria-label': 'controlled' }}
-											classes={{
-												root: 'text-sm py-2 pl-0 pr-2',
-											}}
-											name={genreLabel}
-											onChange={handleChangeGenre}
-										/>
-									}
-									label={
-										<Typography
-											variant='h6'
-											className='text-sm font-normal text-primary-900'
-										>
-											{genreLabel}
-										</Typography>
-									}
-								/>
-							))}
-						</FormGroup>
-					) : null}
-				</Box>
-
-				<Box className='flex flex-col items-start p-4'>
-					<Typography
-						variant='h6'
-						className='text-lg font-bold text-primary-900'
-					>
-						Years
-					</Typography>
-					{filters?.years ? (
-						<FormGroup>
-							{yearsLabel?.map(yearLabel => (
-								<FormControlLabel
-									key={yearLabel}
-									className='m-0'
-									control={
-										<Checkbox
-											checked={
-												filters?.genres[
-													yearLabel as keyof typeof filters.genres
-												]
-											}
-											inputProps={{ 'aria-label': 'controlled' }}
-											classes={{
-												root: 'text-sm py-2 pl-0 pr-2',
-											}}
-											name={yearLabel}
-											onChange={handleChangeYear}
-										/>
-									}
-									label={
-										<Typography
-											variant='h6'
-											className='text-sm font-normal text-primary-900'
-										>
-											{yearLabel}
-										</Typography>
-									}
-								/>
-							))}
-						</FormGroup>
-					) : null}
-				</Box>
+				<FilterCheckbox
+					filters={filters}
+					title='Years'
+					filterKey='years'
+					filtersLabels={yearsLabel}
+					onChange={e => handleChange(e, 'years')}
+				/>
 			</Menu>
 		</>
 	);
