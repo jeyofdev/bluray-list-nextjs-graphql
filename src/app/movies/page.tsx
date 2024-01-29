@@ -91,11 +91,15 @@ const MoviesPage = () => {
 	}, [getGenresByMovies, getYearByMovie, movies]);
 
 	useEffect(() => {
-		const genreFilterIsOk = Object.values(filters?.genres).some(
+		const genreFilterIsActive = Object.values(filters?.genres).some(
 			item => item === true,
 		);
 
-		if (genreFilterIsOk) {
+		const yearFilterIsActive = Object.values(filters?.years).some(
+			item => item === true,
+		);
+
+		if (genreFilterIsActive || yearFilterIsActive) {
 			const genreFilters = Object.keys(filters?.genres).filter(
 				genre => filters?.genres[genre as keyof typeof filters.genres] === true,
 			);
@@ -105,7 +109,31 @@ const MoviesPage = () => {
 				return movieGenres?.some(v => genreFilters.includes(v as string));
 			});
 
-			setMoviesFiltered(movieFilterByGenre);
+			const yearFilters = Object.keys(filters?.years).filter(
+				year => filters?.years[year as keyof typeof filters.years] === true,
+			);
+
+			const movieFilterByYear = movies?.filter(m => {
+				return yearFilters.includes(
+					m?.details?.release_date?.slice(0, 4) as string,
+				);
+			});
+
+			if (genreFilterIsActive && !yearFilterIsActive) {
+				setMoviesFiltered(movieFilterByGenre);
+			}
+			if (!genreFilterIsActive && yearFilterIsActive) {
+				setMoviesFiltered(movieFilterByYear);
+			}
+			if (genreFilterIsActive && yearFilterIsActive) {
+				setMoviesFiltered(
+					movieFilterByGenre?.filter(m => {
+						return yearFilters.includes(
+							m?.details?.release_date?.slice(0, 4) as string,
+						);
+					}),
+				);
+			}
 		} else {
 			setMoviesFiltered(movies);
 		}
