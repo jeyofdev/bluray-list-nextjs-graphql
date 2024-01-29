@@ -5,16 +5,24 @@ import SerieCard from '@components/cards/SerieCard';
 import ContentContainer from '@components/containers/ContentContainer';
 import { ButtonAction } from '@components/ui/buttons/ButtonAction';
 import ItemsList from '@components/ui/list/ItemList';
+import FilterSettings from '@components/ui/menu/FilterSettings';
 import SearchSerieModal from '@components/ui/modal/SearchSerieModal';
 import ShowResultsNumber from '@components/ui/result/ShowResultNumber';
 import Toast from '@components/ui/toast/Toast';
-import { useSeriesSuspenseQuery } from '@graphql/__generated__/graphql-type';
+import { TypeEnum } from '@enums/index';
+import {
+	SerieDetails,
+	SerieResponse,
+	useSeriesSuspenseQuery,
+} from '@graphql/__generated__/graphql-type';
+import useFilter from '@hooks/useFilter';
 import useSearch from '@hooks/useSearch';
 import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
+import { SupportType } from '../../types';
 
 const SeriesPage = () => {
 	const router = useRouter();
@@ -32,6 +40,14 @@ const SeriesPage = () => {
 		fetchPolicy: 'cache-and-network',
 	});
 
+	const {
+		filters,
+		setFilters,
+		itemsFiltered: seriesFiltered,
+		getGenresByItems,
+		getYearByItem,
+	} = useFilter(data?.series as SerieResponse[], TypeEnum.SERIE);
+
 	return (
 		<NoSSRWrapper>
 			<ContentContainer>
@@ -41,20 +57,34 @@ const SeriesPage = () => {
 
 				<Suspense fallback={<h1>load</h1>}>
 					<>
-						<ShowResultsNumber
-							totalResults={data?.series?.length as number}
-							severity='info'
-						/>
+						<Box className='flex justify-between'>
+							<ShowResultsNumber
+								totalResults={seriesFiltered?.length as number}
+								severity='info'
+							/>
+
+							{seriesFiltered?.length ? (
+								<FilterSettings
+									title='Filters'
+									genresLabel={getGenresByItems()}
+									yearsLabel={getYearByItem().sort(
+										(a: string, b: string) => Number(a) - Number(b),
+									)}
+									filters={filters}
+									setFilters={setFilters}
+								/>
+							) : null}
+						</Box>
 
 						<ItemsList
-							items={data.series}
-							renderItems={(serie: any) => (
+							items={seriesFiltered}
+							renderItems={(serie: SerieResponse) => (
 								<SerieCard
 									key={serie.id}
-									id={serie.id}
-									season={serie.season}
-									serie={serie.details}
-									supports={serie.support}
+									id={serie.id as string}
+									season={serie.season as number}
+									serie={serie.details as SerieDetails}
+									supports={serie.support as SupportType | undefined}
 									onClick={() => router.push(`/series/${serie?.id}`)}
 									refetch={refetch}
 									toast={{

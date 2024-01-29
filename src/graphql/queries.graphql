@@ -137,6 +137,7 @@ query Series {
 			poster_path
 			seasons {
 				id
+				air_date
 				name
 				poster_path
 				season_number
