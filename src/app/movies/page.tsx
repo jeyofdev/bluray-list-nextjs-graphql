@@ -57,10 +57,11 @@ const MoviesPage = () => {
 
 				<Suspense fallback={<h1>load</h1>}>
 					<>
-						<Box className='flex justify-between'>
+						<Box className='mb-3 flex items-center justify-between gap-4'>
 							<ShowResultsNumber
 								totalResults={moviesFiltered?.length as number}
 								severity='info'
+								noMargin
 							/>
 
 							{moviesFiltered ? (

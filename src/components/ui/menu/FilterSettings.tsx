@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {
 	Box,
@@ -111,6 +112,16 @@ const FilterSettings = ({
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 			>
+				<IconButton
+					size='large'
+					classes={{
+						root: 'absolute right-1 top-1 hover:bg-danger-50 text-danger-500',
+					}}
+					onClick={handleClose}
+				>
+					<CloseIcon className='size-5' />
+				</IconButton>
+
 				<FilterCheckbox
 					filters={filters}
 					title='Genres'
