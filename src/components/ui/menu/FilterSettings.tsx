@@ -1,5 +1,14 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { Box, Divider, IconButton, Menu, Tooltip } from '@mui/material';
+import {
+	Box,
+	Button,
+	Divider,
+	IconButton,
+	Menu,
+	Tooltip,
+	Typography,
+} from '@mui/material';
+import { convertToObjectWithValueFalse } from '@utils/index';
 import {
 	ChangeEvent,
 	Dispatch,
@@ -49,6 +58,13 @@ const FilterSettings = ({
 		});
 	};
 
+	const handleResetFilters = () => {
+		const genres = convertToObjectWithValueFalse(Object.keys(filters.genres));
+		const years = convertToObjectWithValueFalse(Object.keys(filters.years));
+
+		setFilters({ genres, years });
+	};
+
 	return (
 		<>
 			<Box className='flex items-center text-center'>
@@ -90,7 +106,7 @@ const FilterSettings = ({
 				}}
 				classes={{
 					paper:
-						'bg-primary-50 overflow-visible drop-shadow-lg mt-4 before:content-[""] before:block before:absolute before:top-0 before:right-[14px] before:w-2.5 before:h-2.5 before:bg-primary-50 before:-translate-y-1/2 before:rotate-45 before:z-10',
+						'p-0 bg-primary-50 overflow-visible drop-shadow-lg mt-4 before:content-[""] before:block before:absolute before:top-0 before:right-[14px] before:w-2.5 before:h-2.5 before:bg-primary-50 before:-translate-y-1/2 before:rotate-45 before:z-10',
 				}}
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -116,6 +132,18 @@ const FilterSettings = ({
 					filtersLabels={yearsLabel}
 					onChange={e => handleChange(e, 'years')}
 				/>
+
+				<Box className='mb-2 flex justify-center'>
+					<Button
+						variant='contained'
+						color='primary'
+						onClick={handleResetFilters}
+					>
+						<Typography variant='body2' className='normal-case'>
+							Clear all filters
+						</Typography>
+					</Button>
+				</Box>
 			</Menu>
 		</>
 	);

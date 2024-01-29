@@ -8,6 +8,7 @@ import {
 import { FiltersType } from '../types';
 import { Genre } from '@graphql/__generated__/graphql-type';
 import { TypeEnum } from '@enums/index';
+import { convertToObjectWithValueFalse } from '@utils/index';
 
 type ItemResponseType = any[];
 
@@ -58,14 +59,8 @@ const useFilter = (
 		return Array.from(new Set(years));
 	}, [items, type]);
 
-	const setDataInObject = (itemsData: () => string[]) => {
-		return itemsData().reduce(
-			(accumulator, currentValue) => ({
-				...accumulator,
-				[currentValue]: false,
-			}),
-			{},
-		);
+	const setDataInObject = (itemsData: string[]) => {
+		return convertToObjectWithValueFalse(itemsData);
 	};
 
 	const checkIfItemFilterIsActive = (filter: object) => {
@@ -79,8 +74,8 @@ const useFilter = (
 	};
 
 	useEffect(() => {
-		const genres = setDataInObject(getGenresByItems);
-		const years = setDataInObject(getYearByItem);
+		const genres = convertToObjectWithValueFalse(getGenresByItems());
+		const years = convertToObjectWithValueFalse(getYearByItem());
 
 		setFilters({ genres, years });
 	}, [getGenresByItems, getYearByItem, items, setFilters]);

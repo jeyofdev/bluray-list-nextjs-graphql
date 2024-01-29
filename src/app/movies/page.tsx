@@ -63,7 +63,7 @@ const MoviesPage = () => {
 								severity='info'
 							/>
 
-							{moviesFiltered?.length ? (
+							{moviesFiltered ? (
 								<FilterSettings
 									title='Filters'
 									genresLabel={getGenresByItems()}

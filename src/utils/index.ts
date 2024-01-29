@@ -36,3 +36,16 @@ export const getRating = (rating: number, precision?: number) => {
 export const truncate = (text: string, limit: number) => {
 	return text.length > limit ? `${text.slice(0, limit)}...` : text;
 };
+
+/**
+ * Convert array value to object in format { key: false }
+ */
+export const convertToObjectWithValueFalse = (arr: string[]) => {
+	return arr.reduce(
+		(accumulator, currentValue) => ({
+			...accumulator,
+			[currentValue]: false,
+		}),
+		{},
+	);
+};
