@@ -40,6 +40,7 @@ const MoviesPage = () => {
 
 	const [filters, setFilters] = useState<FiltersType>({
 		genres: {},
+		years: [],
 	});
 
 	const [movies, setMovies] = useState<MovieResponse[]>(
@@ -61,6 +62,14 @@ const MoviesPage = () => {
 		return Array.from(new Set(genreByMovie));
 	}, [movies]);
 
+	const getYearByMovie = useCallback(() => {
+		const years = movies.map(
+			m => m?.details?.release_date?.slice(0, 4) as string,
+		);
+
+		return Array.from(new Set(years));
+	}, [movies]);
+
 	useEffect(() => {
 		const genres = getGenresByMovies().reduce(
 			(accumulator, currentValue) => ({
@@ -70,15 +79,27 @@ const MoviesPage = () => {
 			{},
 		);
 
-		setFilters({ genres });
-	}, [getGenresByMovies, movies]);
+		const years = getYearByMovie().reduce(
+			(accumulator, currentValue) => ({
+				...accumulator,
+				[currentValue]: false,
+			}),
+			{},
+		);
+
+		setFilters({ genres, years });
+	}, [getGenresByMovies, getYearByMovie, movies]);
 
 	useEffect(() => {
-		const genreFilterIsOk = Object.values(filters?.genres).some(
+		const genreFilterIsActive = Object.values(filters?.genres).some(
 			item => item === true,
 		);
 
-		if (genreFilterIsOk) {
+		const yearFilterIsActive = Object.values(filters?.years).some(
+			item => item === true,
+		);
+
+		if (genreFilterIsActive || yearFilterIsActive) {
 			const genreFilters = Object.keys(filters?.genres).filter(
 				genre => filters?.genres[genre as keyof typeof filters.genres] === true,
 			);
@@ -88,7 +109,31 @@ const MoviesPage = () => {
 				return movieGenres?.some(v => genreFilters.includes(v as string));
 			});
 
-			setMoviesFiltered(movieFilterByGenre);
+			const yearFilters = Object.keys(filters?.years).filter(
+				year => filters?.years[year as keyof typeof filters.years] === true,
+			);
+
+			const movieFilterByYear = movies?.filter(m => {
+				return yearFilters.includes(
+					m?.details?.release_date?.slice(0, 4) as string,
+				);
+			});
+
+			if (genreFilterIsActive && !yearFilterIsActive) {
+				setMoviesFiltered(movieFilterByGenre);
+			}
+			if (!genreFilterIsActive && yearFilterIsActive) {
+				setMoviesFiltered(movieFilterByYear);
+			}
+			if (genreFilterIsActive && yearFilterIsActive) {
+				setMoviesFiltered(
+					movieFilterByGenre?.filter(m => {
+						return yearFilters.includes(
+							m?.details?.release_date?.slice(0, 4) as string,
+						);
+					}),
+				);
+			}
 		} else {
 			setMoviesFiltered(movies);
 		}
@@ -113,6 +158,9 @@ const MoviesPage = () => {
 								<FilterSettings
 									title='Filters'
 									genresLabel={getGenresByMovies()}
+									yearsLabel={getYearByMovie().sort(
+										(a: string, b: string) => Number(a) - Number(b),
+									)}
 									filters={filters}
 									setFilters={setFilters}
 								/>
