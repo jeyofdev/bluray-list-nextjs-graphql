@@ -8,3 +8,8 @@ export enum TypeEnum {
 	MOVIE = 'movie',
 	SERIE = 'serie',
 }
+
+export enum SwiperDirectionEnum {
+	LEFT = 'left',
+	RIGHT = 'right',
+}
