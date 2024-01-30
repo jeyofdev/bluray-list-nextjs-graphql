@@ -29,8 +29,11 @@ const SingleMoviePage = ({ params }: SingleMoviePageProps) => {
 
 	return (
 		<NoSSRWrapper>
-			<ContentContainer>
-				<Suspense fallback={<h1>load</h1>}>
+			<Suspense fallback={<h1>load</h1>}>
+				<ContentContainer
+					imageSrc={data?.serie?.details?.backdrop_path as string}
+					title={data?.serie?.details?.name as string}
+				>
 					<SingleSerieCard
 						data={data?.serie?.details as SerieDetails}
 						supports={data?.serie?.support as SupportType}
@@ -38,8 +41,8 @@ const SingleMoviePage = ({ params }: SingleMoviePageProps) => {
 						cast={serieCredits?.serieCredits?.cast as Cast[]}
 						crew={serieCredits?.serieCredits?.crew as Crew[]}
 					/>
-				</Suspense>
-			</ContentContainer>
+				</ContentContainer>
+			</Suspense>
 		</NoSSRWrapper>
 	);
 };

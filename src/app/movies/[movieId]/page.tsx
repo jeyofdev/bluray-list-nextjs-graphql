@@ -29,16 +29,19 @@ const SingleMoviePage = ({ params }: SingleMoviePageProps) => {
 
 	return (
 		<NoSSRWrapper>
-			<ContentContainer>
-				<Suspense fallback={<h1>load</h1>}>
+			<Suspense fallback={<h1>load</h1>}>
+				<ContentContainer
+					imageSrc={data?.movie?.details?.backdrop_path as string}
+					title={data?.movie?.details?.title as string}
+				>
 					<SingleMovieCard
 						data={data?.movie?.details as MovieDetails}
 						supports={data?.movie?.support as SupportType}
 						cast={movieCredits?.movieCredits?.cast as Cast[]}
 						crew={movieCredits?.movieCredits?.crew as Crew[]}
 					/>
-				</Suspense>
-			</ContentContainer>
+				</ContentContainer>
+			</Suspense>
 		</NoSSRWrapper>
 	);
 };
