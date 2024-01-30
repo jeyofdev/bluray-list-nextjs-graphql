@@ -69,7 +69,7 @@ const Header = () => {
 								}}
 								onClick={toggleDrawer(false)}
 							>
-								<CloseIcon />
+								<CloseIcon className='size-8' />
 							</IconButton>
 
 							<Box

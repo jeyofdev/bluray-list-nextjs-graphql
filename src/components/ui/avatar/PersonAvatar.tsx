@@ -35,11 +35,19 @@ const PersonAvatar = ({
 						<>
 							<Avatar
 								alt={`photo of ${data?.name as string}`}
-								src={`https://image.tmdb.org/t/p/w500${data?.profile_path as string}`}
+								src={
+									data?.profile_path
+										? `https://image.tmdb.org/t/p/w500${data?.profile_path as string}`
+										: undefined
+								}
 								classes={{
 									root: 'w-20 h-20',
 								}}
-							/>
+							>
+								<Typography component='p' className='font-normal'>
+									No photo
+								</Typography>
+							</Avatar>
 
 							<Typography
 								component='p'

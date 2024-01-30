@@ -37,10 +37,10 @@ export const SingleCard = ({
 	subtitle,
 }: SingleCardPropsType) => {
 	return (
-		<Box className='flex items-start gap-4'>
+		<Box className='flex flex-col items-center gap-4 sm:flex-row sm:items-start'>
 			<Paper
 				elevation={5}
-				className='relative w-1/3 overflow-hidden rounded-2xl'
+				className='relative w-full max-w-[500px] overflow-hidden rounded-2xl sm:w-1/3'
 			>
 				<Box className='absolute right-4 top-4'>
 					<ChipRating rating={rating} precision={0.5} />
@@ -53,7 +53,7 @@ export const SingleCard = ({
 				/>
 			</Paper>
 
-			<CardContent className='w-2/3 py-0'>
+			<CardContent className='w-full max-w-[500px] p-0 sm:w-2/3 sm:max-w-[none] sm:px-4'>
 				<Typography
 					variant='h2'
 					component='h3'

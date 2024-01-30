@@ -29,7 +29,7 @@ export const SingleMovieCard = ({
 	const producers = () => {
 		const producersResult = crew.filter(item => item.job === 'Producer');
 		if (producersResult.length > 0) {
-			return producersResult.slice(0, 3);
+			return Array.from(new Set(producersResult)).slice(0, 3);
 		}
 
 		return undefined;
@@ -48,8 +48,8 @@ export const SingleMovieCard = ({
 			cast={cast}
 			supports={supports}
 			subtitle={
-				<Box className='flex gap-2'>
-					<>
+				<Box className='flex flex-col gap-2 sm:flex-row'>
+					<Box className='flex gap-2'>
 						<Typography
 							variant='body1'
 							component='h6'
@@ -63,17 +63,20 @@ export const SingleMovieCard = ({
 							component='h6'
 							className='font-semibold'
 						>
-							{data?.genres?.map(genre => genre?.name).join(', ')}
+							{formatNumberToHours(data?.runtime as number)}
 						</Typography>
+					</Box>
+
+					<Box className='hidden gap-2 md:flex'>
 						-
 						<Typography
 							variant='body1'
 							component='h6'
 							className='font-semibold'
 						>
-							{formatNumberToHours(data?.runtime as number)}
+							{data?.genres?.map(genre => genre?.name).join(', ')}
 						</Typography>
-					</>
+					</Box>
 				</Box>
 			}
 		/>
