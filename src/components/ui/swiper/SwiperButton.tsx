@@ -13,9 +13,9 @@ const SwiperButton = ({ direction }: SwiperButtonPropsType) => {
 
 	return (
 		<IconButton
-			size='large'
+			size='small'
 			classes={{
-				root: '0',
+				root: 'bg-primary-50 hover:bg-primary-100',
 			}}
 			onClick={() =>
 				direction === SwiperDirectionEnum.LEFT
@@ -24,9 +24,9 @@ const SwiperButton = ({ direction }: SwiperButtonPropsType) => {
 			}
 		>
 			{direction === SwiperDirectionEnum.LEFT ? (
-				<ChevronLeftIcon className='size-8' />
+				<ChevronLeftIcon className='size-8 text-primary-900' />
 			) : (
-				<ChevronRightIcon className='size-8' />
+				<ChevronRightIcon className='size-8 text-primary-900' />
 			)}
 		</IconButton>
 	);
