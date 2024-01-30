@@ -31,7 +31,9 @@
 		"next": "14.0.4",
 		"react": "^18",
 		"react-dom": "^18",
-		"twin.macro": "^3.4.0"
+		"swiper": "^11.0.5",
+		"twin.macro": "^3.4.0",
+		"usehooks-ts": "^2.10.0"
 	},
 	"devDependencies": {
 		"@graphql-codegen/cli": "5.0.0",
