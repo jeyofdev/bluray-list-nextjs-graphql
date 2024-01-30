@@ -4,10 +4,12 @@ import { Alert, Typography } from '@mui/material';
 type ShowResultsNumberPropsType = {
 	totalResults: number;
 	severity: 'error' | 'success' | 'info';
+	noMargin?: boolean;
 };
 const ShowResultsNumber = ({
 	totalResults,
 	severity,
+	noMargin,
 }: ShowResultsNumberPropsType) => {
 	const alertInfoIconColor = () => {
 		if (severity === 'success') {
@@ -41,7 +43,7 @@ const ShowResultsNumber = ({
 				<Typography
 					variant='h6'
 					component='h5'
-					className='mb-3 text-primary-400'
+					className={`${noMargin ? 'mb-0' : 'mb-3'} text-primary-400`}
 				>
 					{getWordingResults()}
 				</Typography>
@@ -54,7 +56,7 @@ const ShowResultsNumber = ({
 						/>
 					}
 					severity={severity}
-					className='mb-3'
+					className={`${noMargin ? 'mb-0' : 'mb-3'} w-full`}
 				>
 					<Typography
 						variant='h6'

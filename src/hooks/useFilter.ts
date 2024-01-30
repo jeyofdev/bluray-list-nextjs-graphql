@@ -59,10 +59,6 @@ const useFilter = (
 		return Array.from(new Set(years));
 	}, [items, type]);
 
-	const setDataInObject = (itemsData: string[]) => {
-		return convertToObjectWithValueFalse(itemsData);
-	};
-
 	const checkIfItemFilterIsActive = (filter: object) => {
 		return Object.values(filter).some(item => item === true);
 	};

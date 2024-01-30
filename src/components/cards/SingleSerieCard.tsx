@@ -51,7 +51,7 @@ export const SingleSerieCard = ({
 			supports={supports}
 			subtitle={
 				<Box className='flex gap-2'>
-					<>
+					<Box className='flex gap-2'>
 						<Typography
 							variant='body1'
 							component='h6'
@@ -65,7 +65,7 @@ export const SingleSerieCard = ({
 							component='h6'
 							className='font-semibold'
 						>
-							{data?.genres?.map(genre => genre?.name).join(', ')}
+							{data?.seasons?.[season]?.episode_count} episodes
 						</Typography>
 						-
 						<Typography
@@ -75,15 +75,7 @@ export const SingleSerieCard = ({
 						>
 							{(data?.seasons?.[season]?.air_date as string).slice(0, 4)}
 						</Typography>
-						-
-						<Typography
-							variant='body1'
-							component='h6'
-							className='font-semibold'
-						>
-							{data?.seasons?.[season]?.episode_count} episodes
-						</Typography>
-					</>
+					</Box>
 				</Box>
 			}
 		/>

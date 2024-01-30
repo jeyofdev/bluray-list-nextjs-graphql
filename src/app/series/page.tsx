@@ -57,13 +57,14 @@ const SeriesPage = () => {
 
 				<Suspense fallback={<h1>load</h1>}>
 					<>
-						<Box className='flex justify-between'>
+						<Box className='mb-3 flex items-center justify-between gap-4'>
 							<ShowResultsNumber
 								totalResults={seriesFiltered?.length as number}
 								severity='info'
+								noMargin
 							/>
 
-							{seriesFiltered?.length ? (
+							{seriesFiltered ? (
 								<FilterSettings
 									title='Filters'
 									genresLabel={getGenresByItems()}
