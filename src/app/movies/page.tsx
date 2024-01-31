@@ -21,7 +21,7 @@ import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { SupportType } from '../../types';
 
 const MoviesPage = () => {
@@ -44,9 +44,14 @@ const MoviesPage = () => {
 		filters,
 		setFilters,
 		itemsFiltered: moviesFiltered,
+		setItemsFiltered,
 		getGenresByItems,
 		getYearByItem,
 	} = useFilter(data?.movies as MovieResponse[], TypeEnum.MOVIE);
+
+	useEffect(() => {
+		setItemsFiltered(data?.movies as MovieResponse[]);
+	}, [data?.movies, setItemsFiltered]);
 
 	return (
 		<NoSSRWrapper>
