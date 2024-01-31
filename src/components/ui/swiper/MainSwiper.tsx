@@ -1,11 +1,12 @@
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
 // Import Swiper styles
 import ListItemSwiperCard from '@components/cards/ListItemSwiperCard';
 import SwiperButton from '@components/ui/swiper/SwiperButton';
 import { BreakpointEnum, SwiperDirectionEnum, TypeEnum } from '@enums/index';
-import { Box } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import 'swiper/css';
 import { useWindowSize } from 'usehooks-ts';
@@ -19,6 +20,7 @@ type MainSwiperPropsType = {
 const MainSwiper = ({ dataType, list, refetch }: MainSwiperPropsType) => {
 	const router = useRouter();
 	const { width } = useWindowSize();
+	const swiper = useSwiper();
 
 	const getSlidesPerView = () => {
 		if (width >= 400 && width < 600) return 2;
@@ -58,12 +60,34 @@ const MainSwiper = ({ dataType, list, refetch }: MainSwiperPropsType) => {
 				</SwiperSlide>
 			))}
 
-			<Box className='absolute right-4 top-1/2 z-10 -translate-y-1/2'>
-				<SwiperButton direction={SwiperDirectionEnum.RIGHT} />
-			</Box>
+			<SwiperSlide className='relative !flex !h-auto !self-stretch'>
+				<Link
+					href={`/${dataType === TypeEnum.MOVIE ? 'movies' : 'series'}`}
+					passHref
+					legacyBehavior
+					className='relative'
+				>
+					<Button
+						disableRipple
+						className='flex w-full items-center self-stretch bg-primary-100'
+					>
+						<Typography
+							variant='body1'
+							component='p'
+							className='my-0 text-sm text-primary-900'
+						>
+							All
+						</Typography>
+					</Button>
+				</Link>
+			</SwiperSlide>
 
 			<Box className='absolute left-4 top-1/2 z-10 -translate-y-1/2'>
 				<SwiperButton direction={SwiperDirectionEnum.LEFT} />
+			</Box>
+
+			<Box className='absolute right-4 top-1/2 z-10 -translate-y-1/2'>
+				<SwiperButton direction={SwiperDirectionEnum.RIGHT} />
 			</Box>
 		</Swiper>
 	);
