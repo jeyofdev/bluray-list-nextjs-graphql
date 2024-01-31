@@ -1,10 +1,11 @@
 import MainSwiper from '@components/ui/swiper/MainSwiper';
-import { MovieResponse } from '@graphql/__generated__/graphql-type';
+import { TypeEnum } from '@enums/index';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import Link from 'next/link';
 import { ReactNode, Suspense } from 'react';
 
 type SwiperWithTitleSectionPropsType = {
+	dataType: TypeEnum;
 	title: string;
 	buttonHref: string;
 	buttonLabel: string | ReactNode;
@@ -13,6 +14,7 @@ type SwiperWithTitleSectionPropsType = {
 };
 
 const SwiperWithTitleSection = ({
+	dataType,
 	title,
 	buttonHref,
 	buttonLabel,
@@ -47,7 +49,12 @@ const SwiperWithTitleSection = ({
 
 			<Suspense fallback={<h1>load</h1>}>
 				<MainSwiper
-					list={data?.movies?.slice(0, 15) as MovieResponse[]}
+					dataType={dataType}
+					list={
+						dataType === TypeEnum.MOVIE
+							? data?.movies?.slice(0, 15)
+							: data?.series?.slice(0, 15)
+					}
 					refetch={refetch}
 				/>
 			</Suspense>

@@ -3,20 +3,20 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import ListItemSwiperCard from '@components/cards/ListItemSwiperCard';
-import { BreakpointEnum, SwiperDirectionEnum } from '@enums/index';
-import { MovieResponse } from '@graphql/__generated__/graphql-type';
+import SwiperButton from '@components/ui/swiper/SwiperButton';
+import { BreakpointEnum, SwiperDirectionEnum, TypeEnum } from '@enums/index';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import 'swiper/css';
 import { useWindowSize } from 'usehooks-ts';
-import SwiperButton from './SwiperButton';
 
 type MainSwiperPropsType = {
-	list: MovieResponse[];
+	dataType: TypeEnum;
+	list: any;
 	refetch: any;
 };
 
-const MainSwiper = ({ list, refetch }: MainSwiperPropsType) => {
+const MainSwiper = ({ dataType, list, refetch }: MainSwiperPropsType) => {
 	const router = useRouter();
 	const { width } = useWindowSize();
 
@@ -39,13 +39,21 @@ const MainSwiper = ({ list, refetch }: MainSwiperPropsType) => {
 			onSwiper={() => {}}
 			className=''
 		>
-			{list?.map(movie => (
-				<SwiperSlide key={movie.id}>
+			{list?.map((item: any) => (
+				<SwiperSlide key={item.id}>
 					<ListItemSwiperCard
-						key={movie.id}
-						posterPath={movie.details?.poster_path as string}
-						title={movie.details?.title as string}
-						onClick={() => router.push(`/movies/${movie?.id}`)}
+						key={item.id}
+						posterPath={item.details?.poster_path as string}
+						title={
+							dataType === TypeEnum.MOVIE
+								? (item.details?.title as string)
+								: (item.details?.name as string)
+						}
+						onClick={() =>
+							router.push(
+								`/${dataType === TypeEnum.MOVIE ? 'movies' : 'series'}/${item?.id}`,
+							)
+						}
 					/>
 				</SwiperSlide>
 			))}

@@ -3,11 +3,19 @@
 import NoSSRWrapper from '@components/NoSSRWrapper';
 import ContentContainer from '@components/containers/ContentContainer';
 import SwiperWithTitleSection from '@components/swipers/SwiperWithTitleSection';
-import { useMoviesSuspenseQuery } from '@graphql/__generated__/graphql-type';
-import { Typography } from '@mui/material';
+import { TypeEnum } from '@enums/index';
+import {
+	useMoviesSuspenseQuery,
+	useSeriesSuspenseQuery,
+} from '@graphql/__generated__/graphql-type';
+import { Box, Typography } from '@mui/material';
 
 const HomePage = () => {
-	const { data, refetch } = useMoviesSuspenseQuery({
+	const { data: dataMovies, refetch: refetchMovies } = useMoviesSuspenseQuery({
+		fetchPolicy: 'cache-and-network',
+	});
+
+	const { data: dataSeries, refetch: refetchSeries } = useSeriesSuspenseQuery({
 		fetchPolicy: 'cache-and-network',
 	});
 
@@ -18,13 +26,27 @@ const HomePage = () => {
 					Home
 				</Typography>
 
-				<SwiperWithTitleSection
-					title='Latest movies added'
-					buttonHref={'/movies'}
-					buttonLabel='View all'
-					data={data}
-					refetch={refetch}
-				/>
+				<Box className='mb-8'>
+					<SwiperWithTitleSection
+						dataType={TypeEnum.MOVIE}
+						title='Latest movies added'
+						buttonHref={'/movies'}
+						buttonLabel='View all'
+						data={dataMovies}
+						refetch={refetchMovies}
+					/>
+				</Box>
+
+				<Box>
+					<SwiperWithTitleSection
+						dataType={TypeEnum.SERIE}
+						title='Latest series added'
+						buttonHref={'/series'}
+						buttonLabel='View all'
+						data={dataSeries}
+						refetch={refetchSeries}
+					/>
+				</Box>
 			</ContentContainer>
 		</NoSSRWrapper>
 	);
