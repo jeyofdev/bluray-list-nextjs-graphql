@@ -16,6 +16,7 @@ type UseFilterType = {
 	filters: FiltersType;
 	setFilters: Dispatch<SetStateAction<FiltersType>>;
 	itemsFiltered: ItemResponseType;
+	setItemsFiltered: Dispatch<SetStateAction<ItemResponseType>>;
 	getGenresByItems: () => string[];
 	getYearByItem: () => string[];
 };
@@ -125,6 +126,7 @@ const useFilter = (
 		filters,
 		setFilters,
 		itemsFiltered,
+		setItemsFiltered,
 		getGenresByItems,
 		getYearByItem,
 	};

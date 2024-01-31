@@ -21,7 +21,7 @@ import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { SupportType } from '../../types';
 
 const SeriesPage = () => {
@@ -44,9 +44,14 @@ const SeriesPage = () => {
 		filters,
 		setFilters,
 		itemsFiltered: seriesFiltered,
+		setItemsFiltered,
 		getGenresByItems,
 		getYearByItem,
 	} = useFilter(data?.series as SerieResponse[], TypeEnum.SERIE);
+
+	useEffect(() => {
+		setItemsFiltered(data?.series as SerieResponse[]);
+	}, [data?.series, setItemsFiltered]);
 
 	return (
 		<NoSSRWrapper>
