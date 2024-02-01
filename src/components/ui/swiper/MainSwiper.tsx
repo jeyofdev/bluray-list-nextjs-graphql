@@ -1,5 +1,5 @@
 // Import Swiper React components
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import ListItemSwiperCard from '@components/cards/ListItemSwiperCard';
@@ -9,6 +9,9 @@ import { Box, Button, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
 import { useWindowSize } from 'usehooks-ts';
 
 type MainSwiperPropsType = {
@@ -17,10 +20,9 @@ type MainSwiperPropsType = {
 	refetch: any;
 };
 
-const MainSwiper = ({ dataType, list, refetch }: MainSwiperPropsType) => {
+const MainSwiper = ({ dataType, list }: MainSwiperPropsType) => {
 	const router = useRouter();
 	const { width } = useWindowSize();
-	const swiper = useSwiper();
 
 	const getSlidesPerView = () => {
 		if (width >= 400 && width < 600) return 2;
@@ -33,13 +35,21 @@ const MainSwiper = ({ dataType, list, refetch }: MainSwiperPropsType) => {
 		return 1;
 	};
 
+	const pagination = {
+		clickable: true,
+		renderBullet: (_: number, className: string) =>
+			'<span class="' + className + ' !bg-primary-900 !w-2.5 !h-2.5"></span>',
+	};
+
 	return (
 		<Swiper
 			spaceBetween={20}
 			slidesPerView={getSlidesPerView()}
 			onSlideChange={() => {}}
 			onSwiper={() => {}}
-			className=''
+			pagination={pagination}
+			modules={[Pagination, Navigation]}
+			wrapperClass='mb-10'
 		>
 			{list?.map((item: any) => (
 				<SwiperSlide key={item.id}>
