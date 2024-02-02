@@ -14,6 +14,7 @@ import useSearch from '@hooks/useSearch';
 import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
+import Loading from '@routes/loading';
 import { Suspense } from 'react';
 
 const MoviesPage = () => {
@@ -37,7 +38,7 @@ const MoviesPage = () => {
 					Movies
 				</Typography>
 
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense fallback={<Loading label='loading movies...' />}>
 					<MoviesListSuspense
 						items={data?.movies as MovieResponse[]}
 						refetch={refetch}

@@ -7,6 +7,7 @@ import {
 	SerieResponse,
 	useSerieSuspenseQuery,
 } from '@graphql/__generated__/graphql-type';
+import Loading from '@routes/loading';
 import { Suspense } from 'react';
 
 type SingleMoviePageProps = {
@@ -22,7 +23,7 @@ const SingleMoviePage = ({ params }: SingleMoviePageProps) => {
 
 	return (
 		<NoSSRWrapper>
-			<Suspense fallback={<div>loading...</div>}>
+			<Suspense fallback={<Loading label='loading series...' />}>
 				<SingleSerieSuspense data={data?.serie as SerieResponse} />
 			</Suspense>
 		</NoSSRWrapper>

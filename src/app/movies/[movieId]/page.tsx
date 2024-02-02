@@ -7,6 +7,7 @@ import {
 	MoviesQueryVariables,
 	useMovieSuspenseQuery,
 } from '@graphql/__generated__/graphql-type';
+import Loading from '@routes/loading';
 import { Suspense } from 'react';
 
 type SingleMoviePageProps = {
@@ -22,7 +23,7 @@ const SingleMoviePage = ({ params }: SingleMoviePageProps) => {
 
 	return (
 		<NoSSRWrapper>
-			<Suspense fallback={<h1>load</h1>}>
+			<Suspense fallback={<Loading label='loading movies...' />}>
 				<SingleMovieSuspense data={data?.movie as MovieResponse} />
 			</Suspense>
 		</NoSSRWrapper>

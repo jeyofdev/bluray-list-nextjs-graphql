@@ -14,6 +14,7 @@ import useSearch from '@hooks/useSearch';
 import useToast from '@hooks/useToast';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Typography } from '@mui/material';
+import Loading from '@routes/loading';
 import { Suspense } from 'react';
 
 const SeriesPage = () => {
@@ -37,7 +38,7 @@ const SeriesPage = () => {
 					Series
 				</Typography>
 
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense fallback={<Loading label='loading series...' />}>
 					<SeriesListSuspense
 						items={data?.series as SerieResponse[]}
 						refetch={refetch}
