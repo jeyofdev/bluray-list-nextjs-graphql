@@ -1,47 +1,29 @@
 'use client';
 
 import NoSSRWrapper from '@components/NoSSRWrapper';
-import SingleSerieCard from '@components/cards/SingleSerieCard';
-import ContentContainer from '@components/containers/ContentContainer';
+import SingleSerieSuspense from '@components/suspense/SingleSerieSuspense';
 import {
-	Cast,
-	Crew,
 	MoviesQueryVariables,
-	SerieDetails,
-	useSerieCreditsSuspenseQuery,
+	SerieResponse,
 	useSerieSuspenseQuery,
 } from '@graphql/__generated__/graphql-type';
 import { Suspense } from 'react';
-import { SupportType } from '../../../types';
 
 type SingleMoviePageProps = {
 	params: MoviesQueryVariables;
 };
 
 const SingleMoviePage = ({ params }: SingleMoviePageProps) => {
-	const { data, error } = useSerieSuspenseQuery({
-		variables: { serieId: params.serieId },
-	});
+	const { serieId } = params;
 
-	const { data: serieCredits } = useSerieCreditsSuspenseQuery({
-		variables: { serieId: data?.serie?.details?.id },
+	const { data } = useSerieSuspenseQuery({
+		variables: { serieId },
 	});
 
 	return (
 		<NoSSRWrapper>
-			<Suspense fallback={<h1>load</h1>}>
-				<ContentContainer
-					imageSrc={data?.serie?.details?.backdrop_path as string}
-					title={data?.serie?.details?.name as string}
-				>
-					<SingleSerieCard
-						data={data?.serie?.details as SerieDetails}
-						supports={data?.serie?.support as SupportType}
-						season={data?.serie?.season as number}
-						cast={serieCredits?.serieCredits?.cast as Cast[]}
-						crew={serieCredits?.serieCredits?.crew as Crew[]}
-					/>
-				</ContentContainer>
+			<Suspense fallback={<div>loading...</div>}>
+				<SingleSerieSuspense data={data?.serie as SerieResponse} />
 			</Suspense>
 		</NoSSRWrapper>
 	);
