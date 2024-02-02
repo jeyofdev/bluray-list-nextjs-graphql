@@ -13,6 +13,8 @@ const config: CodegenConfig = {
 			],
 			config: {
 				withHooks: true,
+				withMutationFn: true,
+				skipTypename: false,
 			},
 		},
 		'./graphql.schema.json': {
