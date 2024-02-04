@@ -99,6 +99,11 @@ const schema = gql`
 		support: Support
 	}
 
+	type SeasonResponse {
+		id: Int
+		seasons: [Season]
+	}
+
 	type SearchMovieResponse {
 		page: Int!
 		results: [MovieDetails]!
@@ -132,6 +137,13 @@ const schema = gql`
 		# region: String
 	}
 
+	input SeasonOptionsInput {
+		query: String
+		page: Int
+		# language: String
+		# region: String
+	}
+
 	type Query {
 		movies: [MovieResponse]
 		movie(movieId: ID): MovieResponse
@@ -141,6 +153,7 @@ const schema = gql`
 		serieCredits(itemId: Int): creditsResponse
 		searchMovies(searchOptions: SearchOptionsInput): SearchMovieResponse
 		searchSeries(searchOptions: SearchOptionsInput): SearchSerieResponse
+		seasonsBySerie(tmdbSerieId: Int): SeasonResponse
 	}
 
 	type Mutation {

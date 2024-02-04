@@ -20,19 +20,24 @@ const PersonAvatar = ({
 	horizontalAlign,
 	isCast,
 }: PersonAvatarPropsType) => {
+	const TitleJsx = () => {
+		return (
+			<Typography
+				component='h6'
+				className={`mb-1 w-full font-semibold ${titleClassName}`}
+			>
+				{title} :
+			</Typography>
+		);
+	};
+
 	return (
 		<>
 			{data ? (
 				<Box className={`justify- items-${horizontalAlign} flex flex-col`}>
-					<Typography
-						component='h6'
-						className={`mb-1 w-full font-semibold ${titleClassName}`}
-					>
-						{title} :
-					</Typography>
-
 					{!Array.isArray(data) ? (
 						<>
+							<TitleJsx />
 							<Avatar
 								alt={`photo of ${data?.name as string}`}
 								src={
@@ -48,7 +53,6 @@ const PersonAvatar = ({
 									No photo
 								</Typography>
 							</Avatar>
-
 							<Typography
 								component='p'
 								className={`font-normal ${valueClassName}`}
@@ -57,7 +61,8 @@ const PersonAvatar = ({
 							</Typography>
 						</>
 					) : (
-						<Box className='flex flex-wrap items-center justify-start gap-7'>
+						<Box className='flex flex-wrap items-center justify-start gap-x-7 gap-y-2'>
+							{data.length ? <TitleJsx /> : null}
 							{data?.map(item => (
 								<Box key={item.id} className='flex flex-col items-center'>
 									<Avatar

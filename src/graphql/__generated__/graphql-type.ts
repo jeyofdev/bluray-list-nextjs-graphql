@@ -139,6 +139,7 @@ export type Query = {
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
 	searchMovies?: Maybe<SearchMovieResponse>;
 	searchSeries?: Maybe<SearchSerieResponse>;
+	seasonsBySerie?: Maybe<SeasonResponse>;
 	serie?: Maybe<SerieResponse>;
 	serieCredits?: Maybe<CreditsResponse>;
 	series?: Maybe<Array<Maybe<SerieResponse>>>;
@@ -158,6 +159,10 @@ export type QuerySearchMoviesArgs = {
 
 export type QuerySearchSeriesArgs = {
 	searchOptions?: InputMaybe<SearchOptionsInput>;
+};
+
+export type QuerySeasonsBySerieArgs = {
+	tmdbSerieId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QuerySerieArgs = {
@@ -199,6 +204,17 @@ export type Season = {
 	poster_path?: Maybe<Scalars['String']['output']>;
 	season_number?: Maybe<Scalars['Int']['output']>;
 	vote_average?: Maybe<Scalars['Float']['output']>;
+};
+
+export type SeasonOptionsInput = {
+	page?: InputMaybe<Scalars['Int']['input']>;
+	query?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SeasonResponse = {
+	__typename?: 'SeasonResponse';
+	id?: Maybe<Scalars['Int']['output']>;
+	seasons?: Maybe<Array<Maybe<Season>>>;
 };
 
 export type SerieDetails = {
@@ -672,6 +688,23 @@ export type SerieCreditsQuery = {
 			credit_id?: string | null;
 			department?: string | null;
 			job?: string | null;
+		} | null> | null;
+	} | null;
+};
+
+export type SeasonsBySerieQueryVariables = Exact<{
+	tmdbSerieId?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type SeasonsBySerieQuery = {
+	__typename?: 'Query';
+	seasonsBySerie?: {
+		__typename?: 'SeasonResponse';
+		id?: number | null;
+		seasons?: Array<{
+			__typename?: 'Season';
+			id?: number | null;
+			season_number?: number | null;
 		} | null> | null;
 	} | null;
 };
@@ -1743,4 +1776,81 @@ export type SerieCreditsSuspenseQueryHookResult = ReturnType<
 export type SerieCreditsQueryResult = Apollo.QueryResult<
 	SerieCreditsQuery,
 	SerieCreditsQueryVariables
+>;
+export const SeasonsBySerieDocument = gql`
+	query SeasonsBySerie($tmdbSerieId: Int) {
+		seasonsBySerie(tmdbSerieId: $tmdbSerieId) {
+			id
+			seasons {
+				id
+				season_number
+			}
+		}
+	}
+`;
+
+/**
+ * __useSeasonsBySerieQuery__
+ *
+ * To run a query within a React component, call `useSeasonsBySerieQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSeasonsBySerieQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSeasonsBySerieQuery({
+ *   variables: {
+ *      tmdbSerieId: // value for 'tmdbSerieId'
+ *   },
+ * });
+ */
+export function useSeasonsBySerieQuery(
+	baseOptions?: Apollo.QueryHookOptions<
+		SeasonsBySerieQuery,
+		SeasonsBySerieQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useQuery<SeasonsBySerieQuery, SeasonsBySerieQueryVariables>(
+		SeasonsBySerieDocument,
+		options,
+	);
+}
+export function useSeasonsBySerieLazyQuery(
+	baseOptions?: Apollo.LazyQueryHookOptions<
+		SeasonsBySerieQuery,
+		SeasonsBySerieQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useLazyQuery<SeasonsBySerieQuery, SeasonsBySerieQueryVariables>(
+		SeasonsBySerieDocument,
+		options,
+	);
+}
+export function useSeasonsBySerieSuspenseQuery(
+	baseOptions?: Apollo.SuspenseQueryHookOptions<
+		SeasonsBySerieQuery,
+		SeasonsBySerieQueryVariables
+	>,
+) {
+	const options = { ...defaultOptions, ...baseOptions };
+	return Apollo.useSuspenseQuery<
+		SeasonsBySerieQuery,
+		SeasonsBySerieQueryVariables
+	>(SeasonsBySerieDocument, options);
+}
+export type SeasonsBySerieQueryHookResult = ReturnType<
+	typeof useSeasonsBySerieQuery
+>;
+export type SeasonsBySerieLazyQueryHookResult = ReturnType<
+	typeof useSeasonsBySerieLazyQuery
+>;
+export type SeasonsBySerieSuspenseQueryHookResult = ReturnType<
+	typeof useSeasonsBySerieSuspenseQuery
+>;
+export type SeasonsBySerieQueryResult = Apollo.QueryResult<
+	SeasonsBySerieQuery,
+	SeasonsBySerieQueryVariables
 >;

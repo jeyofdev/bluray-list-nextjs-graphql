@@ -1,8 +1,10 @@
 import ListItemCard from '@components/cards/ListItemCard';
 import { TypeEnum } from '@enums/index';
 import {
+	Season,
 	SerieDetails,
 	useDeleteSerieMutation,
+	useSeasonsBySerieSuspenseQuery,
 	useUpdateSerieMutation,
 } from '@graphql/__generated__/graphql-type';
 import { MouseEventHandler } from 'react';
@@ -30,6 +32,11 @@ const SerieCard = ({
 	const [deleteSerie, { data: deletedMovie }] = useDeleteSerieMutation();
 	const [updateSerie, { data: updatedMovie }] = useUpdateSerieMutation();
 
+	const { data: seasons } = useSeasonsBySerieSuspenseQuery({
+		variables: { tmdbSerieId: serie?.id },
+		fetchPolicy: 'cache-and-network',
+	});
+
 	return (
 		<ListItemCard
 			type={TypeEnum.SERIE}
@@ -37,6 +44,8 @@ const SerieCard = ({
 			posterPath={serie.poster_path as string}
 			title={serie?.name as string}
 			rating={serie?.seasons?.[season]?.vote_average as number}
+			season={season}
+			seasons={seasons?.seasonsBySerie?.seasons as Season[]}
 			supports={supports}
 			onClick={onClick}
 			onDelete={() => {

@@ -223,3 +223,13 @@ query SerieCredits($serieId: Int) {
 		id
 	}
 }
+
+query SeasonsBySerie($tmdbSerieId: Int) {
+	seasonsBySerie(tmdbSerieId: $tmdbSerieId) {
+		id
+		seasons {
+			id
+			season_number
+		}
+	}
+}

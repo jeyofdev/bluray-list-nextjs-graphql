@@ -1,4 +1,5 @@
 import SearchCard from '@components/cards/SearchCard';
+import { TypeEnum } from '@enums/index';
 import { MovieDetails } from '@graphql/__generated__/graphql-type';
 import useSupport from '@hooks/useSupport';
 
@@ -31,6 +32,7 @@ const SearchMovieCard = ({
 
 	return (
 		<SearchCard
+			type={TypeEnum.MOVIE}
 			title={movie?.title as string}
 			posterPath={movie?.poster_path as string}
 			rating={movie?.vote_average as number}

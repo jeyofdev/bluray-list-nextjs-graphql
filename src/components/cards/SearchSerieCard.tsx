@@ -1,6 +1,12 @@
 import SearchCard from '@components/cards/SearchCard';
-import { SerieDetails } from '@graphql/__generated__/graphql-type';
+import { TypeEnum } from '@enums/index';
+import {
+	Season,
+	SerieDetails,
+	useSeasonsBySerieSuspenseQuery,
+} from '@graphql/__generated__/graphql-type';
 import useSupport from '@hooks/useSupport';
+import { useState } from 'react';
 
 type SearchSerieCardProps = {
 	serie: SerieDetails;
@@ -15,13 +21,20 @@ const SearchSerieCard = ({
 	refetch,
 	onClose,
 }: SearchSerieCardProps) => {
+	const { data: seasons } = useSeasonsBySerieSuspenseQuery({
+		variables: { tmdbSerieId: serie?.id },
+		fetchPolicy: 'cache-and-network',
+	});
+
 	const { itemSupports, onChange: handleChangeItemSupports } = useSupport();
+
+	const [selectedSeason, setSelectedSeason] = useState<string>('1');
 
 	const handleClick = () => {
 		addSerie({
 			variables: {
 				tmdbSerieId: serie.id,
-				season: 1,
+				season: selectedSeason,
 				support: itemSupports,
 			},
 			onCompleted: refetch,
@@ -32,8 +45,12 @@ const SearchSerieCard = ({
 
 	return (
 		<SearchCard
+			type={TypeEnum.SERIE}
 			title={serie?.name as string}
 			posterPath={serie?.poster_path as string}
+			seasons={seasons?.seasonsBySerie?.seasons as Season[]}
+			selectedSeason={selectedSeason}
+			setSelectedSeason={setSelectedSeason}
 			addButtonLabel='Add to list'
 			onClick={handleClick}
 			onChangeItemSupports={handleChangeItemSupports}
