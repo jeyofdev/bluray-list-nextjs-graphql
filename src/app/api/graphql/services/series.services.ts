@@ -23,7 +23,7 @@ class SerieServices extends DataServices {
 	async findById(ctx: IContext, args: QuerySerieArgs): Promise<SerieResponse> {
 		const { serieId } = args;
 
-		return ctx.prisma.series.findUnique({
+		return ctx.prisma.series.findUniqueOrThrow({
 			where: { id: serieId },
 		});
 	}

@@ -5,9 +5,10 @@ import SingleMovieSuspense from '@components/suspense/SingleMovieSuspense';
 import {
 	MovieResponse,
 	MoviesQueryVariables,
-	useMovieSuspenseQuery,
+	useMovieQuery,
 } from '@graphql/__generated__/graphql-type';
 import Loading from '@routes/loading';
+import PageNotFound from '@routes/not-found';
 import { Suspense } from 'react';
 
 type SingleMoviePageProps = {
@@ -17,9 +18,13 @@ type SingleMoviePageProps = {
 const SingleMoviePage = ({ params }: SingleMoviePageProps) => {
 	const { movieId } = params;
 
-	const { data } = useMovieSuspenseQuery({
+	const { data, error } = useMovieQuery({
 		variables: { movieId },
 	});
+
+	if (error) {
+		return <PageNotFound />;
+	}
 
 	return (
 		<NoSSRWrapper>
