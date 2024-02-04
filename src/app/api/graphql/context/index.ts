@@ -3,6 +3,7 @@ import MovieServices from '../services/movies.services';
 import SerieServices from '../services/series.services';
 import SearchServices from '../services/search.services';
 import CreditsServices from '../services/cast.services';
+import SeasonServices from '../services/season.services';
 
 export interface IContext {
 	prisma: any;
@@ -11,6 +12,7 @@ export interface IContext {
 		series: SerieServices;
 		search: SearchServices;
 		credits: CreditsServices;
+		seasons: SeasonServices;
 	};
 }
 
@@ -24,6 +26,7 @@ const context: IContext = {
 		series: new SerieServices(),
 		search: new SearchServices(),
 		credits: new CreditsServices(),
+		seasons: new SeasonServices(),
 	},
 };
 

@@ -137,6 +137,7 @@ export type Query = {
 	movies?: Maybe<Array<Maybe<MovieResponse>>>;
 	searchMovies?: Maybe<SearchMovieResponse>;
 	searchSeries?: Maybe<SearchSerieResponse>;
+	seasonsBySerie?: Maybe<SeasonResponse>;
 	serie?: Maybe<SerieResponse>;
 	serieCredits?: Maybe<CreditsResponse>;
 	series?: Maybe<Array<Maybe<SerieResponse>>>;
@@ -156,6 +157,10 @@ export type QuerySearchMoviesArgs = {
 
 export type QuerySearchSeriesArgs = {
 	searchOptions?: InputMaybe<SearchOptionsInput>;
+};
+
+export type QuerySeasonsBySerieArgs = {
+	tmdbSerieId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QuerySerieArgs = {
@@ -197,6 +202,17 @@ export type Season = {
 	poster_path?: Maybe<Scalars['String']['output']>;
 	season_number?: Maybe<Scalars['Int']['output']>;
 	vote_average?: Maybe<Scalars['Float']['output']>;
+};
+
+export type SeasonOptionsInput = {
+	page?: InputMaybe<Scalars['Int']['input']>;
+	query?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SeasonResponse = {
+	__typename?: 'SeasonResponse';
+	id?: Maybe<Scalars['Int']['output']>;
+	seasons?: Maybe<Array<Maybe<Season>>>;
 };
 
 export type SerieDetails = {
@@ -372,6 +388,8 @@ export type ResolversTypes = ResolversObject<{
 	SearchOptionsInput: SearchOptionsInput;
 	SearchSerieResponse: ResolverTypeWrapper<SearchSerieResponse>;
 	Season: ResolverTypeWrapper<Season>;
+	SeasonOptionsInput: SeasonOptionsInput;
+	SeasonResponse: ResolverTypeWrapper<SeasonResponse>;
 	SerieDetails: ResolverTypeWrapper<SerieDetails>;
 	SerieResponse: ResolverTypeWrapper<SerieResponse>;
 	String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -398,6 +416,8 @@ export type ResolversParentTypes = ResolversObject<{
 	SearchOptionsInput: SearchOptionsInput;
 	SearchSerieResponse: SearchSerieResponse;
 	Season: Season;
+	SeasonOptionsInput: SeasonOptionsInput;
+	SeasonResponse: SeasonResponse;
 	SerieDetails: SerieDetails;
 	SerieResponse: SerieResponse;
 	String: Scalars['String']['output'];
@@ -649,6 +669,12 @@ export type QueryResolvers<
 		ContextType,
 		Partial<QuerySearchSeriesArgs>
 	>;
+	seasonsBySerie?: Resolver<
+		Maybe<ResolversTypes['SeasonResponse']>,
+		ParentType,
+		ContextType,
+		Partial<QuerySeasonsBySerieArgs>
+	>;
 	serie?: Resolver<
 		Maybe<ResolversTypes['SerieResponse']>,
 		ParentType,
@@ -726,6 +752,20 @@ export type SeasonResolvers<
 	>;
 	vote_average?: Resolver<
 		Maybe<ResolversTypes['Float']>,
+		ParentType,
+		ContextType
+	>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SeasonResponseResolvers<
+	ContextType = any,
+	ParentType extends
+		ResolversParentTypes['SeasonResponse'] = ResolversParentTypes['SeasonResponse'],
+> = ResolversObject<{
+	id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	seasons?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes['Season']>>>,
 		ParentType,
 		ContextType
 	>;
@@ -861,6 +901,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
 	SearchMovieResponse?: SearchMovieResponseResolvers<ContextType>;
 	SearchSerieResponse?: SearchSerieResponseResolvers<ContextType>;
 	Season?: SeasonResolvers<ContextType>;
+	SeasonResponse?: SeasonResponseResolvers<ContextType>;
 	SerieDetails?: SerieDetailsResolvers<ContextType>;
 	SerieResponse?: SerieResponseResolvers<ContextType>;
 	Support?: SupportResolvers<ContextType>;
