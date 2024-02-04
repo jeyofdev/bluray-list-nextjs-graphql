@@ -5,6 +5,7 @@ import DeleteActionModal from '@components/ui/modal/DeleteActionModal';
 import UpdateActionModal from '@components/ui/modal/UpdateActionModal';
 import ChipRating from '@components/ui/rating/ChipRating';
 import { TypeEnum } from '@enums/index';
+import { Season } from '@graphql/__generated__/graphql-type';
 import {
 	Box,
 	Card,
@@ -24,9 +25,11 @@ type ListItemCardPropsType = {
 	posterPath: string;
 	title: string;
 	rating: number;
+	season?: number;
 	onDelete: any;
 	onUpdate: any;
 	supports?: SupportType;
+	seasons?: Season[];
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 	refetch: any;
 	toast: ToastType;
@@ -38,6 +41,8 @@ const ListItemCard = ({
 	posterPath,
 	title,
 	rating,
+	season,
+	seasons,
 	onDelete,
 	onUpdate,
 	supports,
@@ -47,6 +52,10 @@ const ListItemCard = ({
 }: ListItemCardPropsType) => {
 	const [showModalDelete, setShowModalDelete] = useState<boolean>(false);
 	const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
+
+	const [selectedSeason, setSelectedSeason] = useState<string>(
+		season ? season.toString() : '',
+	);
 
 	return (
 		<>
@@ -103,6 +112,16 @@ const ListItemCard = ({
 							</Typography>
 						)}
 
+						{type === TypeEnum.SERIE ? (
+							<Typography
+								variant='body2'
+								component='p'
+								className='text-center leading-6'
+							>
+								(season {season})
+							</Typography>
+						) : null}
+
 						<Box className='flex items-center justify-center gap-4'>
 							{supports?.bluray && (
 								<BlurayIcon className='text-4xl text-primary-900' />
@@ -130,6 +149,9 @@ const ListItemCard = ({
 				itemId={id}
 				itemTitle={title}
 				itemSupports={supports as SupportType}
+				selectedSeason={selectedSeason}
+				setSelectedSeason={setSelectedSeason}
+				seasons={seasons}
 				open={showModalUpdate}
 				onClick={setShowModalUpdate}
 				onUpdate={onUpdate}

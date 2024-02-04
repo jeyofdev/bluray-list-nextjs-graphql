@@ -1,10 +1,12 @@
 import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import { SupportEnum, TypeEnum } from '@enums/index';
+import { Season } from '@graphql/__generated__/graphql-type';
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Checkbox } from '@mui/material';
+import { Box, Checkbox, Typography } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { SupportType, ToastType } from '../../../types';
+import SearchSelect from '../form/SearchSelect';
 import ActionModal from './ActionModal';
 
 type UpdateActionModalPropsType = {
@@ -15,6 +17,9 @@ type UpdateActionModalPropsType = {
 	itemId: string;
 	itemTitle: string;
 	itemSupports: SupportType;
+	selectedSeason: string;
+	setSelectedSeason: Dispatch<SetStateAction<string>>;
+	seasons?: Season[];
 	toast: ToastType;
 	refetch: any;
 };
@@ -24,6 +29,9 @@ const UpdateActionModal = ({
 	itemId,
 	itemTitle,
 	itemSupports,
+	selectedSeason,
+	setSelectedSeason,
+	seasons,
 	open,
 	onClick,
 	onUpdate,
@@ -44,7 +52,7 @@ const UpdateActionModal = ({
 		const variables =
 			type === 'movie'
 				? { movieId: itemId, support: movieSupports }
-				: { serieId: itemId, season: 1, support: movieSupports };
+				: { serieId: itemId, season: selectedSeason, support: movieSupports };
 
 		onUpdate({
 			variables,
@@ -65,26 +73,47 @@ const UpdateActionModal = ({
 		<ActionModal
 			open={open}
 			onClose={handleClose}
-			title={`select one or more support`}
 			icon={<EditIcon className='text-green-400' />}
 			type='update'
 			onAction={handleUpdate}
 		>
-			<Box>
-				<Checkbox
-					icon={<BlurayIcon className='text-5xl text-primary-900' />}
-					checkedIcon={<BlurayIcon className='text-5xl text-sky-400' />}
-					checked={movieSupports[SupportEnum.BLURAY]}
-					onChange={() => handleChangeMovieSupports(SupportEnum.BLURAY)}
-				/>
+			<Box className='flex flex-col items-center'>
+				<Typography variant='body1' className='text-center text-primary-900'>
+					Select one or more support
+				</Typography>
 
-				<Checkbox
-					icon={<BlurayUltraHDIcon className='text-7xl text-primary-900' />}
-					checkedIcon={<BlurayUltraHDIcon className='text-7xl text-sky-400' />}
-					checked={movieSupports[SupportEnum.BLURAY_HD]}
-					onChange={() => handleChangeMovieSupports(SupportEnum.BLURAY_HD)}
-				/>
+				<Box className='-mt-5'>
+					<Checkbox
+						icon={<BlurayIcon className='text-5xl text-primary-900' />}
+						checkedIcon={<BlurayIcon className='text-5xl text-sky-400' />}
+						checked={movieSupports[SupportEnum.BLURAY]}
+						onChange={() => handleChangeMovieSupports(SupportEnum.BLURAY)}
+					/>
+
+					<Checkbox
+						icon={<BlurayUltraHDIcon className='text-7xl text-primary-900' />}
+						checkedIcon={
+							<BlurayUltraHDIcon className='text-7xl text-sky-400' />
+						}
+						checked={movieSupports[SupportEnum.BLURAY_HD]}
+						onChange={() => handleChangeMovieSupports(SupportEnum.BLURAY_HD)}
+					/>
+				</Box>
 			</Box>
+
+			{type === TypeEnum.SERIE ? (
+				<Box className='flex flex-col items-center'>
+					<Typography variant='body1' className='text-center text-primary-900'>
+						Select the season
+					</Typography>
+
+					<SearchSelect
+						options={seasons?.map(season => season.season_number) as number[]}
+						value={selectedSeason}
+						setValue={setSelectedSeason}
+					/>
+				</Box>
+			) : null}
 		</ActionModal>
 	);
 };

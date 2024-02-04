@@ -933,6 +933,31 @@
 						"deprecationReason": null
 					},
 					{
+						"name": "seasonsBySerie",
+						"description": null,
+						"args": [
+							{
+								"name": "tmdbSerieId",
+								"description": null,
+								"type": {
+									"kind": "SCALAR",
+									"name": "Int",
+									"ofType": null
+								},
+								"defaultValue": null,
+								"isDeprecated": false,
+								"deprecationReason": null
+							}
+						],
+						"type": {
+							"kind": "OBJECT",
+							"name": "SeasonResponse",
+							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
 						"name": "serie",
 						"description": null,
 						"args": [
@@ -1294,6 +1319,80 @@
 							"kind": "SCALAR",
 							"name": "Float",
 							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					}
+				],
+				"inputFields": null,
+				"interfaces": [],
+				"enumValues": null,
+				"possibleTypes": null
+			},
+			{
+				"kind": "INPUT_OBJECT",
+				"name": "SeasonOptionsInput",
+				"description": null,
+				"fields": null,
+				"inputFields": [
+					{
+						"name": "page",
+						"description": null,
+						"type": {
+							"kind": "SCALAR",
+							"name": "Int",
+							"ofType": null
+						},
+						"defaultValue": null,
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "query",
+						"description": null,
+						"type": {
+							"kind": "SCALAR",
+							"name": "String",
+							"ofType": null
+						},
+						"defaultValue": null,
+						"isDeprecated": false,
+						"deprecationReason": null
+					}
+				],
+				"interfaces": null,
+				"enumValues": null,
+				"possibleTypes": null
+			},
+			{
+				"kind": "OBJECT",
+				"name": "SeasonResponse",
+				"description": null,
+				"fields": [
+					{
+						"name": "id",
+						"description": null,
+						"args": [],
+						"type": {
+							"kind": "SCALAR",
+							"name": "Int",
+							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
+					{
+						"name": "seasons",
+						"description": null,
+						"args": [],
+						"type": {
+							"kind": "LIST",
+							"name": null,
+							"ofType": {
+								"kind": "OBJECT",
+								"name": "Season",
+								"ofType": null
+							}
 						},
 						"isDeprecated": false,
 						"deprecationReason": null
