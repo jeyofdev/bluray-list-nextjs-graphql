@@ -5,8 +5,9 @@ import { ContentItem } from '@components/ui/content/ContentItem';
 import ChipRating from '@components/ui/rating/ChipRating';
 import { Cast, Crew } from '@graphql/__generated__/graphql-type';
 import { Box, CardContent, CardMedia, Paper, Typography } from '@mui/material';
+import Loading from '@routes/loading';
 import { truncate } from '@utils/index';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { SupportType } from '../../types';
 
 type SingleCardPropsType = {
@@ -80,42 +81,44 @@ export const SingleCard = ({
 					/>
 				</Box>
 
-				<Box className='mt-4 flex flex-wrap gap-8'>
-					<PersonAvatar
-						data={director}
-						title='Directed By'
-						titleClassName='text-lg'
-						valueClassName='text-sm'
-						horizontalAlign='center'
-					/>
+				<Suspense fallback={<Loading label='loading movies...' />}>
+					<Box className='mt-4 flex flex-wrap gap-8'>
+						<PersonAvatar
+							data={director}
+							title='Directed By'
+							titleClassName='text-lg'
+							valueClassName='text-sm'
+							horizontalAlign='center'
+						/>
 
-					<PersonAvatar
-						data={music}
-						title='Music By'
-						titleClassName='text-lg'
-						valueClassName='text-sm'
-						horizontalAlign='center'
-					/>
+						<PersonAvatar
+							data={music}
+							title='Music By'
+							titleClassName='text-lg'
+							valueClassName='text-sm'
+							horizontalAlign='center'
+						/>
 
-					<PersonAvatar
-						data={producers}
-						title='Produced By'
-						titleClassName='text-lg'
-						valueClassName='text-sm'
-						horizontalAlign='center'
-					/>
-				</Box>
+						<PersonAvatar
+							data={producers}
+							title='Produced By'
+							titleClassName='text-lg'
+							valueClassName='text-sm'
+							horizontalAlign='center'
+						/>
+					</Box>
 
-				<Box className='mt-4 flex flex-wrap gap-8'>
-					<PersonAvatar
-						data={cast.length > 0 ? cast.slice(0, 6) : undefined}
-						title='Cast'
-						titleClassName='text-lg'
-						valueClassName='text-sm'
-						horizontalAlign='start'
-						isCast
-					/>
-				</Box>
+					<Box className='mt-4 flex flex-wrap gap-8'>
+						<PersonAvatar
+							data={cast.length > 0 ? cast.slice(0, 6) : undefined}
+							title='Cast'
+							titleClassName='text-lg'
+							valueClassName='text-sm'
+							horizontalAlign='start'
+							isCast
+						/>
+					</Box>
+				</Suspense>
 
 				<Box className='flex items-center gap-4'>
 					{supports?.bluray && (

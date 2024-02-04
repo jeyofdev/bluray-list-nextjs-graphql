@@ -5,7 +5,7 @@ import {
 	Crew,
 	MovieDetails,
 	MovieResponse,
-	useMovieCreditsSuspenseQuery,
+	useMovieCreditsQuery,
 } from '@graphql/__generated__/graphql-type';
 import { SupportType } from '../../types';
 
@@ -14,22 +14,26 @@ type SingleMovieSuspensePropsType = {
 };
 
 const SingleMovieSuspense = ({ data }: SingleMovieSuspensePropsType) => {
-	const { data: credits } = useMovieCreditsSuspenseQuery({
+	const { data: credits } = useMovieCreditsQuery({
 		variables: { movieId: data?.details?.id },
 	});
 
 	return (
-		<ContentContainer
-			imageSrc={data?.details?.backdrop_path as string}
-			title={data?.details?.title as string}
-		>
-			<SingleMovieCard
-				data={data?.details as MovieDetails}
-				supports={data?.support as SupportType}
-				cast={credits?.movieCredits?.cast as Cast[]}
-				crew={credits?.movieCredits?.crew as Crew[]}
-			/>
-		</ContentContainer>
+		<>
+			{data ? (
+				<ContentContainer
+					imageSrc={data?.details?.backdrop_path as string}
+					title={data?.details?.title as string}
+				>
+					<SingleMovieCard
+						data={data?.details as MovieDetails}
+						supports={data?.support as SupportType}
+						cast={credits ? (credits?.movieCredits?.cast as Cast[]) : []}
+						crew={credits ? (credits?.movieCredits?.crew as Crew[]) : []}
+					/>
+				</ContentContainer>
+			) : null}
+		</>
 	);
 };
 

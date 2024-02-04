@@ -23,7 +23,7 @@ class MovieServices extends DataServices {
 	async findById(ctx: IContext, args: QueryMovieArgs): Promise<MovieResponse> {
 		const { movieId } = args;
 
-		return ctx.prisma.movies.findUnique({
+		return ctx.prisma.movies.findUniqueOrThrow({
 			where: { id: movieId },
 		});
 	}

@@ -10,12 +10,12 @@ import {
 import { IContext } from '../context';
 
 const mutations: MutationResolvers = {
-	addMovie: async (_: never, args: MutationAddMovieArgs, ctx: IContext) => {
+	addMovie: async (_: object, args: MutationAddMovieArgs, ctx: IContext) => {
 		return ctx.dataSource.movies.add(ctx, args);
 	},
 
 	updateMovie: async (
-		_: never,
+		_: object,
 		args: MutationUpdateMovieArgs,
 		ctx: IContext,
 	) => {
@@ -23,26 +23,26 @@ const mutations: MutationResolvers = {
 	},
 
 	deleteMovie: async (
-		_: never,
+		_: object,
 		args: MutationDeleteMovieArgs,
 		ctx: IContext,
 	) => {
 		return ctx.dataSource.movies.deleteById(ctx, args);
 	},
 
-	addSerie: async (_: never, args: MutationAddSerieArgs, ctx: IContext) => {
+	addSerie: async (_: object, args: MutationAddSerieArgs, ctx: IContext) => {
 		return ctx.dataSource.series.add(ctx, args);
 	},
 
 	updateSerie: async (
-		_: never,
+		_: object,
 		args: MutationUpdateSerieArgs,
 		ctx: IContext,
 	) => {
 		return ctx.dataSource.series.updateById(ctx, args);
 	},
 
-	deleteSerie: (_: never, args: MutationDeleteSerieArgs, ctx: IContext) => {
+	deleteSerie: (_: object, args: MutationDeleteSerieArgs, ctx: IContext) => {
 		return ctx.dataSource.series.deleteById(ctx, args);
 	},
 };

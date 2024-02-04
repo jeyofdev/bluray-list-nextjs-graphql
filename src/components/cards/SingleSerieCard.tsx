@@ -34,6 +34,10 @@ export const SingleSerieCard = ({
 
 	const producers = crew.filter(item => item.job === 'Producer').slice(0, 3);
 
+	const seasonData = data?.seasons?.find(
+		seasonData => seasonData?.season_number === season,
+	);
+
 	return (
 		<SingleCard
 			title={data?.name as string}
@@ -73,7 +77,7 @@ export const SingleSerieCard = ({
 							component='h6'
 							className='font-semibold'
 						>
-							{(data?.seasons?.[season]?.air_date as string).slice(0, 4)}
+							{seasonData?.air_date?.slice(0, 4)}
 						</Typography>
 					</Box>
 				</Box>

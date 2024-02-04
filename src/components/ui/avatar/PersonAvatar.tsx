@@ -62,11 +62,19 @@ const PersonAvatar = ({
 								<Box key={item.id} className='flex flex-col items-center'>
 									<Avatar
 										alt={`photo of ${item?.name as string}`}
-										src={`https://image.tmdb.org/t/p/w500${item?.profile_path as string}`}
+										src={
+											item?.profile_path
+												? `https://image.tmdb.org/t/p/w500${item?.profile_path as string}`
+												: undefined
+										}
 										classes={{
 											root: 'w-20 h-20',
 										}}
-									/>
+									>
+										<Typography component='p' className='font-normal'>
+											No photo
+										</Typography>
+									</Avatar>
 
 									<Typography
 										component='p'
