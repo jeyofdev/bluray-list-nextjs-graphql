@@ -72,6 +72,7 @@ model movies {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
   details   MoviesDetails
   support   Support
+	created_at DateTime
 }
 
 model series {
@@ -79,4 +80,5 @@ model series {
   details SeriesDetail
   season Int
   support Support
+	created_at DateTime
 }

@@ -1,6 +1,8 @@
 import { gql } from 'graphql-tag';
 
 const schema = gql`
+	scalar DateTime
+
 	type Genre {
 		id: Int
 		name: String
@@ -90,6 +92,7 @@ const schema = gql`
 		id: ID
 		details: MovieDetails
 		support: Support
+		created_at: DateTime
 	}
 
 	type SerieResponse {
@@ -97,6 +100,7 @@ const schema = gql`
 		details: SerieDetails
 		season: Int
 		support: Support
+		created_at: DateTime
 	}
 
 	type SeasonResponse {

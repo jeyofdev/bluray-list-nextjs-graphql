@@ -1,4 +1,8 @@
-import { GraphQLResolveInfo } from 'graphql';
+import {
+	GraphQLResolveInfo,
+	GraphQLScalarType,
+	GraphQLScalarTypeConfig,
+} from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -26,6 +30,7 @@ export type Scalars = {
 	Boolean: { input: boolean; output: boolean };
 	Int: { input: number; output: number };
 	Float: { input: number; output: number };
+	DateTime: { input: any; output: any };
 };
 
 export type Cast = {
@@ -79,6 +84,7 @@ export type MovieDetails = {
 
 export type MovieResponse = {
 	__typename?: 'MovieResponse';
+	created_at?: Maybe<Scalars['DateTime']['output']>;
 	details?: Maybe<MovieDetails>;
 	id?: Maybe<Scalars['ID']['output']>;
 	support?: Maybe<Support>;
@@ -236,6 +242,7 @@ export type SerieDetails = {
 
 export type SerieResponse = {
 	__typename?: 'SerieResponse';
+	created_at?: Maybe<Scalars['DateTime']['output']>;
 	details?: Maybe<SerieDetails>;
 	id?: Maybe<Scalars['ID']['output']>;
 	season?: Maybe<Scalars['Int']['output']>;
@@ -375,6 +382,7 @@ export type ResolversTypes = ResolversObject<{
 	Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
 	Cast: ResolverTypeWrapper<Cast>;
 	Crew: ResolverTypeWrapper<Crew>;
+	DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
 	Float: ResolverTypeWrapper<Scalars['Float']['output']>;
 	Genre: ResolverTypeWrapper<Genre>;
 	ID: ResolverTypeWrapper<Scalars['ID']['output']>;
@@ -403,6 +411,7 @@ export type ResolversParentTypes = ResolversObject<{
 	Boolean: Scalars['Boolean']['output'];
 	Cast: Cast;
 	Crew: Crew;
+	DateTime: Scalars['DateTime']['output'];
 	Float: Scalars['Float']['output'];
 	Genre: Genre;
 	ID: Scalars['ID']['output'];
@@ -500,6 +509,11 @@ export type CrewResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export interface DateTimeScalarConfig
+	extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+	name: 'DateTime';
+}
+
 export type GenreResolvers<
 	ContextType = any,
 	ParentType extends
@@ -568,6 +582,11 @@ export type MovieResponseResolvers<
 	ParentType extends
 		ResolversParentTypes['MovieResponse'] = ResolversParentTypes['MovieResponse'],
 > = ResolversObject<{
+	created_at?: Resolver<
+		Maybe<ResolversTypes['DateTime']>,
+		ParentType,
+		ContextType
+	>;
 	details?: Resolver<
 		Maybe<ResolversTypes['MovieDetails']>,
 		ParentType,
@@ -844,6 +863,11 @@ export type SerieResponseResolvers<
 	ParentType extends
 		ResolversParentTypes['SerieResponse'] = ResolversParentTypes['SerieResponse'],
 > = ResolversObject<{
+	created_at?: Resolver<
+		Maybe<ResolversTypes['DateTime']>,
+		ParentType,
+		ContextType
+	>;
 	details?: Resolver<
 		Maybe<ResolversTypes['SerieDetails']>,
 		ParentType,
@@ -892,6 +916,7 @@ export type CreditsResponseResolvers<
 export type Resolvers<ContextType = any> = ResolversObject<{
 	Cast?: CastResolvers<ContextType>;
 	Crew?: CrewResolvers<ContextType>;
+	DateTime?: GraphQLScalarType;
 	Genre?: GenreResolvers<ContextType>;
 	MovieDetails?: MovieDetailsResolvers<ContextType>;
 	MovieResponse?: MovieResponseResolvers<ContextType>;
