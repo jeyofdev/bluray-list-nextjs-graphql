@@ -9,6 +9,7 @@ import {
 	MovieResponse,
 } from '@graphql/__generated__/graphql-type';
 import useFilter from '@hooks/useFilter';
+import useSort from '@hooks/useSort';
 import { ToastOnCloseType } from '@hooks/useToast';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -45,6 +46,8 @@ const MoviesListSuspense = ({
 		getYearByItem,
 	} = useFilter(items, type);
 
+	const { sortItems } = useSort(moviesFiltered);
+
 	useEffect(() => {
 		setItemsFiltered(items);
 	}, [items, setItemsFiltered]);
@@ -72,7 +75,7 @@ const MoviesListSuspense = ({
 			</Box>
 
 			<ItemsList
-				items={moviesFiltered}
+				items={sortItems}
 				renderItems={(movie: MovieResponse) => (
 					<MovieCard
 						key={movie.id}
