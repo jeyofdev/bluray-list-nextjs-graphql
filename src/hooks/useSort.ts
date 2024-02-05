@@ -1,16 +1,23 @@
-import { useEffect, useState } from 'react';
-
-type ItemResponseType = any[];
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { SortType } from '../types';
+import { SortEnum } from '@enums/index';
 
 type UseSortType = {
-	sortItems: ItemResponseType;
+	sorts: SortType;
+	setSorts: Dispatch<SetStateAction<SortType>>;
+	sortItems: any;
 };
 
 const useSort = (items: any): UseSortType => {
 	const [sortItems, setSortItems] = useState(items);
 
+	const [sorts, setSorts] = useState<SortType>({
+		createdAt: SortEnum.ASC,
+	});
+
 	const getNewDate = (date: string) => {
 		const [year, month, day, hour, minute] = date.split(/-|:|[A-Za-z]/);
+
 		return new Date(
 			Number(year),
 			Number(month) - 1,
@@ -18,6 +25,14 @@ const useSort = (items: any): UseSortType => {
 			Number(hour),
 			Number(minute),
 		);
+	};
+
+	const sortByDate = (a: any, b: any, sort: SortEnum) => {
+		if (sort === SortEnum.ASC) {
+			return a.getTime() - b.getTime();
+		}
+
+		return b.getTime() - a.getTime();
 	};
 
 	useEffect(() => {
@@ -31,12 +46,14 @@ const useSort = (items: any): UseSortType => {
 					const dateA = getNewDate(a.created_at);
 					const dateB = getNewDate(b.created_at);
 
-					return dateB.getTime() - dateA.getTime();
+					return sortByDate(dateA, dateB, sorts?.createdAt);
 				}),
 		);
-	}, [items]);
+	}, [items, sorts]);
 
 	return {
+		sorts,
+		setSorts,
 		sortItems,
 	};
 };

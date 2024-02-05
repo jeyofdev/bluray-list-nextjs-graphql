@@ -1,3 +1,4 @@
+import { SortEnum } from '@enums/index';
 import { ToastOnCloseType } from '@hooks/useToast';
 import { ChangeEvent, ReactNode } from 'react';
 
@@ -28,4 +29,8 @@ export type PaginationHandleChangeCurrentPage = (
 export type FiltersType = {
 	genres: object;
 	years: object;
+};
+
+export type SortType = {
+	createdAt: SortEnum;
 };

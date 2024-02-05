@@ -1,6 +1,7 @@
 import MovieCard from '@components/cards/MovieCard';
 import ItemsList from '@components/ui/list/ItemList';
 import FilterSettings from '@components/ui/menu/FilterSettings';
+import SortSettings from '@components/ui/menu/SortSettings';
 import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
 import ShowResultsNumber from '@components/ui/result/ShowResultNumber';
 import { TypeEnum } from '@enums/index';
@@ -46,7 +47,7 @@ const MoviesListSuspense = ({
 		getYearByItem,
 	} = useFilter(items, type);
 
-	const { sortItems } = useSort(moviesFiltered);
+	const { sorts, setSorts, sortItems } = useSort(moviesFiltered);
 
 	useEffect(() => {
 		setItemsFiltered(items);
@@ -61,17 +62,23 @@ const MoviesListSuspense = ({
 					noMargin
 				/>
 
-				{moviesFiltered ? (
-					<FilterSettings
-						title='Filters'
-						genresLabel={getGenresByItems()}
-						yearsLabel={getYearByItem().sort(
-							(a: string, b: string) => Number(a) - Number(b),
-						)}
-						filters={filters}
-						setFilters={setFilters}
-					/>
-				) : null}
+				<Box className='flex justify-center gap-2'>
+					{moviesFiltered ? (
+						<FilterSettings
+							title='Filters'
+							genresLabel={getGenresByItems()}
+							yearsLabel={getYearByItem().sort(
+								(a: string, b: string) => Number(a) - Number(b),
+							)}
+							filters={filters}
+							setFilters={setFilters}
+						/>
+					) : null}
+
+					{moviesFiltered ? (
+						<SortSettings title='Filters' sorts={sorts} setSorts={setSorts} />
+					) : null}
+				</Box>
 			</Box>
 
 			<ItemsList
