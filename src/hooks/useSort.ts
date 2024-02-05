@@ -12,7 +12,10 @@ const useSort = (items: any): UseSortType => {
 	const [sortItems, setSortItems] = useState(items);
 
 	const [sorts, setSorts] = useState<SortType>({
-		createdAt: SortEnum.ASC,
+		createdAt: {
+			label: 'By date',
+			value: SortEnum.ASC,
+		},
 	});
 
 	const getNewDate = (date: string) => {
@@ -46,7 +49,7 @@ const useSort = (items: any): UseSortType => {
 					const dateA = getNewDate(a.created_at);
 					const dateB = getNewDate(b.created_at);
 
-					return sortByDate(dateA, dateB, sorts?.createdAt);
+					return sortByDate(dateA, dateB, sorts?.createdAt.value);
 				}),
 		);
 	}, [items, sorts]);

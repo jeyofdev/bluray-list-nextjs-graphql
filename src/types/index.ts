@@ -32,5 +32,8 @@ export type FiltersType = {
 };
 
 export type SortType = {
-	createdAt: SortEnum;
+	createdAt: {
+		label: string;
+		value: SortEnum;
+	};
 };

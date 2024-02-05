@@ -1,7 +1,15 @@
 import { SortEnum } from '@enums/index';
 import CloseIcon from '@mui/icons-material/Close';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { Box, IconButton, Menu, Tooltip } from '@mui/material';
+import {
+	Box,
+	Checkbox,
+	FormControlLabel,
+	IconButton,
+	Menu,
+	Tooltip,
+	Typography,
+} from '@mui/material';
 import {
 	ChangeEvent,
 	Dispatch,
@@ -22,6 +30,10 @@ const SortSettings = ({ title, sorts, setSorts }: SortSettingsPropsType) => {
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 	const open = Boolean(anchorEl);
 
+	const [showSortRadio, setShowSortRadio] = useState(
+		Object.keys(sorts).map(el => ({ [el]: true })),
+	);
+
 	const handleClick = (e: MouseEvent<HTMLElement>) => {
 		setAnchorEl(e.currentTarget);
 	};
@@ -34,10 +46,26 @@ const SortSettings = ({ title, sorts, setSorts }: SortSettingsPropsType) => {
 		return Array.from(new Set(Object.keys(sorts)));
 	};
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>, sortName: string) => {
+	const handleChangeSortRadio = (
+		e: ChangeEvent<HTMLInputElement>,
+		sortName: string,
+	) => {
 		setSorts({
 			...sorts,
-			[sortName]: (e.target as HTMLInputElement).value as SortEnum,
+			[sortName]: {
+				...sorts?.[sortName as keyof typeof sorts],
+				value: (e.target as HTMLInputElement).value as SortEnum,
+			},
+		});
+	};
+
+	const handleChangeShowSortRadio = (
+		e: ChangeEvent<HTMLInputElement>,
+		sortName: string,
+	) => {
+		setShowSortRadio({
+			...showSortRadio,
+			[sortName]: (e.target as HTMLInputElement).checked,
 		});
 	};
 
@@ -98,12 +126,38 @@ const SortSettings = ({ title, sorts, setSorts }: SortSettingsPropsType) => {
 				</IconButton>
 
 				{getSortsNames().map(sortName => (
-					<SortRadio
-						key={sortName}
-						title='Created at'
-						value={sorts?.[sortName as keyof typeof sorts]}
-						onChange={e => handleChange(e, sortName)}
-					/>
+					<Box key={sortName} className='flex flex-col items-start p-4'>
+						<FormControlLabel
+							className='m-0'
+							label={
+								<Typography
+									variant='h6'
+									className='text-lg font-bold text-primary-900'
+								>
+									{sorts?.[sortName as keyof typeof sorts]?.label}
+								</Typography>
+							}
+							control={
+								<Checkbox
+									checked={
+										!!showSortRadio?.[sortName as keyof typeof showSortRadio]
+									}
+									name={sortName}
+									onChange={e => handleChangeShowSortRadio(e, sortName)}
+									classes={{
+										root: 'text-sm py-2 pl-0 pr-2',
+									}}
+								/>
+							}
+						/>
+
+						{showSortRadio?.[sortName as keyof typeof showSortRadio] ? (
+							<SortRadio
+								value={sorts?.[sortName as keyof typeof sorts]?.value}
+								onChange={e => handleChangeSortRadio(e, sortName)}
+							/>
+						) : null}
+					</Box>
 				))}
 			</Menu>
 		</>
