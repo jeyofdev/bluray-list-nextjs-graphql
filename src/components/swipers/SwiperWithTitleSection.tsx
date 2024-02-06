@@ -9,8 +9,9 @@ type SwiperWithTitleSectionPropsType = {
 	title: string;
 	buttonHref: string;
 	buttonLabel: string | ReactNode;
-	data: any;
+	items: any[];
 	refetch: any;
+	itemsLimit: number;
 };
 
 const SwiperWithTitleSection = ({
@@ -18,8 +19,9 @@ const SwiperWithTitleSection = ({
 	title,
 	buttonHref,
 	buttonLabel,
-	data,
+	items,
 	refetch,
+	itemsLimit,
 }: SwiperWithTitleSectionPropsType) => {
 	return (
 		<>
@@ -50,11 +52,7 @@ const SwiperWithTitleSection = ({
 			<Suspense fallback={<h1>load</h1>}>
 				<MainSwiper
 					dataType={dataType}
-					list={
-						dataType === TypeEnum.MOVIE
-							? data?.movies?.slice(0, 15)
-							: data?.series?.slice(0, 15)
-					}
+					list={items?.slice(0, itemsLimit)}
 					refetch={refetch}
 				/>
 			</Suspense>
