@@ -5,12 +5,10 @@ import {
 	useEffect,
 	useState,
 } from 'react';
-import { FiltersType } from '../types';
+import { FiltersType, ItemResponseType } from '../types';
 import { Genre } from '@graphql/__generated__/graphql-type';
 import { TypeEnum } from '@enums/index';
 import { convertToObjectWithValueFalse } from '@utils/index';
-
-type ItemResponseType = any[];
 
 type UseFilterType = {
 	filters: FiltersType;
