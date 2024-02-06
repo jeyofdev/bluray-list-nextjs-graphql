@@ -1,6 +1,7 @@
 import MainSwiper from '@components/ui/swiper/MainSwiper';
 import { TypeEnum } from '@enums/index';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import { Alert, Box, Button, Divider, Typography } from '@mui/material';
 import Link from 'next/link';
 import { ReactNode, Suspense } from 'react';
 
@@ -50,11 +51,29 @@ const SwiperWithTitleSection = ({
 			/>
 
 			<Suspense fallback={<h1>load</h1>}>
-				<MainSwiper
-					dataType={dataType}
-					list={items?.slice(0, itemsLimit)}
-					refetch={refetch}
-				/>
+				{items.length > 0 ? (
+					<MainSwiper
+						dataType={dataType}
+						list={items?.slice(0, itemsLimit)}
+						refetch={refetch}
+					/>
+				) : (
+					<Alert
+						icon={
+							<InfoIcon fontSize='inherit' className='text-2xl text-sky-700' />
+						}
+						severity={'info'}
+						className='mb-0 w-full'
+					>
+						<Typography
+							variant='h6'
+							component='h5'
+							className='text-lg text-sky-700'
+						>
+							No results found
+						</Typography>
+					</Alert>
+				)}
 			</Suspense>
 		</>
 	);
