@@ -12,10 +12,8 @@ const useSort = (items: any): UseSortType => {
 	const [sortItems, setSortItems] = useState(items);
 
 	const [sorts, setSorts] = useState<SortType>({
-		createdAt: {
-			label: 'By date',
-			value: SortEnum.ASC,
-		},
+		name: 'createdAt',
+		order: SortEnum.ASC,
 	});
 
 	const getNewDate = (date: string) => {
@@ -30,12 +28,12 @@ const useSort = (items: any): UseSortType => {
 		);
 	};
 
-	const sortByDate = (a: any, b: any, sort: SortEnum) => {
+	const sorting = (a: any, b: any, sort: SortEnum) => {
 		if (sort === SortEnum.ASC) {
-			return a.getTime() - b.getTime();
+			return a - b;
 		}
 
-		return b.getTime() - a.getTime();
+		return b - a;
 	};
 
 	useEffect(() => {
@@ -46,10 +44,16 @@ const useSort = (items: any): UseSortType => {
 					created_at: e.created_at.toString(),
 				}))
 				.sort((a: any, b: any) => {
-					const dateA = getNewDate(a.created_at);
-					const dateB = getNewDate(b.created_at);
+					if (sorts.name === 'createdAt') {
+						const dateA = getNewDate(a.created_at);
+						const dateB = getNewDate(b.created_at);
 
-					return sortByDate(dateA, dateB, sorts?.createdAt.value);
+						return sorting(dateA.getTime(), dateB.getTime(), sorts?.order);
+					} else if (sorts.name === 'title') {
+						return sorts?.order === SortEnum.ASC
+							? a.details?.title.localeCompare(b.details?.title)
+							: b.details?.title.localeCompare(a.details?.title);
+					}
 				}),
 		);
 	}, [items, sorts]);

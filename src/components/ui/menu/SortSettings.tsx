@@ -1,15 +1,6 @@
-import { SortEnum } from '@enums/index';
 import CloseIcon from '@mui/icons-material/Close';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-import {
-	Box,
-	Checkbox,
-	FormControlLabel,
-	IconButton,
-	Menu,
-	Tooltip,
-	Typography,
-} from '@mui/material';
+import { Box, Divider, IconButton, Menu, Tooltip } from '@mui/material';
 import {
 	ChangeEvent,
 	Dispatch,
@@ -17,21 +8,33 @@ import {
 	SetStateAction,
 	useState,
 } from 'react';
-import { SortType } from '../../../types';
+import { RadioItemType, SortType } from '../../../types';
 import SortRadio from '../form/SortRadio';
 
 type SortSettingsPropsType = {
 	title: string;
 	sorts: SortType;
 	setSorts: Dispatch<SetStateAction<SortType>>;
+	sortNameItems: RadioItemType[];
+	sortOrderItems: RadioItemType[];
 };
 
-const SortSettings = ({ title, sorts, setSorts }: SortSettingsPropsType) => {
+const SortSettings = ({
+	title,
+	sorts,
+	setSorts,
+	sortNameItems,
+	sortOrderItems,
+}: SortSettingsPropsType) => {
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 	const open = Boolean(anchorEl);
 
 	const [showSortRadio, setShowSortRadio] = useState(
 		Object.keys(sorts).map(el => ({ [el]: true })),
+	);
+
+	const [sortByRadio, setSortByRadio] = useState(
+		Object.keys(sorts).map((el, i) => ({ [el]: i === 0 ? true : false })),
 	);
 
 	const handleClick = (e: MouseEvent<HTMLElement>) => {
@@ -48,14 +51,11 @@ const SortSettings = ({ title, sorts, setSorts }: SortSettingsPropsType) => {
 
 	const handleChangeSortRadio = (
 		e: ChangeEvent<HTMLInputElement>,
-		sortName: string,
+		key: string,
 	) => {
 		setSorts({
 			...sorts,
-			[sortName]: {
-				...sorts?.[sortName as keyof typeof sorts],
-				value: (e.target as HTMLInputElement).value as SortEnum,
-			},
+			[key]: (e.target as HTMLInputElement).value,
 		});
 	};
 
@@ -110,7 +110,7 @@ const SortSettings = ({ title, sorts, setSorts }: SortSettingsPropsType) => {
 				}}
 				classes={{
 					paper:
-						'min-w-48 max-h-72 sm:max-h-96 overflow-y-auto p-0 bg-primary-50 overflow-visible drop-shadow-lg mt-4 before:content-[""] before:block before:absolute before:top-0 before:right-[14px] before:w-2.5 before:h-2.5 before:bg-primary-50 before:-translate-y-1/2 before:rotate-45 before:z-10',
+						'min-w-40 max-h-72 sm:max-h-96 overflow-y-auto p-0 bg-primary-50 overflow-visible drop-shadow-lg mt-4 before:content-[""] before:block before:absolute before:top-0 before:right-[14px] before:w-2.5 before:h-2.5 before:bg-primary-50 before:-translate-y-1/2 before:rotate-45 before:z-10',
 				}}
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -125,7 +125,40 @@ const SortSettings = ({ title, sorts, setSorts }: SortSettingsPropsType) => {
 					<CloseIcon className='size-5' />
 				</IconButton>
 
-				{getSortsNames().map(sortName => (
+				<Box className='flex flex-col items-start p-0'>
+					<SortRadio
+						title='Sort by'
+						value={sorts?.name}
+						onChange={e => handleChangeSortRadio(e, 'name')}
+						radioItems={sortNameItems}
+					/>
+
+					<Divider
+						classes={{
+							root: 'w-full !my-0',
+						}}
+					/>
+
+					<SortRadio
+						title='Order by'
+						value={sorts?.order}
+						onChange={e => handleChangeSortRadio(e, 'order')}
+						radioItems={sortOrderItems}
+					/>
+				</Box>
+
+				{/* {getSortsNames().map(sortName => (
+					<Box key={sortName} className='flex flex-col items-start p-4'>
+						<SortRadio
+							title='Order by'
+							value={sorts?.[sortName as keyof typeof sorts]?.value}
+							onChange={e => handleChangeSortRadio(e, sortName)}
+							labels={['Asc', 'Desc']}
+						/>
+					</Box>
+				))} */}
+
+				{/* {getSortsNames().map(sortName => (
 					<Box key={sortName} className='flex flex-col items-start p-4'>
 						<FormControlLabel
 							className='m-0'
@@ -155,10 +188,11 @@ const SortSettings = ({ title, sorts, setSorts }: SortSettingsPropsType) => {
 							<SortRadio
 								value={sorts?.[sortName as keyof typeof sorts]?.value}
 								onChange={e => handleChangeSortRadio(e, sortName)}
+								labels={['asc', 'desc']}
 							/>
 						) : null}
 					</Box>
-				))}
+				))} */}
 			</Menu>
 		</>
 	);

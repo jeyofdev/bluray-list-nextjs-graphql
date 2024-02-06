@@ -76,7 +76,19 @@ const MoviesListSuspense = ({
 					) : null}
 
 					{moviesFiltered ? (
-						<SortSettings title='Filters' sorts={sorts} setSorts={setSorts} />
+						<SortSettings
+							title='Filters'
+							sorts={sorts}
+							setSorts={setSorts}
+							sortNameItems={[
+								{ key: 'createdAt', label: 'Created at' },
+								{ key: 'title', label: 'Title' },
+							]}
+							sortOrderItems={[
+								{ key: 'asc', label: 'Asc' },
+								{ key: 'desc', label: 'Desc' },
+							]}
+						/>
 					) : null}
 				</Box>
 			</Box>
