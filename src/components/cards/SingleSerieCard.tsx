@@ -71,14 +71,17 @@ export const SingleSerieCard = ({
 						>
 							{data?.seasons?.[season]?.episode_count} episodes
 						</Typography>
-						-
-						<Typography
-							variant='body1'
-							component='h6'
-							className='font-semibold'
-						>
-							{seasonData?.air_date?.slice(0, 4)}
-						</Typography>
+						{seasonData?.air_date
+							? -(
+									<Typography
+										variant='body1'
+										component='h6'
+										className='font-semibold'
+									>
+										{seasonData?.air_date?.slice(0, 4)}
+									</Typography>
+								)
+							: null}
 					</Box>
 				</Box>
 			}
