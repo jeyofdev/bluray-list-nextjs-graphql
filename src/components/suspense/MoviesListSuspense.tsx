@@ -77,7 +77,7 @@ const MoviesListSuspense = ({
 
 					{moviesFiltered ? (
 						<SortSettings
-							title='Filters'
+							title='Sort'
 							sorts={sorts}
 							setSorts={setSorts}
 							sortNameItems={[
