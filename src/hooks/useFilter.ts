@@ -50,9 +50,14 @@ const useFilter = (
 		if (type === TypeEnum.MOVIE) {
 			years = items.map(m => m?.details?.release_date?.slice(0, 4) as string);
 		} else if (type === TypeEnum.SERIE) {
-			years = items.map(m => {
-				return m?.details?.seasons[m?.season]?.air_date?.slice(0, 4) as string;
-			});
+			years = items
+				.filter(i => i?.details?.seasons[i?.season]?.air_date)
+				.map(m => {
+					return m?.details?.seasons[m?.season]?.air_date?.slice(
+						0,
+						4,
+					) as string;
+				});
 		}
 
 		return Array.from(new Set(years));
@@ -91,9 +96,15 @@ const useFilter = (
 			});
 
 			const itemFilterByYear = items?.filter(m => {
-				return yearFilters.includes(
-					m?.details?.release_date?.slice(0, 4) as string,
-				);
+				if (type === TypeEnum.MOVIE) {
+					return yearFilters.includes(
+						m?.details?.release_date?.slice(0, 4) as string,
+					);
+				} else if (type === TypeEnum.SERIE) {
+					return yearFilters.includes(
+						m?.details?.seasons[m?.season]?.air_date?.slice(0, 4) as string,
+					);
+				}
 			});
 
 			if (genreFilterIsActive && !yearFilterIsActive) {
