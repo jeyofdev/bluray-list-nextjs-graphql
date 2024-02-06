@@ -68,6 +68,7 @@ class SerieServices extends DataServices {
 					bluray_hd: args.support?.bluray_hd,
 					dvd: args.support?.dvd,
 				},
+				created_at: new Date(),
 			},
 		});
 	}

@@ -28,6 +28,7 @@ export type Scalars = {
 	Boolean: { input: boolean; output: boolean };
 	Int: { input: number; output: number };
 	Float: { input: number; output: number };
+	DateTime: { input: any; output: any };
 };
 
 export type Cast = {
@@ -81,6 +82,7 @@ export type MovieDetails = {
 
 export type MovieResponse = {
 	__typename?: 'MovieResponse';
+	created_at?: Maybe<Scalars['DateTime']['output']>;
 	details?: Maybe<MovieDetails>;
 	id?: Maybe<Scalars['ID']['output']>;
 	support?: Maybe<Support>;
@@ -238,6 +240,7 @@ export type SerieDetails = {
 
 export type SerieResponse = {
 	__typename?: 'SerieResponse';
+	created_at?: Maybe<Scalars['DateTime']['output']>;
 	details?: Maybe<SerieDetails>;
 	id?: Maybe<Scalars['ID']['output']>;
 	season?: Maybe<Scalars['Int']['output']>;
@@ -274,6 +277,7 @@ export type AddMovieMutation = {
 	addMovie?: {
 		__typename?: 'MovieResponse';
 		id?: string | null;
+		created_at?: any | null;
 		details?: {
 			__typename?: 'MovieDetails';
 			id?: number | null;
@@ -338,6 +342,7 @@ export type AddSerieMutation = {
 		__typename?: 'SerieResponse';
 		id?: string | null;
 		season?: number | null;
+		created_at?: any | null;
 		details?: {
 			__typename?: 'SerieDetails';
 			id?: number | null;
@@ -428,6 +433,7 @@ export type MoviesQuery = {
 	movies?: Array<{
 		__typename?: 'MovieResponse';
 		id?: string | null;
+		created_at?: any | null;
 		details?: {
 			__typename?: 'MovieDetails';
 			id?: number | null;
@@ -460,6 +466,7 @@ export type MovieQuery = {
 	movie?: {
 		__typename?: 'MovieResponse';
 		id?: string | null;
+		created_at?: any | null;
 		details?: {
 			__typename?: 'MovieDetails';
 			id?: number | null;
@@ -570,6 +577,7 @@ export type SeriesQuery = {
 		__typename?: 'SerieResponse';
 		id?: string | null;
 		season?: number | null;
+		created_at?: any | null;
 		details?: {
 			__typename?: 'SerieDetails';
 			id?: number | null;
@@ -611,6 +619,7 @@ export type SerieQuery = {
 		__typename?: 'SerieResponse';
 		id?: string | null;
 		season?: number | null;
+		created_at?: any | null;
 		details?: {
 			__typename?: 'SerieDetails';
 			id?: number | null;
@@ -723,6 +732,7 @@ export const AddMovieDocument = gql`
 				bluray_hd
 				dvd
 			}
+			created_at
 		}
 	}
 `;
@@ -898,6 +908,7 @@ export const AddSerieDocument = gql`
 				bluray_hd
 				dvd
 			}
+			created_at
 		}
 	}
 `;
@@ -1160,6 +1171,7 @@ export const MoviesDocument = gql`
 				bluray_hd
 				dvd
 			}
+			created_at
 		}
 	}
 `;
@@ -1248,6 +1260,7 @@ export const MovieDocument = gql`
 				bluray_hd
 				bluray
 			}
+			created_at
 		}
 	}
 `;
@@ -1523,6 +1536,7 @@ export const SeriesDocument = gql`
 				bluray_hd
 				dvd
 			}
+			created_at
 		}
 	}
 `;
@@ -1623,6 +1637,7 @@ export const SerieDocument = gql`
 				bluray_hd
 				dvd
 			}
+			created_at
 		}
 	}
 `;

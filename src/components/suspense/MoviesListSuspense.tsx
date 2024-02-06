@@ -1,6 +1,7 @@
 import MovieCard from '@components/cards/MovieCard';
 import ItemsList from '@components/ui/list/ItemList';
 import FilterSettings from '@components/ui/menu/FilterSettings';
+import SortSettings from '@components/ui/menu/SortSettings';
 import SearchMovieModal from '@components/ui/modal/SearchMovieModal';
 import ShowResultsNumber from '@components/ui/result/ShowResultNumber';
 import { TypeEnum } from '@enums/index';
@@ -9,6 +10,7 @@ import {
 	MovieResponse,
 } from '@graphql/__generated__/graphql-type';
 import useFilter from '@hooks/useFilter';
+import useSort from '@hooks/useSort';
 import { ToastOnCloseType } from '@hooks/useToast';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -45,6 +47,8 @@ const MoviesListSuspense = ({
 		getYearByItem,
 	} = useFilter(items, type);
 
+	const { sorts, setSorts, sortItems } = useSort(moviesFiltered);
+
 	useEffect(() => {
 		setItemsFiltered(items);
 	}, [items, setItemsFiltered]);
@@ -58,21 +62,39 @@ const MoviesListSuspense = ({
 					noMargin
 				/>
 
-				{moviesFiltered ? (
-					<FilterSettings
-						title='Filters'
-						genresLabel={getGenresByItems()}
-						yearsLabel={getYearByItem().sort(
-							(a: string, b: string) => Number(a) - Number(b),
-						)}
-						filters={filters}
-						setFilters={setFilters}
-					/>
-				) : null}
+				<Box className='flex justify-center gap-2'>
+					{moviesFiltered ? (
+						<FilterSettings
+							title='Filters'
+							genresLabel={getGenresByItems()}
+							yearsLabel={getYearByItem().sort(
+								(a: string, b: string) => Number(a) - Number(b),
+							)}
+							filters={filters}
+							setFilters={setFilters}
+						/>
+					) : null}
+
+					{moviesFiltered ? (
+						<SortSettings
+							title='Filters'
+							sorts={sorts}
+							setSorts={setSorts}
+							sortNameItems={[
+								{ key: 'createdAt', label: 'Created at' },
+								{ key: 'title', label: 'Title' },
+							]}
+							sortOrderItems={[
+								{ key: 'asc', label: 'Asc' },
+								{ key: 'desc', label: 'Desc' },
+							]}
+						/>
+					) : null}
+				</Box>
 			</Box>
 
 			<ItemsList
-				items={moviesFiltered}
+				items={sortItems}
 				renderItems={(movie: MovieResponse) => (
 					<MovieCard
 						key={movie.id}

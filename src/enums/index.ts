@@ -21,3 +21,8 @@ export enum BreakpointEnum {
 	LG = 1380,
 	XL = 1920,
 }
+
+export enum SortEnum {
+	ASC = 'asc',
+	DESC = 'desc',
+}

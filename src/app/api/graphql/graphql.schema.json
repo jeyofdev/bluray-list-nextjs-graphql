@@ -258,6 +258,16 @@
 			},
 			{
 				"kind": "SCALAR",
+				"name": "DateTime",
+				"description": null,
+				"fields": null,
+				"inputFields": null,
+				"interfaces": null,
+				"enumValues": null,
+				"possibleTypes": null
+			},
+			{
+				"kind": "SCALAR",
 				"name": "Float",
 				"description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
 				"fields": null,
@@ -501,6 +511,18 @@
 				"name": "MovieResponse",
 				"description": null,
 				"fields": [
+					{
+						"name": "created_at",
+						"description": null,
+						"args": [],
+						"type": {
+							"kind": "SCALAR",
+							"name": "DateTime",
+							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
 					{
 						"name": "details",
 						"description": null,
@@ -1611,6 +1633,18 @@
 				"name": "SerieResponse",
 				"description": null,
 				"fields": [
+					{
+						"name": "created_at",
+						"description": null,
+						"args": [],
+						"type": {
+							"kind": "SCALAR",
+							"name": "DateTime",
+							"ofType": null
+						},
+						"isDeprecated": false,
+						"deprecationReason": null
+					},
 					{
 						"name": "details",
 						"description": null,
