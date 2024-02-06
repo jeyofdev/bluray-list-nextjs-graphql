@@ -50,14 +50,18 @@ export const SingleMovieCard = ({
 			subtitle={
 				<Box className='flex flex-col gap-2 sm:flex-row'>
 					<Box className='flex gap-2'>
-						<Typography
-							variant='body1'
-							component='h6'
-							className='font-semibold'
-						>
-							{formatDate(data?.release_date as string)}
-						</Typography>
-						-
+						{data?.release_date ? (
+							<>
+								<Typography
+									variant='body1'
+									component='h6'
+									className='font-semibold'
+								>
+									{formatDate(data?.release_date as string)}
+								</Typography>
+								-
+							</>
+						) : null}
 						<Typography
 							variant='body1'
 							component='h6'

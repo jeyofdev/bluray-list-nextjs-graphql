@@ -18,12 +18,12 @@ type DetailsProductionCountries {
 }
 
 type DetailsSeasons {
-  air_date           String
+  air_date           String?
   episode_count      Int
   id                 Int
   name               String
   overview           String
-  poster_path        String
+  poster_path        String?
   season_number      Int
   vote_average       Float
 }
@@ -36,9 +36,9 @@ type MoviesDetails {
   original_language    String
   original_title       String
   overview             String
-  poster_path          String
+  poster_path          String?
   production_countries DetailsProductionCountries[]
-  release_date         String
+  release_date         String?
   title                String
   vote_average         Float
 	runtime              Int
@@ -46,7 +46,7 @@ type MoviesDetails {
 
 type SeriesDetail {
   id                   Int
-  backdrop_path        String
+  backdrop_path        String?
   first_air_date       String
   genres               DetailsGenres[]
   homepage             String
@@ -56,7 +56,7 @@ type SeriesDetail {
   original_language    String
   original_name        String
   overview             String
-  poster_path          String
+  poster_path          String?
   production_countries DetailsProductionCountries[]
   seasons              DetailsSeasons[]
   vote_average         Float
