@@ -1,8 +1,10 @@
 import ItemsList from '@components/ui/list/ItemList';
 import FilterSettings from '@components/ui/menu/FilterSettings';
+import SortSettings from '@components/ui/menu/SortSettings';
 import ShowResultsNumber from '@components/ui/result/ShowResultNumber';
 import { TypeEnum } from '@enums/index';
 import useFilter from '@hooks/useFilter';
+import useSort from '@hooks/useSort';
 import { ToastOnCloseType } from '@hooks/useToast';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -45,6 +47,8 @@ const SeriesListSuspense = ({
 		getYearByItem,
 	} = useFilter(items, type);
 
+	const { sorts, setSorts, sortItems } = useSort(seriesFiltered);
+
 	useEffect(() => {
 		setItemsFiltered(items);
 	}, [items, setItemsFiltered]);
@@ -58,21 +62,39 @@ const SeriesListSuspense = ({
 					noMargin
 				/>
 
-				{seriesFiltered ? (
-					<FilterSettings
-						title='Filters'
-						genresLabel={getGenresByItems()}
-						yearsLabel={getYearByItem().sort(
-							(a: string, b: string) => Number(a) - Number(b),
-						)}
-						filters={filters}
-						setFilters={setFilters}
-					/>
-				) : null}
+				<Box className='flex justify-center gap-2'>
+					{seriesFiltered ? (
+						<FilterSettings
+							title='Filters'
+							genresLabel={getGenresByItems()}
+							yearsLabel={getYearByItem().sort(
+								(a: string, b: string) => Number(a) - Number(b),
+							)}
+							filters={filters}
+							setFilters={setFilters}
+						/>
+					) : null}
+
+					{seriesFiltered ? (
+						<SortSettings
+							title='Sort'
+							sorts={sorts}
+							setSorts={setSorts}
+							sortNameItems={[
+								{ key: 'createdAt', label: 'Created at' },
+								{ key: 'name', label: 'Title' },
+							]}
+							sortOrderItems={[
+								{ key: 'asc', label: 'Asc' },
+								{ key: 'desc', label: 'Desc' },
+							]}
+						/>
+					) : null}
+				</Box>
 			</Box>
 
 			<ItemsList
-				items={seriesFiltered}
+				items={sortItems}
 				renderItems={(serie: SerieResponse) => (
 					<SerieCard
 						key={serie.id}

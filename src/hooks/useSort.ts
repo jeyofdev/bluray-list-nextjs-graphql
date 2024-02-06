@@ -39,6 +39,13 @@ const useSort = (items: any): UseSortType => {
 							sorts.order,
 							'string',
 						);
+					} else if (sorts.name === 'name') {
+						return sortArrayByOrder(
+							a.details?.name,
+							b.details?.name,
+							sorts.order,
+							'string',
+						);
 					}
 				}),
 		);

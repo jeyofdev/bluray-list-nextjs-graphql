@@ -46,7 +46,7 @@ const SeriesPage = () => {
 						onToastClose={handleCloseToast}
 						showSearchModal={showSearchModal}
 						onCloseSearchModal={onCloseSearchModal}
-						type={TypeEnum.MOVIE}
+						type={TypeEnum.SERIE}
 					/>
 				</Suspense>
 
