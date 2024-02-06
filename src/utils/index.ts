@@ -1,3 +1,4 @@
+import { SortEnum } from '@enums/index';
 import { format } from 'date-fns';
 
 /**
@@ -48,4 +49,49 @@ export const convertToObjectWithValueFalse = (arr: string[]) => {
 		}),
 		{},
 	);
+};
+
+/**
+ * Get new custom Date
+ */
+export const getNewDate = (date: string) => {
+	const [year, month, day, hour, minute] = date.split(/-|:|[A-Za-z]/);
+
+	return new Date(
+		Number(year),
+		Number(month) - 1,
+		Number(day),
+		Number(hour),
+		Number(minute),
+	);
+};
+
+/**
+ * Sort items of array by order asc or desc
+ */
+export const sortingByOrder = (a: any, b: any, order: SortEnum) => {
+	if (order === SortEnum.ASC) {
+		return a - b;
+	}
+
+	return b - a;
+};
+
+/**
+ * sort string or date of array by order
+ */
+export const sortArrayByOrder = (
+	a: string,
+	b: string,
+	order: SortEnum,
+	type: 'string' | 'date',
+) => {
+	if (type === 'string') {
+		return order === SortEnum.ASC ? a.localeCompare(b) : b.localeCompare(a);
+	}
+
+	const dateA = getNewDate(a);
+	const dateB = getNewDate(b);
+
+	return sortingByOrder(dateA.getTime(), dateB.getTime(), order);
 };

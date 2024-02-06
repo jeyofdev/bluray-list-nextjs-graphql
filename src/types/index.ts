@@ -31,13 +31,6 @@ export type FiltersType = {
 	years: object;
 };
 
-// export type SortType = {
-// 	createdAt: {
-// 		label: string;
-// 		value: SortEnum;
-// 	};
-// };
-
 export type SortType = {
 	name: string;
 	order: SortEnum;
@@ -47,3 +40,5 @@ export type RadioItemType = {
 	key: string;
 	label: string;
 };
+
+export type ItemResponseType = any[];

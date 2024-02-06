@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SortType } from '../types';
 import { SortEnum } from '@enums/index';
+import { sortArrayByOrder } from '@utils/index';
 
 type UseSortType = {
 	sorts: SortType;
@@ -16,26 +17,6 @@ const useSort = (items: any): UseSortType => {
 		order: SortEnum.ASC,
 	});
 
-	const getNewDate = (date: string) => {
-		const [year, month, day, hour, minute] = date.split(/-|:|[A-Za-z]/);
-
-		return new Date(
-			Number(year),
-			Number(month) - 1,
-			Number(day),
-			Number(hour),
-			Number(minute),
-		);
-	};
-
-	const sorting = (a: any, b: any, sort: SortEnum) => {
-		if (sort === SortEnum.ASC) {
-			return a - b;
-		}
-
-		return b - a;
-	};
-
 	useEffect(() => {
 		setSortItems(
 			items
@@ -45,14 +26,19 @@ const useSort = (items: any): UseSortType => {
 				}))
 				.sort((a: any, b: any) => {
 					if (sorts.name === 'createdAt') {
-						const dateA = getNewDate(a.created_at);
-						const dateB = getNewDate(b.created_at);
-
-						return sorting(dateA.getTime(), dateB.getTime(), sorts?.order);
+						return sortArrayByOrder(
+							a.created_at,
+							b.created_at,
+							sorts?.order,
+							'date',
+						);
 					} else if (sorts.name === 'title') {
-						return sorts?.order === SortEnum.ASC
-							? a.details?.title.localeCompare(b.details?.title)
-							: b.details?.title.localeCompare(a.details?.title);
+						return sortArrayByOrder(
+							a.details?.title,
+							b.details?.title,
+							sorts.order,
+							'string',
+						);
 					}
 				}),
 		);
