@@ -8,7 +8,6 @@ import useSort from '@hooks/useSort';
 import { ToastOnCloseType } from '@hooks/useToast';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import {
 	SerieDetails,
 	SerieResponse,
@@ -42,16 +41,11 @@ const SeriesListSuspense = ({
 		filters,
 		setFilters,
 		itemsFiltered: seriesFiltered,
-		setItemsFiltered,
 		getGenresByItems,
 		getYearByItem,
 	} = useFilter(items, type);
 
 	const { sorts, setSorts, sortItems } = useSort(seriesFiltered);
-
-	useEffect(() => {
-		setItemsFiltered(items);
-	}, [items, setItemsFiltered]);
 
 	return (
 		<>

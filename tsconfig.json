@@ -25,6 +25,7 @@
 			"@enums/*": ["./src/enums/*"],
 			"@graphql/*": ["./src/graphql/*"],
 			"@hooks/*": ["./src/hooks/*"],
+			"@reducers/*": ["./src/reducers/*"],
 			"@utils/*": ["./src/utils/*"],
 			"@styles/*": ["./src/styles/*"],
 			"@theme/*": ["./src/theme/*"],
