@@ -34,6 +34,9 @@ export const getRating = (rating: number, precision?: number) => {
 	return !precision ? Math.round(rating / 2) : rating / 2;
 };
 
+/**
+ * truncate text by limit
+ */
 export const truncate = (text: string, limit: number) => {
 	return text.length > limit ? `${text.slice(0, limit)}...` : text;
 };
