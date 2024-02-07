@@ -1,5 +1,6 @@
 import RootComponent from '@components/RootComponent';
 import ApolloWrapper from '@components/apollo/ApolloWrapper';
+import Footer from '@components/navigation/Footer';
 import Header from '@components/navigation/Header';
 import { CssBaseline } from '@mui/material';
 import '@styles/globals.css';
@@ -23,10 +24,11 @@ const RootLayout = ({ children }: RootLayoutPropsType) => {
 		<html lang='en'>
 			<RootComponent>
 				<CssBaseline />
-				<body className={`${inter.className} bg-slate-50`}>
+				<body className={`${inter.className} relative bg-slate-50`}>
 					<ApolloWrapper>
 						<Header />
 						{children}
+						<Footer />
 					</ApolloWrapper>
 				</body>
 			</RootComponent>
