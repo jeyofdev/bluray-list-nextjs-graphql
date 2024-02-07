@@ -2,9 +2,10 @@ import BlurayIcon from '@components/icons/BlurayIcon';
 import BlurayUltraHDIcon from '@components/icons/BlurayUltraHDIcon';
 import { SupportEnum, TypeEnum } from '@enums/index';
 import { Season } from '@graphql/__generated__/graphql-type';
+import useSupport from '@hooks/useSupport';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Checkbox, Typography } from '@mui/material';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { SupportType, ToastType } from '../../../types';
 import SearchSelect from '../form/SearchSelect';
 import ActionModal from './ActionModal';
@@ -38,7 +39,11 @@ const UpdateActionModal = ({
 	toast,
 	refetch,
 }: UpdateActionModalPropsType) => {
-	const [movieSupports, setMovieSupports] = useState<SupportType>({
+	const {
+		itemSupports: movieSupports,
+		onChange: handleChangeItemSupports,
+		cheKIfOneSupportIsActive,
+	} = useSupport({
 		bluray: itemSupports.bluray,
 		bluray_hd: itemSupports.bluray_hd,
 		dvd: itemSupports.dvd,
@@ -52,7 +57,11 @@ const UpdateActionModal = ({
 		const variables =
 			type === 'movie'
 				? { movieId: itemId, support: movieSupports }
-				: { serieId: itemId, season: selectedSeason, support: movieSupports };
+				: {
+						serieId: itemId,
+						season: Number(selectedSeason),
+						support: movieSupports,
+					};
 
 		onUpdate({
 			variables,
@@ -62,13 +71,6 @@ const UpdateActionModal = ({
 		toast.onOpen(`The ${type} "${itemTitle}" has been updated with success.`);
 	};
 
-	const handleChangeMovieSupports = (support: SupportEnum) => {
-		setMovieSupports({
-			...movieSupports,
-			[support]: !movieSupports[support],
-		});
-	};
-
 	return (
 		<ActionModal
 			open={open}
@@ -76,6 +78,7 @@ const UpdateActionModal = ({
 			icon={<EditIcon className='text-green-400' />}
 			type='update'
 			onAction={handleUpdate}
+			addButtonIsDisabled={!cheKIfOneSupportIsActive()}
 		>
 			<Box className='flex flex-col items-center'>
 				<Typography variant='body1' className='text-center text-primary-900'>
@@ -87,7 +90,7 @@ const UpdateActionModal = ({
 						icon={<BlurayIcon className='text-5xl text-primary-900' />}
 						checkedIcon={<BlurayIcon className='text-5xl text-sky-400' />}
 						checked={movieSupports[SupportEnum.BLURAY]}
-						onChange={() => handleChangeMovieSupports(SupportEnum.BLURAY)}
+						onChange={() => handleChangeItemSupports(SupportEnum.BLURAY)}
 					/>
 
 					<Checkbox
@@ -96,7 +99,7 @@ const UpdateActionModal = ({
 							<BlurayUltraHDIcon className='text-7xl text-sky-400' />
 						}
 						checked={movieSupports[SupportEnum.BLURAY_HD]}
-						onChange={() => handleChangeMovieSupports(SupportEnum.BLURAY_HD)}
+						onChange={() => handleChangeItemSupports(SupportEnum.BLURAY_HD)}
 					/>
 				</Box>
 			</Box>

@@ -16,7 +16,11 @@ const SearchMovieCard = ({
 	refetch,
 	onClose,
 }: SearchMovieCardProps) => {
-	const { itemSupports, onChange: handleChangeItemSupports } = useSupport();
+	const {
+		itemSupports,
+		onChange: handleChangeItemSupports,
+		cheKIfOneSupportIsActive,
+	} = useSupport();
 
 	const handleClick = () => {
 		addMovie({
@@ -39,6 +43,7 @@ const SearchMovieCard = ({
 			addButtonLabel='Add to list'
 			onClick={handleClick}
 			onChangeItemSupports={handleChangeItemSupports}
+			addButtonIsDisabled={!cheKIfOneSupportIsActive()}
 		/>
 	);
 };

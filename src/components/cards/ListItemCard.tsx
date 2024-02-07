@@ -54,7 +54,7 @@ const ListItemCard = ({
 	const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
 
 	const [selectedSeason, setSelectedSeason] = useState<string>(
-		season ? season.toString() : '',
+		season ? season.toString() : '1',
 	);
 
 	return (

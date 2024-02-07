@@ -28,6 +28,7 @@ type SearchCardProps = {
 	addButtonLabel: string;
 	onClick: () => void;
 	onChangeItemSupports: (support: SupportEnum) => void;
+	addButtonIsDisabled: boolean;
 };
 
 const SearchCard = ({
@@ -41,6 +42,7 @@ const SearchCard = ({
 	addButtonLabel,
 	onClick,
 	onChangeItemSupports,
+	addButtonIsDisabled,
 }: SearchCardProps) => {
 	return (
 		<Card className='group relative flex items-stretch'>
@@ -69,7 +71,7 @@ const SearchCard = ({
 					</Box>
 				</Box>
 
-				{type === TypeEnum.SERIE ? (
+				{type === TypeEnum.SERIE && (seasons as Season[])?.length > 1 ? (
 					<Box className='flex flex-col items-center'>
 						<Typography variant='h6' className='text-center text-primary-900'>
 							Select the season
@@ -83,7 +85,12 @@ const SearchCard = ({
 					</Box>
 				) : null}
 
-				<Button variant='contained' color='secondary' onClick={onClick}>
+				<Button
+					variant='contained'
+					color='secondary'
+					disabled={addButtonIsDisabled}
+					onClick={onClick}
+				>
 					{addButtonLabel}
 				</Button>
 			</Box>

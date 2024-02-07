@@ -19,6 +19,7 @@ export type ActionModalPropsType = {
 	cancelLabel?: string;
 	confirmLabel?: string;
 	children?: ChildrenType;
+	addButtonIsDisabled?: boolean;
 };
 
 const ActionModal = ({
@@ -31,6 +32,7 @@ const ActionModal = ({
 	cancelLabel,
 	confirmLabel,
 	children,
+	addButtonIsDisabled,
 }: ActionModalPropsType) => {
 	const prefix = type === 'delete' ? 'delete' : 'update';
 
@@ -77,6 +79,7 @@ const ActionModal = ({
 					variant='contained'
 					onClick={onAction}
 					className={`${type === 'delete' ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
+					disabled={addButtonIsDisabled}
 				>
 					{confirmLabel ?? 'Confirm'}
 				</Button>
