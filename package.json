@@ -1,6 +1,7 @@
 {
 	"name": "bluray-list-nextjs-graphql",
-	"version": "0.1.0",
+	"version": "1.0.0",
+	"description": "This is a personnal project using NextJs, Apollo, Graphql, Typescript and The Movie Database (TMDB) API.",
 	"private": true,
 	"scripts": {
 		"dev": "next dev -p 8080",
@@ -10,6 +11,24 @@
 		"prepare": "husky install",
 		"codegen:api": "graphql-codegen --config src/app/api/graphql/codegen.ts",
 		"codegen:client": "graphql-codegen --config codegen.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jeyofdev/bluray-list-nextjs-graphql.git"
+	},
+	"keywords": [
+		"node",
+		"next",
+		"react",
+		"graphql",
+		"apollo",
+		"typescript",
+		"javascript"
+	],
+	"author": "jeyofdev <jgregoire.dev@gmail.com>",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/jeyofdev/bluray-list-nextjs-graphql/issues"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.8.9",
