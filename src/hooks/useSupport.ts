@@ -5,13 +5,14 @@ import { SupportEnum } from '@enums/index';
 type UseSupportType = {
 	itemSupports: SupportType;
 	onChange: (support: SupportEnum) => void;
+	cheKIfOneSupportIsActive: () => boolean;
 };
 
-const useSupport = (): UseSupportType => {
+const useSupport = (supports?: SupportType): UseSupportType => {
 	const [itemSupports, setItemSupports] = useState<SupportType>({
-		bluray: false,
-		bluray_hd: false,
-		dvd: false,
+		bluray: supports?.bluray ?? false,
+		bluray_hd: supports?.bluray_hd ?? false,
+		dvd: supports?.dvd ?? false,
 	});
 
 	const onChange = (support: SupportEnum) => {
@@ -21,7 +22,11 @@ const useSupport = (): UseSupportType => {
 		});
 	};
 
-	return { itemSupports, onChange };
+	const cheKIfOneSupportIsActive = () => {
+		return Object.values(itemSupports).some(support => support);
+	};
+
+	return { itemSupports, onChange, cheKIfOneSupportIsActive };
 };
 
 export default useSupport;

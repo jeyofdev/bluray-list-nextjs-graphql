@@ -26,7 +26,11 @@ const SearchSerieCard = ({
 		fetchPolicy: 'cache-and-network',
 	});
 
-	const { itemSupports, onChange: handleChangeItemSupports } = useSupport();
+	const {
+		itemSupports,
+		onChange: handleChangeItemSupports,
+		cheKIfOneSupportIsActive,
+	} = useSupport();
 
 	const [selectedSeason, setSelectedSeason] = useState<string>('1');
 
@@ -34,7 +38,7 @@ const SearchSerieCard = ({
 		addSerie({
 			variables: {
 				tmdbSerieId: serie.id,
-				season: selectedSeason,
+				season: Number(selectedSeason),
 				support: itemSupports,
 			},
 			onCompleted: refetch,
@@ -54,6 +58,7 @@ const SearchSerieCard = ({
 			addButtonLabel='Add to list'
 			onClick={handleClick}
 			onChangeItemSupports={handleChangeItemSupports}
+			addButtonIsDisabled={!cheKIfOneSupportIsActive()}
 		/>
 	);
 };
