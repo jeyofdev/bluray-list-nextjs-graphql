@@ -34,6 +34,9 @@ export const getRating = (rating: number, precision?: number) => {
 	return !precision ? Math.round(rating / 2) : rating / 2;
 };
 
+/**
+ * truncate text by limit
+ */
 export const truncate = (text: string, limit: number) => {
 	return text.length > limit ? `${text.slice(0, limit)}...` : text;
 };
@@ -67,14 +70,17 @@ export const getNewDate = (date: string) => {
 };
 
 /**
- * Sort items of array by order asc or desc
+ * Sort two date by order asc or desc
  */
-export const sortingByOrder = (a: any, b: any, order: SortEnum) => {
+export const sortingDateByOrder = (a: Date, b: Date, order: SortEnum) => {
+	const dateA = a.getTime();
+	const dateB = b.getTime();
+
 	if (order === SortEnum.ASC) {
-		return a - b;
+		return dateA - dateB;
 	}
 
-	return b - a;
+	return dateB - dateA;
 };
 
 /**
@@ -90,8 +96,21 @@ export const sortArrayByOrder = (
 		return order === SortEnum.ASC ? a.localeCompare(b) : b.localeCompare(a);
 	}
 
-	const dateA = getNewDate(a);
-	const dateB = getNewDate(b);
+	return sortingDateByOrder(getNewDate(a), getNewDate(b), order);
+};
 
-	return sortingByOrder(dateA.getTime(), dateB.getTime(), order);
+/**
+ * Check that at least one key of an object is true
+ */
+export const oneObjectKeyHasTrueValue = (filter: object) => {
+	return Object.values(filter).some(item => item === true);
+};
+
+/**
+ * Generate an object whose values ​​are true and keys generated from a string array
+ */
+export const generateObjectFromArrayOfString = (filter: object) => {
+	return Object.keys(filter).filter(
+		el => filter[el as keyof typeof filter] === true,
+	);
 };

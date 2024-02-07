@@ -3,18 +3,29 @@ import {
 	SetStateAction,
 	useCallback,
 	useEffect,
+	useReducer,
 	useState,
 } from 'react';
 import { FiltersType, ItemResponseType } from '../types';
 import { Genre } from '@graphql/__generated__/graphql-type';
 import { TypeEnum } from '@enums/index';
-import { convertToObjectWithValueFalse } from '@utils/index';
+import {
+	convertToObjectWithValueFalse,
+	generateObjectFromArrayOfString,
+	oneObjectKeyHasTrueValue,
+} from '@utils/index';
+import filterReducer from '@reducers/filterReducer';
+import {
+	getAllItems,
+	getItemsFilteredByGenre,
+	getItemsFilteredByGenreAndYear,
+	getItemsFilteredByYear,
+} from '../actions/filtersAction';
 
 type UseFilterType = {
 	filters: FiltersType;
 	setFilters: Dispatch<SetStateAction<FiltersType>>;
 	itemsFiltered: ItemResponseType;
-	setItemsFiltered: Dispatch<SetStateAction<ItemResponseType>>;
 	getGenresByItems: () => string[];
 	getYearByItem: () => string[];
 };
@@ -30,8 +41,7 @@ const useFilter = (
 
 	const [items, setItems] = useState<ItemResponseType>(dataItem);
 
-	const [itemsFiltered, setItemsFiltered] =
-		useState<ItemResponseType>(dataItem);
+	const [itemsFiltered, dispatch] = useReducer(filterReducer, dataItem);
 
 	const getGenresByItems = useCallback(() => {
 		const genresByItem = items
@@ -63,16 +73,6 @@ const useFilter = (
 		return Array.from(new Set(years));
 	}, [items, type]);
 
-	const checkIfItemFilterIsActive = (filter: object) => {
-		return Object.values(filter).some(item => item === true);
-	};
-
-	const getFilters = (filter: object) => {
-		return Object.keys(filter).filter(
-			el => filter[el as keyof typeof filter] === true,
-		);
-	};
-
 	useEffect(() => {
 		const genres = convertToObjectWithValueFalse(getGenresByItems());
 		const years = convertToObjectWithValueFalse(getYearByItem());
@@ -81,12 +81,12 @@ const useFilter = (
 	}, [getGenresByItems, getYearByItem, items, setFilters]);
 
 	useEffect(() => {
-		const genreFilterIsActive = checkIfItemFilterIsActive(filters?.genres);
-		const yearFilterIsActive = checkIfItemFilterIsActive(filters?.years);
+		const genreFilterIsActive = oneObjectKeyHasTrueValue(filters?.genres);
+		const yearFilterIsActive = oneObjectKeyHasTrueValue(filters?.years);
 
 		if (genreFilterIsActive || yearFilterIsActive) {
-			const genreFilters = getFilters(filters?.genres);
-			const yearFilters = getFilters(filters?.years);
+			const genreFilters = generateObjectFromArrayOfString(filters?.genres);
+			const yearFilters = generateObjectFromArrayOfString(filters?.years);
 
 			const itemFilterByGenre = items?.filter(m => {
 				const movieGenres = m?.details?.genres?.map(
@@ -108,34 +108,27 @@ const useFilter = (
 			});
 
 			if (genreFilterIsActive && !yearFilterIsActive) {
-				setItemsFiltered(itemFilterByGenre);
+				dispatch(getItemsFilteredByGenre({ items: itemFilterByGenre }));
 			} else if (!genreFilterIsActive && yearFilterIsActive) {
-				setItemsFiltered(itemFilterByYear);
+				dispatch(getItemsFilteredByYear({ items: itemFilterByYear }));
 			} else if (genreFilterIsActive && yearFilterIsActive) {
-				setItemsFiltered(
-					itemFilterByGenre?.filter(m => {
-						if (type === TypeEnum.MOVIE) {
-							return yearFilters.includes(
-								m?.details?.release_date?.slice(0, 4) as string,
-							);
-						} else if (type === TypeEnum.SERIE) {
-							return yearFilters.includes(
-								m?.details?.seasons[m?.season]?.air_date?.slice(0, 4) as string,
-							);
-						}
+				dispatch(
+					getItemsFilteredByGenreAndYear({
+						items: itemFilterByGenre,
+						yearFilters,
+						type,
 					}),
 				);
 			}
 		} else {
-			setItemsFiltered(items);
+			dispatch(getAllItems({ items: dataItem }));
 		}
-	}, [filters, items, type]);
+	}, [dataItem, filters, items, type]);
 
 	return {
 		filters,
 		setFilters,
-		itemsFiltered,
-		setItemsFiltered,
+		itemsFiltered: itemsFiltered as ItemResponseType,
 		getGenresByItems,
 		getYearByItem,
 	};

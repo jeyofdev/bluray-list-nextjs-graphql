@@ -14,7 +14,6 @@ import useSort from '@hooks/useSort';
 import { ToastOnCloseType } from '@hooks/useToast';
 import { Box } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { SupportType } from '../../types';
 
 type MoviesListSuspensePropsType = {
@@ -42,16 +41,11 @@ const MoviesListSuspense = ({
 		filters,
 		setFilters,
 		itemsFiltered: moviesFiltered,
-		setItemsFiltered,
 		getGenresByItems,
 		getYearByItem,
 	} = useFilter(items, type);
 
 	const { sorts, setSorts, sortItems } = useSort(moviesFiltered);
-
-	useEffect(() => {
-		setItemsFiltered(items);
-	}, [items, setItemsFiltered]);
 
 	return (
 		<>
