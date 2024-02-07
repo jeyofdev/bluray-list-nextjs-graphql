@@ -34,7 +34,10 @@ const ContentContainer = ({
 					root: 'pb-8 absolute left-1/2 top-[75%] sm:top-[70%] md:top-[70%] lg:top-[65%] xl:top-[65%] -translate-x-1/2',
 				}}
 			>
-				<Paper elevation={0} className='rounded-md p-4 md:p-5 lg:p-6 xl:p-8'>
+				<Paper
+					elevation={0}
+					className='mb-10 rounded-md p-4 md:p-5 lg:p-6 xl:p-8'
+				>
 					{children}
 				</Paper>
 			</Container>
