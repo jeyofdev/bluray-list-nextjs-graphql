@@ -56,6 +56,7 @@ NEXT_PUBLIC_API_URL="http://localhost:8080/api/graphql"
 Run your GraphQL server and your React app with this command :
 
 ```sh
+npx prisma generate
 npm run dev
 ```
 
